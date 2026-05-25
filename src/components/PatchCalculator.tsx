@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Check, ChevronRight, ChevronLeft, Info, Send } from "lucide-react";
-import { Button } from "@/components/ui/button"; // Assuming shadcn/ui buttons, fallback to standard if not
-import { Card } from "@/components/ui/card";
 
 // --- Configuration & Pricing Logic ---
 const CONFIG = {
@@ -40,18 +38,15 @@ export default function PatchCalculator() {
   });
   const [totalPrice, setTotalPrice] = useState(0);
 
-  // Price Calculation Engine
   useEffect(() => {
     const shapeObj = CONFIG.shapes.find(s => s.id === selections.shape);
     const sizeObj = CONFIG.sizes.find(s => s.id === selections.size);
     const compObj = CONFIG.complexities.find(c => c.id === selections.complexity);
     const backObj = CONFIG.backings.find(b => b.id === selections.backing);
 
-    // Base Logic: (Base + SizeFactor) * Complexity * Quantity + Backing
     const base = (shapeObj?.basePrice || 10) * (sizeObj?.value || 1);
     const perUnit = (base * (compObj?.multiplier || 1)) + (backObj?.price || 0);
     
-    // Quantity Discount (Degressive)
     let quantityMultiplier = 1;
     if (selections.quantity >= 100) quantityMultiplier = 0.6;
     else if (selections.quantity >= 50) quantityMultiplier = 0.8;
@@ -208,12 +203,12 @@ export default function PatchCalculator() {
                   <div className="flex items-center gap-6">
                     <button 
                       onClick={() => setSelections(p => ({...p, quantity: Math.max(1, p.quantity - 1)}))}
-                      className="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center text-2xl font-bold"
+                      className="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center text-2xl font-bold hover:bg-primary/90 transition-colors"
                     >-</button>
                     <span className="text-4xl font-serif font-bold text-primary w-20 text-center">{selections.quantity}</span>
                     <button 
                       onClick={() => setSelections(p => ({...p, quantity: p.quantity + 1}))}
-                      className="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center text-2xl font-bold"
+                      className="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center text-2xl font-bold hover:bg-primary/90 transition-colors"
                     >+</button>
                   </div>
                   <p className="text-sm text-foreground/60 italic">Tipp: Ab 20, 50 und 100 Stück sinkt der Stückpreis automatisch.</p>
@@ -224,32 +219,30 @@ export default function PatchCalculator() {
 
           {/* Navigation Buttons */}
           <div className="flex justify-between items-center pt-8">
-            <Button 
-              variant="ghost" 
+            <button 
               onClick={() => setStep(s => s - 1)} 
               disabled={step === 1}
-              className="flex items-center gap-2 text-primary hover:bg-primary/5"
+              className="flex items-center gap-2 px-4 py-2 text-primary hover:bg-primary/5 rounded-lg transition-colors disabled:opacity-50"
             >
               <ChevronLeft className="w-4 h-4" /> Zurück
-            </Button>
+            </button>
             
             {step < 5 ? (
-              <Button 
+              <button 
                 onClick={() => setStep(s => s + 1)}
-                className="bg-primary text-background hover:bg-primary/90 flex items-center gap-2 px-8 rounded-full"
+                className="bg-primary text-background hover:bg-primary/90 flex items-center gap-2 px-8 py-2 rounded-full font-semibold transition-all active:scale-95"
               >
                 Weiter <ChevronRight className="w-4 h-4" />
-              </Button>
+              </button>
             ) : (
-              <Button 
-                className="bg-accent text-primary hover:bg-accent/90 flex items-center gap-2 px-8 rounded-full font-bold"
+              <button 
+                className="bg-accent text-primary hover:bg-accent/90 flex items-center gap-2 px-8 py-2 rounded-full font-bold transition-all active:scale-95"
                 onClick={() => {
-                  // Final action: trigger lead form
                   window.location.href = "#contact";
                 }}
               >
                 Anfrage absenden <Send className="w-4 h-4" />
-              </Button>
+              </button>
             )}
           </div>
         </div>
