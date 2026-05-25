@@ -1,7 +1,10 @@
 # 🧵 Stickwerk-Studio
 **Fäden, die Marken sichtbar machen.**
 
+> ⚠️ **Legal Notice:** This project is proprietary. All rights reserved. Unauthorized use, reproduction, or distribution of this software is strictly prohibited. See [LICENSE](./LICENSE) for details.
+
 Stickwerk-Studio is a professional, modern platform dedicated to high-quality machine embroidery, custom patches, and textile branding for the DACH region. This project combines a seamless customer experience with a powerful administrative backend to streamline the production of custom textiles.
+
 
 ---
 
