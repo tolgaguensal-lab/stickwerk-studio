@@ -45,6 +45,4 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          # Cache for faster builds
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          # Cache removed to fix buildx failure and ensure a clean build
