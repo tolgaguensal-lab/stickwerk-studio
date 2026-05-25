@@ -6,8 +6,10 @@ services:
     container_name: stickwerk-app
     ports:
       - "3000:3000"
-    env_file:
-      - .env
+    environment:
+      - DATABASE_URL=postgresql://stickwerk_user:stickwerk_password@db:5432/stickwerk_db
+      - NEXTAUTH_SECRET=stickwerk_secret_key_2026_change_me
+      - NODE_ENV=production
     depends_on:
       - db
     restart: always
@@ -18,9 +20,9 @@ services:
     image: postgres:15-alpine
     container_name: stickwerk-db
     environment:
-      POSTGRES_USER: stickwerk_user
-      POSTGRES_PASSWORD: stickwerk_password
-      POSTGRES_DB: stickwerk_db
+      - POSTGRES_USER=stickwerk_user
+      - POSTGRES_PASSWORD=stickwerk_password
+      - POSTGRES_DB=stickwerk_db
     volumes:
       - /DATA/AppData/stickwerk-studio/db:/var/lib/postgresql/data
     ports:
