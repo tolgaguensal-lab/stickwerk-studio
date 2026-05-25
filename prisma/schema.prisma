@@ -1,36 +1,27 @@
-prisma {
-  generator client {
-    provider = "prisma-client-js"
-  }
+generator client {
+  provider = "prisma-client-js"
+}
 
-  datasource db {
-    provider = "postgresql"
-    url      = env("DATABASE_URL")
-  }
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum LeadStatus {
+  NEW
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
 }
 
 model Lead {
-  id                String   @id @default(cuid())
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  
-  // Customer Info
-  name              String
-  email             String
-  company           String?
-  message           String?
-  
-  // Project Details
-  projectType       String   // e.g., "Patch", "Clothing", "Custom"
-  estimatedQuantity Int
-  estimatedPrice    Float?
-  
-  // Calculation Snapshot (stored as JSON to preserve exactly what the user saw)
-  calculationData   Json     
-  
-  // File Uploads
-  motifUrl          String?
-  
-  // Internal Status
-  status            String   @default("new") // new, contacted, quoted, producing, completed, archived
+  id               String     @id @default(cuid())
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+  name             String
+  email            String
+  phone            String?
+  message          String?
+  calculationData  Json
+  status           LeadStatus @default(NEW)
 }
