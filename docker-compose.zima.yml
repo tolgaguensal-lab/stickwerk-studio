@@ -3,6 +3,7 @@ version: '3.8'
 services:
   app:
     image: ghcr.io/tolgaguensal-lab/stickwerk-studio:latest
+    container_name: stickwerk-app
     ports:
       - "3000:3000"
     env_file:
@@ -10,18 +11,18 @@ services:
     depends_on:
       - db
     restart: always
+    volumes:
+      - /DATA/AppData/stickwerk-studio/config:/app/config
 
   db:
     image: postgres:15-alpine
+    container_name: stickwerk-db
     environment:
       POSTGRES_USER: stickwerk_user
       POSTGRES_PASSWORD: stickwerk_password
       POSTGRES_DB: stickwerk_db
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - /DATA/AppData/stickwerk-studio/db:/var/lib/postgresql/data
     ports:
       - "5432:5432"
     restart: always
-
-volumes:
-  postgres_data:
