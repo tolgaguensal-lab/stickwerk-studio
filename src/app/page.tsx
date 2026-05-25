@@ -1,61 +1,128 @@
 import Image from "next/image";
+import { motion } from "framer-motion";
+import { ArrowRight, CheckCircle2, PenTool, Zap, Heart } from "lucide-react";
 
 export default function Home() {
   return (
-    <div className="flex flex-col min-h-screen items-center justify-center bg-background font-sans text-foreground">
-      <main className="flex flex-col items-center justify-center py-20 px-6 text-center max-w-4xl w-full">
-        
-        {/* Logo Section */}
-        <div className="mb-12 transition-transform hover:scale-105 duration-500">
-          <Image
-            src="/logo.jpg"
-            alt="Stickwerk-Studio Logo"
-            width={280}
-            height={280}
-            className="rounded-full shadow-2xl border-4 border-primary"
-            priority
-          />
+    <div className="flex flex-col min-h-screen bg-background font-sans text-foreground">
+      
+      {/* --- HERO SECTION --- */}
+      <section className="relative flex flex-col items-center justify-center py-24 px-6 text-center overflow-hidden">
+        {/* Decorative background elements */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10 opacity-20 pointer-events-none">
+          <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-accent rounded-full blur-[120px]" />
+          <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-primary rounded-full blur-[120px]" />
         </div>
 
-        {/* Hero Section */}
-        <div className="flex flex-col items-center gap-6 mb-16">
-          <h1 className="text-4xl md:text-6xl font-serif font-bold leading-tight tracking-tight text-primary">
-            Fäden, die Marken <span className="text-accent">sichtbar machen</span>
-          </h1>
-          <p className="max-w-2xl text-lg md:text-xl leading-relaxed text-foreground/80 italic">
-            Professionelle Stickereien, hochwertige Patches und textile Veredelung 
-            für Unternehmen, die Wert auf Detail und Qualität legen.
-          </p>
-        </div>
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="flex flex-col items-center gap-12 max-w-5xl"
+        >
+          {/* Logo */}
+          <div className="relative group">
+            <div className="absolute -inset-1 bg-gradient-to-r from-primary to-accent rounded-full blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
+            <Image
+              src="/logo.jpg"
+              alt="Stickwerk-Studio Logo"
+              width={220}
+              height={220}
+              className="relative rounded-full shadow-2xl border-2 border-white/50"
+              priority
+            />
+          </div>
 
-        {/* Call to Action Section */}
-        <div className="flex flex-col sm:flex-row gap-6 w-full justify-center items-center">
-          <a
-            className="flex h-14 w-full sm:w-auto items-center justify-center gap-3 rounded-full bg-primary px-8 text-background font-semibold text-lg transition-all hover:bg-primary/90 hover:shadow-lg active:scale-95"
-            href="#calculator"
-          >
-            <span>Patch-Kalkulator starten</span>
-            <span className="text-accent">→</span>
-          </a>
-          <a
-            className="flex h-14 w-full sm:w-auto items-center justify-center rounded-full border-2 border-primary px-8 text-primary font-semibold text-lg transition-all hover:bg-primary/5 active:scale-95"
-            href="#contact"
-          >
-            Anfrage senden
-          </a>
-        </div>
+          {/* Headline */}
+          <div className="space-y-6">
+            <h1 className="text-5xl md:text-7xl font-serif font-bold leading-tight tracking-tight text-primary">
+              Fäden, die Marken <br />
+              <span className="text-accent italic">sichtbar machen</span>
+            </h1>
+            <p className="max-w-2xl mx-auto text-lg md:text-xl leading-relaxed text-foreground/80 italic font-light">
+              Wir verwandeln Ihre Vision in haptische Exzellenz. <br className="hidden md:block" />
+              Hochwertige Patches und textile Veredelung, präzise gestickt und persönlich begleitet.
+            </p>
+          </div>
 
-        {/* Brand Statement */}
-        <div className="mt-24 pt-12 border-t border-primary/10 w-full max-w-2xl">
-          <p className="text-sm uppercase tracking-widest text-accent font-bold mb-4">
-            Stickwerk-Studio
-          </p>
-          <p className="text-foreground/60 text-sm italic">
-            Modernes Handwerk trifft auf digitale Präzision. 
-            Spezialisiert auf die DACH-Region.
-          </p>
+          {/* CTAs */}
+          <div className="flex flex-col sm:flex-row gap-6 w-full justify-center items-center">
+            <a
+              className="group flex h-14 w-full sm:w-auto items-center justify-center gap-3 rounded-full bg-primary px-10 text-background font-semibold text-lg transition-all hover:bg-primary/90 hover:shadow-xl active:scale-95"
+              href="#calculator"
+            >
+              <span>Patch-Kalkulator starten</span>
+              <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+            </a>
+            <a
+              className="flex h-14 w-full sm:w-auto items-center justify-center rounded-full border-2 border-primary px-10 text-primary font-semibold text-lg transition-all hover:bg-primary/5 active:scale-95"
+              href="#contact"
+            >
+              Anfrage senden
+            </a>
+          </div>
+        </motion.div>
+      </section>
+
+      {/* --- VALUE PROPOSITION SECTION --- */}
+      <section className="py-24 px-6 bg-white/50 dark:bg-primary/5">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+            <div className="flex flex-col items-center text-center space-y-4 p-6">
+              <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-4">
+                <Zap className="w-8 h-8" />
+              </div>
+              <h3 className="text-2xl font-serif font-bold text-primary">Digitale Präzision</h3>
+              <p className="text-foreground/70 leading-relaxed">
+                Wir optimieren jedes Motiv für die Stickmaschine, damit jede Linie perfekt sitzt und die Form exakt gewahrt bleibt.
+              </p>
+            </div>
+            <div className="flex flex-col items-center text-center space-y-4 p-6">
+              <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-4">
+                <Heart className="w-8 h-8" />
+              </div>
+              <h3 className="text-2xl font-serif font-bold text-primary">Haptische Qualität</h3>
+              <p className="text-foreground/70 leading-relaxed">
+                Nur erstklassige Garne und langlebige Materialien. Qualität, die man nicht nur sieht, sondern fühlt.
+              </p>
+            </div>
+            <div className="flex flex-col items-center text-center space-y-4 p-6">
+              <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-4">
+                <PenTool className="w-8 h-8" />
+              </div>
+              <h3 className="text-2xl font-serif font-bold text-primary">Persönlicher Dialog</h3>
+              <p className="text-foreground/70 leading-relaxed">
+                Kein anonymes Formular-Handling. Wir beraten Sie individuell zu Form, Material und Umsetzung.
+              </p>
+            </div>
+          </div>
         </div>
-      </main>
+      </section>
+
+      {/* --- BRAND STATEMENT --- */}
+      <section className="py-24 px-6 text-center">
+        <div className="max-w-3xl mx-auto space-y-8">
+          <div className="flex items-center justify-center gap-4">
+             <div className="h-px w-12 bg-accent" />
+             <span className="text-xs uppercase tracking-[0.3em] text-accent font-bold">Stickwerk-Studio</span>
+             <div className="h-px w-12 bg-accent" />
+          </div>
+          <p className="text-2xl md:text-3xl font-serif italic text-primary leading-relaxed">
+            "Modernes Handwerk trifft auf digitale Präzision. <br className="hidden md:block" />
+            Spezialisiert auf die DACH-Region."
+          </p>
+          <div className="flex justify-center gap-2">
+            {[1,2,3,4,5].map(i => (
+              <CheckCircle2 key={i} className="w-5 h-5 text-accent fill-accent/20" />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Footer simple placeholder */}
+      <footer className="py-12 px-6 border-t border-primary/10 text-center text-sm text-foreground/50">
+        <p>© 2026 Stickwerk-Studio. Alle Rechte vorbehalten.</p>
+      </footer>
     </div>
   );
 }
