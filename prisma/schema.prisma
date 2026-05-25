@@ -1,0 +1,63 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum LeadStatus {
+  NEW
+  UNDER_REVIEW
+  OFFER_SENT
+  FOLLOW_UP
+  WON
+  LOST
+  ARCHIVED
+}
+
+model User {
+  id       String @id @default(cuid())
+  email    String @unique
+  password String
+  role     String @default("ADMIN")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  leads Lead[]
+}
+
+model Lead {
+  id              String     @id @default(cuid())
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+  
+  // Customer Info
+  name            String
+  email           String
+  phone           String?
+  
+  // Project Details
+  projectType     String     // e.g., "Patches", "Embroidery"
+  description     String     @db.Text
+  quantity        Int        @default(1)
+  desiredDate     DateTime?
+  
+  // Calculator Snapshot (stored as JSON for flexibility)
+  calculatorData  Json?      // Store size, shape, fastening, etc.
+  estimatedPrice  String?    // Store the price range shown to user
+  
+  // File Uploads
+  logoUrl         String?    // Path to the uploaded file
+  
+  // Admin Pipeline
+  status          LeadStatus @default(NEW)
+  adminNotes      String?    @db.Text
+  assignedUserId  String?
+  assignedUser    User?      @relation(fields: [assignedUserId], references: [id])
+  
+  // Compliance
+  gdprConsent     Boolean    @default(false)
+  consentDate     DateTime?
+}
