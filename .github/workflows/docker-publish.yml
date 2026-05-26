@@ -44,11 +44,12 @@ jobs:
 
       - name: Validate Prisma Schema
         run: npx prisma validate
+        env:
+          DATABASE_URL: "postgresql://user:pass@localhost:5432/db"
 
       - name: Run Build check
         run: npm run build
         env:
-          # Provide dummy env vars for build-time checks
           DATABASE_URL: "postgresql://user:pass@localhost:5432/db"
           SENTRY_DSN: "https://placeholder@sentry.io/1"
           NEXT_PUBLIC_SENTRY_DSN: "https://placeholder@sentry.io/1"
