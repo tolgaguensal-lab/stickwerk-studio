@@ -1,128 +1,138 @@
+"use client";
+
+import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
-import { motion } from "framer-motion";
-import { ArrowRight, CheckCircle2, PenTool, Zap, Heart } from "lucide-react";
+import { ArrowRight, PenTool, Zap, Heart } from "lucide-react";
+import PatchCalculator from "@/components/PatchCalculator";
+import { Button } from "@/components/ui/button";
 
-export default function Home() {
+export default function LandingPage() {
+  const { scrollYProgress } = useScroll();
+  const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
+  const scale = useTransform(scrollYProgress, [0, 0.2], [1, 0.9]);
+
   return (
-    <div className="flex flex-col min-h-screen bg-background font-sans text-foreground">
-      
-      {/* --- HERO SECTION --- */}
-      <section className="relative flex flex-col items-center justify-center py-24 px-6 text-center overflow-hidden">
-        {/* Decorative background elements */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10 opacity-20 pointer-events-none">
-          <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-accent rounded-full blur-[120px]" />
-          <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-primary rounded-full blur-[120px]" />
-        </div>
-
+    <main className="relative z-10">
+      {/* Hero Section */}
+      <section className="min-h-screen flex flex-col items-center justify-center text-center px-6">
         <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="flex flex-col items-center gap-12 max-w-5xl"
+          style={{ opacity, scale }}
+          className="max-w-4xl space-y-8"
         >
-          {/* Logo */}
-          <div className="relative group">
-            <div className="absolute -inset-1 bg-gradient-to-r from-primary to-accent rounded-full blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
-            <Image
-              src="/logo.jpg"
-              alt="Stickwerk-Studio Logo"
-              width={220}
-              height={220}
-              className="relative rounded-full shadow-2xl border-2 border-white/50"
-              priority
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="relative inline-block"
+          >
+            <Image 
+              src="/logo.jpg" 
+              alt="Stickwerk Logo" 
+              width={180} 
+              height={180} 
+              className="rounded-full shadow-2xl border-4 border-white"
             />
-          </div>
-
-          {/* Headline */}
-          <div className="space-y-6">
-            <h1 className="text-5xl md:text-7xl font-serif font-bold leading-tight tracking-tight text-primary">
-              Fäden, die Marken <br />
-              <span className="text-accent italic">sichtbar machen</span>
-            </h1>
-            <p className="max-w-2xl mx-auto text-lg md:text-xl leading-relaxed text-foreground/80 italic font-light">
-              Wir verwandeln Ihre Vision in haptische Exzellenz. <br className="hidden md:block" />
-              Hochwertige Patches und textile Veredelung, präzise gestickt und persönlich begleitet.
-            </p>
-          </div>
-
-          {/* CTAs */}
-          <div className="flex flex-col sm:flex-row gap-6 w-full justify-center items-center">
-            <a
-              className="group flex h-14 w-full sm:w-auto items-center justify-center gap-3 rounded-full bg-primary px-10 text-background font-semibold text-lg transition-all hover:bg-primary/90 hover:shadow-xl active:scale-95"
-              href="#calculator"
-            >
-              <span>Patch-Kalkulator starten</span>
-              <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
-            </a>
-            <a
-              className="flex h-14 w-full sm:w-auto items-center justify-center rounded-full border-2 border-primary px-10 text-primary font-semibold text-lg transition-all hover:bg-primary/5 active:scale-95"
-              href="#contact"
-            >
-              Anfrage senden
-            </a>
-          </div>
+          </motion.div>
+          
+          <motion.h1 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="text-6xl md:text-8xl font-serif font-bold text-primary leading-tight"
+          >
+            Fäden, die Marken <br /> 
+            <span className="text-accent italic">sichtbar machen</span>
+          </motion.h1>
+          
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="text-xl md:text-2xl text-foreground/70 max-w-2xl mx-auto leading-relaxed"
+          >
+            Exklusive Stickkunst für anspruchsvolle Marken. Präzision, Haptik und Design in jedem Stich.
+          </motion.p>
+          
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            className="flex flex-wrap justify-center gap-4"
+          >
+            <Button size="lg" className="px-8 py-6 text-lg rounded-full group">
+              Jetzt konfigurieren 
+              <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </Button>
+          </motion.div>
         </motion.div>
       </section>
 
-      {/* --- VALUE PROPOSITION SECTION --- */}
-      <section className="py-24 px-6 bg-white/50 dark:bg-primary/5">
+      {/* Features Section */}
+      <section className="py-32 px-6">
         <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-            <div className="flex flex-col items-center text-center space-y-4 p-6">
-              <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-4">
-                <Zap className="w-8 h-8" />
-              </div>
-              <h3 className="text-2xl font-serif font-bold text-primary">Digitale Präzision</h3>
-              <p className="text-foreground/70 leading-relaxed">
-                Wir optimieren jedes Motiv für die Stickmaschine, damit jede Linie perfekt sitzt und die Form exakt gewahrt bleibt.
-              </p>
-            </div>
-            <div className="flex flex-col items-center text-center space-y-4 p-6">
-              <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-4">
-                <Heart className="w-8 h-8" />
-              </div>
-              <h3 className="text-2xl font-serif font-bold text-primary">Haptische Qualität</h3>
-              <p className="text-foreground/70 leading-relaxed">
-                Nur erstklassige Garne und langlebige Materialien. Qualität, die man nicht nur sieht, sondern fühlt.
-              </p>
-            </div>
-            <div className="flex flex-col items-center text-center space-y-4 p-6">
-              <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-4">
-                <PenTool className="w-8 h-8" />
-              </div>
-              <h3 className="text-2xl font-serif font-bold text-primary">Persönlicher Dialog</h3>
-              <p className="text-foreground/70 leading-relaxed">
-                Kein anonymes Formular-Handling. Wir beraten Sie individuell zu Form, Material und Umsetzung.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+          <motion.div 
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-20 space-y-4"
+          >
+            <h2 className="text-4xl md:text-6xl font-serif font-bold text-primary">Das Stickwerk-Versprechen</h2>
+            <div className="w-24 h-1 bg-accent mx-auto rounded-full" />
+          </motion.div>
 
-      {/* --- BRAND STATEMENT --- */}
-      <section className="py-24 px-6 text-center">
-        <div className="max-w-3xl mx-auto space-y-8">
-          <div className="flex items-center justify-center gap-4">
-             <div className="h-px w-12 bg-accent" />
-             <span className="text-xs uppercase tracking-[0.3em] text-accent font-bold">Stickwerk-Studio</span>
-             <div className="h-px w-12 bg-accent" />
-          </div>
-          <p className="text-2xl md:text-3xl font-serif italic text-primary leading-relaxed">
-            "Modernes Handwerk trifft auf digitale Präzision. <br className="hidden md:block" />
-            Spezialisiert auf die DACH-Region."
-          </p>
-          <div className="flex justify-center gap-2">
-            {[1,2,3,4,5].map(i => (
-              <CheckCircle2 key={i} className="w-5 h-5 text-accent fill-accent/20" />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+            {[
+              { icon: <Zap />, title: "Digitale Präzision", text: "Wir optimieren jedes Motiv für die Stickmaschine, damit jede Linie perfekt sitzt." },
+              { icon: <Heart />, title: "Haptische Qualität", text: "Nur erstklassige Garne und langlebige Materialien. Qualität, die man fühlt." },
+              { icon: <PenTool />, title: "Persönlicher Dialog", text: "Individuelle Beratung zu Form und Material für Ihr perfektes Ergebnis." },
+            ].map((feature, i) => (
+              <motion.div 
+                key={i}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: i * 0.2 }}
+                className="p-8 rounded-3xl bg-white/50 backdrop-blur-sm border border-primary/10 hover:border-accent/50 transition-all group"
+              >
+                <div className="w-14 h-14 rounded-2xl bg-primary/10 text-primary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                  {feature.icon}
+                </div>
+                <h3 className="text-2xl font-serif font-bold text-primary mb-3">{feature.title}</h3>
+                <p className="text-foreground/70 leading-relaxed">{feature.text}</p>
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Footer simple placeholder */}
-      <footer className="py-12 px-6 border-t border-primary/10 text-center text-sm text-foreground/50">
-        <p>© 2026 Stickwerk-Studio. Alle Rechte vorbehalten.</p>
-      </footer>
-    </div>
+      {/* Calculator Section */}
+      <section className="py-32 px-6 bg-primary/5">
+        <div className="max-w-6xl mx-auto">
+          <motion.div 
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-20 space-y-4"
+          >
+            <h2 className="text-4xl md:text-6xl font-serif font-bold text-primary">Ihr Patch-Konfigurator</h2>
+            <p className="text-xl text-foreground/70 max-w-2xl mx-auto">
+              Gestalten Sie Ihren Patch in Echtzeit und erhalten Sie eine sofortige Kostenschätzung.
+            </p>
+          </motion.div>
+          
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="relative"
+          >
+            <PatchCalculator />
+          </motion.div>
+        </div>
+      </section>
+    </main>
   );
 }
