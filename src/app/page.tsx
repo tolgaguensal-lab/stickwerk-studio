@@ -143,21 +143,23 @@ export default function LandingPage() {
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="relative inline-block mb-6"
           >
-            <div className="absolute inset-0 bg-accent/10 rounded-full blur-2xl animate-pulse" />
-            <Image 
-              src="/logo.jpg" 
-              alt="Stickwerk Logo" 
-              width={180} 
-              height={180} 
-              className="rounded-full shadow-2xl border-4 border-white relative z-10"
-            />
+            <div className="absolute inset-0 bg-gradient-to-r from-accent/20 to-primary/20 rounded-full blur-3xl animate-pulse" />
+            <div className="relative z-10 p-2 bg-white rounded-full shadow-2xl border-4 border-white">
+              <Image 
+                src="/logo.jpg" 
+                alt="Stickwerk Logo" 
+                width={180} 
+                height={180} 
+                className="rounded-full object-cover"
+              />
+            </div>
           </motion.div>
           
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-5xl md:text-7xl font-serif font-bold text-primary leading-tight"
+            className="text-5xl md:text-7xl font-serif font-bold text-primary leading-tight shadow-lg"
           >
             Fäden, die Marken <br /> 
             <span className="text-accent italic">sichtbar machen</span>
@@ -167,7 +169,7 @@ export default function LandingPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-xl md:text-2xl text-foreground/70 max-w-2xl mx-auto leading-relaxed"
+            className="text-xl md:text-2xl text-primary/80 max-w-2xl mx-auto leading-relaxed font-medium"
           >
             Exklusive Stickkunst für anspruchsvolle Marken. Präzision, Haptik und Design in jedem Stich.
           </motion.p>
