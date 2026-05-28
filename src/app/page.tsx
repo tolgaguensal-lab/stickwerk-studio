@@ -2,7 +2,7 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
-import { ArrowRight, PenTool, Zap, Heart, ShieldCheck, Users, TrendingUp, Clock, Star, CheckCircle2, Target, Award, FileText, Package, Truck, Smile, Sparkles, Bolt, Mail } from "lucide-react";
+import { ArrowRight, PenTool, Zap, Heart, ShieldCheck, Users, TrendingUp, Clock, Star, CheckCircle2, Target, Award, FileText, Truck, Smile, Sparkles, Bolt, Mail } from "lucide-react";
 import PatchCalculator from "@/components/PatchCalculator";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
@@ -117,17 +117,7 @@ export default function LandingPage() {
       title: "Express-Service",
       description: "Schnelle Produktion für dringende Aufträge ohne Qualitätsverlust."
     }
-  ];
-
-  // Custom Euro icon component
-  function Euro() {
-    return (
-      <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-        <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2Z" />
-        <path d="M12 6c-2.2 0-4 1.8-4 4s1.8 4 4 4 4-1.8 4-4-1.8-4-4-4Z" />
-      </svg>
-    );
-  }
+   ];
 
   return (
     <main className="relative z-10">
@@ -467,7 +457,9 @@ export default function LandingPage() {
                       <Star key={j + testimonial.stars} className="w-5 h-5 text-foreground/30" />
                     ))}
                   </div>
-                  <p className="text-foreground/70 italic mb-6 leading-relaxed">"{testimonial.quote}"</p>
+                   <p className="text-foreground/70 italic mb-6 leading-relaxed">
+                     &quot;{testimonial.quote}&quot;
+                   </p>
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
                       <span className="text-primary font-bold">{testimonial.name.charAt(0)}</span>

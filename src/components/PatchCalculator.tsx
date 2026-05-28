@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Check, ChevronRight, ChevronLeft, Info, Send, Loader2, User, Mail, Phone, MessageSquare, Upload, Palette, Layers, Clock, Bolt, Scissors, Sparkles, ShieldCheck } from "lucide-react";
+import { Check, ChevronRight, ChevronLeft, Info, Send, Loader2, User, Mail, Phone, MessageSquare, Upload, Palette, Layers, ShieldCheck } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -133,28 +133,64 @@ export default function PatchCalculator() {
     e.preventDefault();
     setLoading(true);
     try {
-      const formDataPayload = new FormData();
-      formDataPayload.append("name", formData.name);
-      formDataPayload.append("email", formData.email);
-      formDataPayload.append("phone", formData.phone);
-      formDataPayload.append("message", formData.message);
-      formDataPayload.append("calculationData", JSON.stringify(selections));
-      if (designFile) {
-        formDataPayload.append("design", designFile);
-      }
+      // Send as JSON for compatibility with API
+      const payload = {
+        name: formData.name.trim(),
+        email: formData.email.trim(),
+        phone: formData.phone.trim() || null,
+        message: formData.message.trim() || null,
+        calculationData: selections,
+        designFile: designFile ? {
+          name: designFile.name,
+          size: designFile.size,
+          type: designFile.type,
+        } : null,
+      };
 
       const response = await fetch("/api/leads", {
         method: "POST",
-        body: formDataPayload,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
       });
+
+      const result = await response.json();
 
       if (response.ok) {
         setSubmitted(true);
       } else {
-        alert("Da ist etwas schiefgelaufen. Bitte versuchen Sie es erneut.");
+        // Show specific error messages from API
+        let errorMessage = result.error || "Da ist etwas schiefgelaufen. Bitte versuchen Sie es erneut.";
+        
+        // Show user-friendly messages for common errors
+        if (errorMessage.includes("Name and email are required")) {
+          errorMessage = "Bitte geben Sie Ihren Namen und Ihre E-Mail-Adresse ein.";
+        } else if (errorMessage.includes("valid email")) {
+          errorMessage = "Bitte geben Sie eine gültige E-Mail-Adresse ein.";
+        } else if (errorMessage.includes("already exists")) {
+          errorMessage = "Eine Anfrage mit dieser E-Mail-Adresse existiert bereits. Bitte verwenden Sie eine andere E-Mail oder warten Sie auf unsere Antwort.";
+        } else if (errorMessage.includes("Internal server error")) {
+          errorMessage = "Ein technischer Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.";
+        }
+        
+        alert(errorMessage);
       }
-    } catch {
-      alert("Verbindungsfehler. Bitte prüfen Sie Ihre Internetverbindung.");
+    } catch (error: unknown) {
+      console.error("Submission error:", error);
+      let errorMessage = "Verbindungsfehler. Bitte prüfen Sie Ihre Internetverbindung.";
+      
+      if (error instanceof Error) {
+        if (error.name === "TypeError" && error.message.includes("Failed to fetch")) {
+          errorMessage = "Keine Verbindung zum Server. Bitte prüfen Sie Ihre Internetverbindung.";
+        } else if (error.name === "AbortError") {
+          errorMessage = "Die Anfrage wurde abgebrochen. Bitte versuchen Sie es erneut.";
+        } else {
+          errorMessage = error.message || errorMessage;
+        }
+      }
+      
+      alert(errorMessage);
     } finally {
       setLoading(false);
     }
