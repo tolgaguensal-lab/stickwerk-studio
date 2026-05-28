@@ -1,4 +1,4 @@
-# Deployment Guide - ZimaOS + Pangolin + PocketBase
+# Deployment Guide - ZimaOS + Pangolin
 
 ## Produktionsroute
 
@@ -18,24 +18,31 @@ Docker-Container stickwerk-app
 http://<ZIMAOS-IP>:3034
 ```
 
-## 1. Docker Image
+## 1. Voraussetzungen
+
+- ZimaOS mit Docker
+- **PocketBase** installiert über ZimaOS App Store
+- Pangolin auf VPS (Cloud-Anbieter)
+- Newt auf ZimaOS
+
+## 2. Docker Image
 
 ```
 ghcr.io/tolgaguensal-lab/stickwerk-studio:latest
 ```
 
-## 2. Öffentliche Domain
+## 3. PocketBase Setup (ZimaOS App Store)
 
-```
-https://sws.guenlab.de
-```
+1. PocketBase über ZimaOS App Store installieren
+2. PocketBase Admin Account erstellen
+3. PocketBase URL notieren (z.B. `http://<ZIMAOS-IP>:8090`)
 
-## 3. Environment Variables (.env)
+## 4. Environment Variables (.env)
 
 ```bash
-# PocketBase
-NEXT_PUBLIC_POCKETBASE_URL=http://pocketbase:8090
-POCKETBASE_URL=http://pocketbase:8090
+# PocketBase (installiert über ZimaOS App Store)
+NEXT_PUBLIC_POCKETBASE_URL=http://<ZIMAOS-IP>:8090
+POCKETBASE_URL=http://127.0.0.1:8090
 POCKETBASE_ADMIN_EMAIL=admin@stickwerk-studio.de
 POCKETBASE_ADMIN_PASSWORD=your_password_here
 
