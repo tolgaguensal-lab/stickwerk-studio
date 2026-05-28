@@ -32,17 +32,25 @@ jobs:
       - name: Run tests
         run: npm test || true
 
-      - name: Generate version tag
+      - name: Get version from package.json
         id: version
         run: |
-          # Get latest tag or start at v0.1.0
-          LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
-          # Increment patch version
-          VERSION=$(echo $LATEST_TAG | sed 's/v//' | awk -F. '{print $1"."$2"."$3+1}')
+          VERSION=$(node -p "require('./package.json').version")
           echo "tag=v${VERSION}" >> $GITHUB_OUTPUT
-          echo "New version: v${VERSION}"
+          echo "version=${VERSION}" >> $GITHUB_OUTPUT
+          echo "Version from package.json: v${VERSION}"
+      
+      - name: Check if tag exists
+        id: check
+        run: |
+          if git rev-parse "v$(node -p "require('./package.json').version")" >/dev/null 2>&1; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+          fi
       
       - name: Create Git tag
+        if: steps.check.outputs.exists == 'false'
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"

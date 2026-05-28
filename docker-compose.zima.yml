@@ -1,6 +1,6 @@
 services:
   app:
-    image: ghcr.io/tolgaguensal-lab/stickwerk-studio:v0.1.0
+    image: ghcr.io/tolgaguensal-lab/stickwerk-studio:v0.2.0
     container_name: stickwerk-app
     ports:
       - "3000:3000"
