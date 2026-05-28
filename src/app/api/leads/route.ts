@@ -21,7 +21,7 @@ export async function POST(req: Request) {
         email,
         phone,
         message,
-        calculationData: calculationData as any,
+        calculationData,
         status: "NEW",
       },
     });

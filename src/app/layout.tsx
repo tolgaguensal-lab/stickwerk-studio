@@ -1,6 +1,7 @@
 import React from "react";
 import SmoothScroll from "@/components/SmoothScroll";
 import Scene from "@/components/Scene";
+import Navbar from "@/components/Navbar";
 import "./globals.css";
 
 export default function RootLayout({
@@ -13,6 +14,7 @@ export default function RootLayout({
       <body className="antialiased">
         <SmoothScroll>
           <Scene />
+          <Navbar />
           {children}
         </SmoothScroll>
       </body>
