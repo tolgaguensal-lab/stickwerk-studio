@@ -1,11 +1,11 @@
 {
   "name": "stickwerk-studio",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -H 0.0.0.0 -p 3000",
     "lint": "eslint"
   },
   "dependencies": {
