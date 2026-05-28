@@ -1,6 +1,7 @@
 services:
   app:
     image: ghcr.io/tolgaguensal-lab/stickwerk-studio:latest
+    pull_policy: always
     container_name: stickwerk-app
     ports:
       - "3000:3000"
@@ -14,8 +15,6 @@ services:
     restart: always
     volumes:
       - /DATA/AppData/stickwerk-studio/config:/app/config
-    labels:
-      - "com.centurylinklabs.watchtower.enable=true"
 
   db:
     image: postgres:15-alpine
