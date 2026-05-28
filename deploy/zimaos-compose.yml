@@ -1,6 +1,6 @@
 services:
   app:
-    image: ghcr.io/tolgaguensal-lab/stickwerk-studio:latest
+    image: ghcr.io/tolgaguensal-lab/stickwerk-studio:0.3.0
     container_name: stickwerk-app
     restart: unless-stopped
     ports:
