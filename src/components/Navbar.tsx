@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
@@ -12,9 +12,44 @@ import {
   SheetTrigger,
   SheetClose,
 } from "@/components/ui/sheet";
+import { usePathname } from "next/navigation";
 
+// Custom hook for hash-based smooth scrolling
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
+
+  // Handle hash navigation for smooth scrolling
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const hash = window.location.hash;
+      if (hash) {
+        const element = document.querySelector(hash);
+        if (element) {
+          // Use smooth scroll behavior
+          element.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start',
+          });
+        }
+      }
+    }
+  }, [pathname]);
+
+  // Helper function for smooth scroll navigation
+  const handleHashNav = (e: React.MouseEvent, targetHash: string) => {
+    e.preventDefault();
+    const element = document.querySelector(targetHash);
+    if (element) {
+      element.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+      // Update URL hash without page reload
+      window.history.pushState(null, '', targetHash);
+    }
+    setIsOpen(false);
+  };
 
   return (
     <motion.nav
@@ -39,19 +74,35 @@ export default function Navbar() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
-            <Link href="#features" className="text-foreground/70 hover:text-accent transition-colors">
+            <a 
+              href="#features" 
+              onClick={(e) => handleHashNav(e, "#features")}
+              className="text-foreground/70 hover:text-accent transition-colors cursor-pointer"
+            >
               Leistungen
-            </Link>
-            <Link href="#calculator" className="text-foreground/70 hover:text-accent transition-colors">
+            </a>
+            <a 
+              href="#calculator" 
+              onClick={(e) => handleHashNav(e, "#calculator")}
+              className="text-foreground/70 hover:text-accent transition-colors cursor-pointer"
+            >
               Konfigurator
-            </Link>
-            <Link href="#faq" className="text-foreground/70 hover:text-accent transition-colors">
+            </a>
+            <a 
+              href="#faq" 
+              onClick={(e) => handleHashNav(e, "#faq")}
+              className="text-foreground/70 hover:text-accent transition-colors cursor-pointer"
+            >
               FAQ
-            </Link>
+            </a>
             <Link href="/kontakt" className="text-foreground/70 hover:text-accent transition-colors">
               Kontakt
             </Link>
-            <Button variant="accent" size="sm">
+            <Button 
+              variant="accent" 
+              size="sm" 
+                         onClick={(e) => handleHashNav(e, "#calculator")}
+            >
               Jetzt konfigurieren
             </Button>
           </div>
@@ -78,48 +129,55 @@ export default function Navbar() {
                     </Button>
                   </div>
 
-                  <div className="flex flex-col gap-4">
-                    <SheetClose asChild>
-                      <Link
-                        href="#features"
-                        className="text-lg text-foreground/70 hover:text-accent transition-colors"
-                      >
-                        Leistungen
-                      </Link>
-                    </SheetClose>
-                    <SheetClose asChild>
-                      <Link
-                        href="#calculator"
-                        className="text-lg text-foreground/70 hover:text-accent transition-colors"
-                      >
-                        Konfigurator
-                      </Link>
-                    </SheetClose>
-                    <SheetClose asChild>
-                      <Link
-                        href="#faq"
-                        className="text-lg text-foreground/70 hover:text-accent transition-colors"
-                      >
-                        FAQ
-                      </Link>
-                    </SheetClose>
-                    <SheetClose asChild>
-                      <Link
-                        href="/kontakt"
-                        className="text-lg text-foreground/70 hover:text-accent transition-colors"
-                      >
-                        Kontakt
-                      </Link>
-                    </SheetClose>
-                  </div>
+                   <div className="flex flex-col gap-4">
+                     <SheetClose asChild>
+                       <a
+                         href="#features"
+                         onClick={(e) => handleHashNav(e, "#features")}
+                         className="text-lg text-foreground/70 hover:text-accent transition-colors cursor-pointer block"
+                       >
+                         Leistungen
+                       </a>
+                     </SheetClose>
+                     <SheetClose asChild>
+                       <a
+                         href="#calculator"
+                         onClick={(e) => handleHashNav(e, "#calculator")}
+                         className="text-lg text-foreground/70 hover:text-accent transition-colors cursor-pointer block"
+                       >
+                         Konfigurator
+                       </a>
+                     </SheetClose>
+                     <SheetClose asChild>
+                       <a
+                         href="#faq"
+                         onClick={(e) => handleHashNav(e, "#faq")}
+                         className="text-lg text-foreground/70 hover:text-accent transition-colors cursor-pointer block"
+                       >
+                         FAQ
+                       </a>
+                     </SheetClose>
+                     <SheetClose asChild>
+                       <Link
+                         href="/kontakt"
+                         className="text-lg text-foreground/70 hover:text-accent transition-colors"
+                       >
+                         Kontakt
+                       </Link>
+                     </SheetClose>
+                   </div>
 
-                  <div className="mt-auto pt-8">
-                    <SheetClose asChild>
-                      <Button variant="accent" className="w-full">
-                        Jetzt konfigurieren
-                      </Button>
-                    </SheetClose>
-                  </div>
+                <div className="mt-auto pt-8">
+                     <SheetClose asChild>
+                       <Button 
+                         variant="accent" 
+                         className="w-full"
+              onClick={(e) => handleHashNav(e, "#calculator")}
+                       >
+                         Jetzt konfigurieren
+                       </Button>
+                     </SheetClose>
+                   </div>
                 </div>
               </SheetContent>
             </Sheet>
