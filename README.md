@@ -1,85 +1,149 @@
 # 🧵 Stickwerk-Studio
+
 **Fäden, die Marken sichtbar machen.**
 
 > ⚠️ **Legal Notice:** This project is proprietary. All rights reserved. Unauthorized use, reproduction, or distribution of this software is strictly prohibited. See [LICENSE](./LICENSE) for details.
 
-Stickwerk-Studio is a professional, modern platform dedicated to high-quality machine embroidery, custom patches, and textile branding for the DACH region. This project combines a seamless customer experience with a powerful administrative backend to streamline the production of custom textiles.
-
+Professionelle Website für Maschinenstickerei und Custom Patches im DACH-Raum. Interaktiver Patch-Kontaktformular, Lead-Verwaltung und Admin-Dashboard.
 
 ---
 
-## ✨ Key Features
+## ✨ Features
 
-### 🎨 For Customers
-- **Interactive Patch Calculator**: A non-technical, user-friendly tool for instant pricing estimates based on size, complexity, and quantity.
-- **Custom Design Upload**: Easy interface for submitting logos and design specifications.
-- **Modern UX/UI**: A clean, professional aesthetic reflecting the craftsmanship of the studio.
+### Für Kunden
+- **Patch-Kontaktformular** mit 11-Schritte-Konfigurator
+- **Preisberechnung** in Echtzeit basierend auf Größe, Komplexität und Menge
+- **Kontaktformular** mit Datenschutz-Checkbox
+- **Rechtliche Seiten** (Impressum, Datenschutz, AGB)
 
-### 🛠 For Administration
-- **Lead Management Pipeline**: A structured workflow to track custom requests from initial inquiry to final production.
-- **Order Orchestration**: Centralized management of production queues and customer communications.
-- **GDPR Compliant**: Built with privacy by design to ensure data security within the EU.
+### Für Administration
+- **Admin-Dashboard** zur Lead-Verwaltung
+- **Status-Tracking** (new → contacted → quoted → won/lost)
+- **PocketBase** als datastore (über ZimaOS App Store)
 
 ---
 
 ## 🚀 Tech Stack
 
-| Layer | Technology | Description |
-| :--- | :--- | :--- |
-| **Framework** | [Next.js 15](https://nextjs.org/) | React framework with App Router for optimal performance. |
-| **Language** | [TypeScript](https://www.typescriptlang.org/) | Static typing for scalable and maintainable code. |
-| **Styling** | [Tailwind CSS](https://tailwindcss.com/) | Utility-first CSS for a modern, responsive design. |
-| **Database** | [PostgreSQL](https://www.postgresql.org/) | Robust relational database for order and lead storage. |
-| **ORM** | [Prisma](https://www.prisma.io/) | Type-safe database client for efficient queries. |
-| **Infrastructure** | [Docker](https://www.docker.com/) | Containerized environment for consistent deployment. |
+| Layer | Technologie |
+|-------|-------------|
+| **Framework** | Next.js 16 (App Router) |
+| **Sprache** | TypeScript |
+| **Styling** | Tailwind CSS |
+| **Animation** | Framer Motion |
+| **Datenbank** | PocketBase (ZimaOS App Store) |
+| **Deployment** | Docker + ZimaOS + Pangolin |
 
 ---
 
-## 🛠 Getting Started
+## 🏗️ Projektstruktur
 
-### Prerequisites
-- Node.js 18+
-- Docker & Docker Compose
+```
+stickwerk-studio/
+├── src/
+│   ├── app/              # Next.js App Router
+│   │   ├── admin/        # Admin-Dashboard
+│   │   ├── api/          # API-Routes
+│   │   ├── kontakt/      # Kontaktformular
+│   │   ├── impressum/    # Impressum
+│   │   ├── datenschutz/  # Datenschutzerklärung
+│   │   └── agb/          # AGB
+│   ├── components/       # React-Komponenten
+│   │   ├── PatchCalculator.tsx
+│   │   ├── Navbar.tsx
+│   │   └── ui/           # UI-Komponenten
+│   └── lib/              # Hilfsfunktionen
+│       └── pocketbase/   # PocketBase Client
+├── deploy/               # Docker Compose für ZimaOS
+├── docs/                 # Dokumentation
+├── scripts/              # Hilfsscripts
+└── tests/                # E2E Tests (Playwright)
+```
+
+---
+
+## 🛠️ Entwicklung
+
+### Voraussetzungen
+- Node.js 20+
+- PocketBase (lokal oder über ZimaOS App Store)
 
 ### Installation
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/tolgaguensal-lab/stickwerk-studio.git
-   cd stickwerk-studio
-   ```
+```bash
+git clone https://github.com/tolgaguensal-lab/stickwerk-studio.git
+cd stickwerk-studio
+npm install
+```
 
-2. **Install dependencies:**
-   ```bash
-   npm install
-   ```
+### Environment Variables
+```bash
+cp .env.example .env
+# .env编辑ieren
+```
 
-3. **Setup environment variables:**
-   Create a `.env` file based on the project requirements:
-   - `DATABASE_URL`: PostgreSQL connection string.
-   - `NEXTAUTH_SECRET`: Random string for session encryption.
+### Entwicklungsserver
+```bash
+npm run dev
+```
 
-4. **Spin up the infrastructure:**
-   ```bash
-   docker-compose up -d
-   ```
+### Build
+```bash
+npm run build
+npm run start
+```
 
-5. **Run migrations:**
-   ```bash
-   npx prisma migrate dev
-   ```
+### Tests
+```bash
+npm run lint        # ESLint
+npm run test:e2e    # Playwright E2E Tests
+```
 
-6. **Start the development server:**
-   ```bash
-   npm run dev
-   ```
+---
+
+## 🐳 Deployment
+
+### Docker Image
+```
+ghcr.io/tolgaguensal-lab/stickwerk-studio:latest
+```
+
+### ZimaOS Setup
+1. PocketBase über App Store installieren
+2. `deploy/zimaos-compose.yml` auf ZimaOS kopieren
+3. `.env` mit PocketBase-Zugangsdaten erstellen
+4. Container starten:
+```bash
+docker compose -f zimaos-compose.yml pull
+docker compose -f zimaos-compose.yml up -d
+```
+
+### Pangolin Resource Target
+```
+http://<ZIMAOS-IP>:3034
+```
+
+Siehe [DEPLOYMENT.md](./DEPLOYMENT.md) für Details.
+
+---
+
+## 📄 Dokumentation
+
+- [DEPLOYMENT.md](./DEPLOYMENT.md) - Deployment-Anleitung
+- [docs/PANGOLIN-ZIMAOS-DEBUG.md](./docs/PANGOLIN-ZIMAOS-DEBUG.md) - Debug-Dokumentation
+- [docs/DSGVO-CHECKLISTE.md](./docs/DSGVO-CHECKLISTE.md) - DSGVO-Checkliste
 
 ---
 
 ## 📅 Roadmap
-- [ ] Finalize the Patch Calculator algorithm.
-- [ ] Implement the Lead Management dashboard.
-- [ ] Integrate automated email notifications for new leads.
-- [ ] Full GDPR audit and compliance documentation.
+
+- [x] Patch-Kontaktformular (11 Schritte)
+- [x] Admin-Dashboard
+- [x] Docker Deployment
+- [x] Pangolin Integration
+- [x] PocketBase Backend
+- [ ] E2E Tests vollständig
+- [ ] E-Mail-Benachrichtigungen
+- [ ] DSGVO finale Prüfung
 
 ---
 
