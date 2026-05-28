@@ -1,158 +1,144 @@
-# Deployment Guide - ZimaOS + Pangolin
+# Deployment Guide - ZimaOS + Pangolin + PocketBase
 
-## Voraussetzungen
+## Produktionsroute
 
-- ZimaOS mit Docker
-- Pangolin auf VPS (Cloud-Anbieter)
-- Newt auf ZimaOS (verbindet ZimaOS mit Pangolin)
+```
+Internet / Besucher
+    ↓
+https://sws.guenlab.de
+    ↓
+VPS mit Pangolin / Traefik / Gerbil
+    ↓
+Newt Tunnel
+    ↓
+ZimaOS im Heimnetz
+    ↓
+Docker-Container stickwerk-app
+    ↓
+http://<ZIMAOS-IP>:3034
+```
 
 ## 1. Docker Image
-
-Das offizielle Docker Image ist verfügbar unter:
 
 ```
 ghcr.io/tolgaguensal-lab/stickwerk-studio:latest
 ```
 
-Zusätzlich gibt es versionierte Tags:
+## 2. Öffentliche Domain
 
 ```
-ghcr.io/tolgaguensal-lab/stickwerk-studio:0.2.0
+https://sws.guenlab.de
 ```
 
-## 2. Environment Variables (.env)
-
-Erstelle eine `.env`-Datei im selben Verzeichnis wie `zimaos-compose.yml`:
+## 3. Environment Variables (.env)
 
 ```bash
-# PostgreSQL Passwort
-POSTGRES_PASSWORD=DEIN_SICHERES_PASSWORT_HIER
+# PocketBase
+NEXT_PUBLIC_POCKETBASE_URL=http://pocketbase:8090
+POCKETBASE_URL=http://pocketbase:8090
+POCKETBASE_ADMIN_EMAIL=admin@stickwerk-studio.de
+POCKETBASE_ADMIN_PASSWORD=your_password_here
 
-# NextAuth Secret (generieren mit: openssl rand -base64 32)
-NEXTAUTH_SECRET=DEIN_NEXTAUTH_SECRET_HIER
+# NextAuth
+NEXTAUTH_SECRET=your_secret_here
+NEXTAUTH_URL=https://sws.guenlab.de
+AUTH_TRUST_HOST=true
+
+# Site URLs
+NEXT_PUBLIC_SITE_URL=https://sws.guenlab.de
+NEXT_PUBLIC_APP_URL=https://sws.guenlab.de
 ```
 
-## 3. ZimaOS Start
+## 4. ZimaOS Setup
 
+### 4.1 Dateien kopieren
 ```bash
-# Verzeichnis wechseln
+# Auf ZimaOS:
+mkdir -p /DATA/AppData/stickwerk-studio
+cp deploy/zimaos-compose.yml /DATA/AppData/stickwerk-studio/
+cp .env /DATA/AppData/stickwerk-studio/
+```
+
+### 4.2 Container starten
+```bash
 cd /DATA/AppData/stickwerk-studio
-
-# Images pullen
 docker compose -f zimaos-compose.yml pull
-
-# Container starten
 docker compose -f zimaos-compose.yml up -d
 ```
 
-## 4. Tests
+## 5. Tests
 
+### 5.1 App lokal testen
 ```bash
-# HTTP-Status prüfen
 curl -I http://127.0.0.1:3000
-
-# Healthcheck
 curl http://127.0.0.1:3000/api/health
-
-# Logs prüfen
-docker logs stickwerk-app
 ```
 
-## 5. Pangolin Konfiguration
+### 5.2 App über ZimaOS-IP testen
+```bash
+ZIMA_IP=$(hostname -I | awk '{print $1}')
+curl -I http://$ZIMA_IP:3000
+curl http://$ZIMA_IP:3000/api/health
+```
 
-### Wichtig: localhost NICHT verwenden!
+### 5.3 Externe Domain testen
+```bash
+curl -I https://sws.guenlab.de
+curl https://sws.guenlab.de/api/health
+```
 
-Pangolin läuft auf einem VPS und kann nicht auf `localhost` deiner ZimaOS zugreifen.
+## 6. Pangolin Konfiguration
 
 ### Resource Target
-
-Die Pangolin Resource muss auf die **interne IP** deiner ZimaOS zeigen:
-
-```
-http://<ZIMAOS-IP>:3000
-```
+| Setting | Wert |
+|---------|------|
+| Protocol | HTTP |
+| Host/IP | `<ZIMAOS-IP>` |
+| Port | 3000 |
 
 **Beispiel:**
-
 ```
 http://192.168.178.91:3000
 ```
 
-### Verbindungskette
-
-```
-Internet
-    ↓
-VPS mit Pangolin/Traefik/Gerbil
-    ↓
-Newt Tunnel
-    ↓
-ZimaOS
-    ↓
-http://<ZIMAOS-IP>:3000
-    ↓
-stickwerk-app Container
-```
-
-### Pangolin Einstellungen
-
-| Setting | Wert |
-|---------|------|
-| Type | HTTP |
-| Target | `http://<ZIMAOS-IP>:3000` |
-| Port | 3000 |
-
-## 6. Domain Konfiguration
-
-Falls die Domain `sws.guenlab.de` verwendet wird:
-
-```bash
-# In .env oder docker-compose.yml setzen:
-NEXTAUTH_URL=https://sws.guenlab.de
-NEXT_PUBLIC_SITE_URL=https://sws.guenlab.de
-AUTH_TRUST_HOST=true
-```
+**NICHT verwenden:**
+- `http://localhost:3000`
+- `http://127.0.0.1:3000`
+- `http://<VPS-IP>:3000`
 
 ## 7. Updates
 
 ```bash
-# Neuestes Image ziehen
+cd /DATA/AppData/stickwerk-studio
 docker compose -f zimaos-compose.yml pull
-
-# Container neu starten
 docker compose -f zimaos-compose.yml up -d
-
-# Alte Images aufräumen
-docker image prune -f
 ```
 
-## 8. Troubleshooting
+## 8. Debugging
 
-### Container startet nicht
-
+### Debug-Script ausführen
 ```bash
-# Logs prüfen
-docker logs stickwerk-app
-
-# Häufige Fehler:
-# - DATABASE_URL nicht erreichbar → Prüfe ob db-Container läuft
-# - NEXTAUTH_SECRET fehlt → Prüfe .env
-# - Port belegt → Prüfe mit: lsof -i :3000
+cd /DATA/AppData/stickwerk-studio
+./scripts/zimaos-pangolin-debug.sh
 ```
 
-### Healthcheck fehlgeschlagen
+### Manuelle Debugging-Schritte
+1. Container-Status prüfen: `docker ps`
+2. App-Logs prüfen: `docker logs stickwerk-app`
+3. Newt-Logs prüfen: `docker logs newt`
+4. App lokal testen: `curl http://127.0.0.1:3000/api/health`
+5. App über ZimaOS-IP testen: `curl http://<ZIMAOS-IP>:3034/api/health`
 
-```bash
-# Manuell testen
-docker exec stickwerk-app wget -qO- http://127.0.0.1:3000/api/health
+### Fehlerbilder
+- **404:** Pangolin Resource/DNS falsch
+- **502:** Target nicht erreichbar (falsche IP/Port)
+- **504:** Tunnel-Timeout
+- **Login erscheint:** Auth deaktivieren
 
-# Erwartete Antwort:
-# {"status":"ok","timestamp":"...","service":"stickwerk-studio"}
-```
+## 9. Wichtig
 
-### Pangolin kann nicht verbinden
-
-1. Prüfe ob ZimaOS-IP korrekt ist
-2. Prüfe ob Container auf 0.0.0.0 läuft (nicht nur localhost)
-3. Prüfe Firewall-Regeln
-4. Prüfe Newt-Logs auf ZimaOS
+- Die App läuft auf ZimaOS
+- Der VPS ist nur Pangolin/Traefik/Gerbil
+- Newt verbindet ZimaOS mit Pangolin
+- Die Ubuntu-VM ist nicht Teil der Produktion
+- Keine produktiven localhost-URLs verwenden

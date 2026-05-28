@@ -109,3 +109,18 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
+      - name: Update ZimaOS compose with version tag
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          IMAGE="ghcr.io/${{ env.IMAGE_NAME }}:${VERSION}"
+          
+          # Update deploy/zimaos-compose.yml
+          sed -i "s|image: ghcr.io/${{ env.IMAGE_NAME }}:latest|image: ${IMAGE}|g" deploy/zimaos-compose.yml
+          
+          # Commit and push
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add deploy/zimaos-compose.yml
+          git diff --cached --quiet || git commit -m "chore: update zimaos image to v${VERSION}"
+          git push origin main

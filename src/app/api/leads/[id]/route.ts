@@ -1,9 +1,12 @@
 import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
+import { getAdminPocketBase } from "@/lib/pocketbase/server";
+import { z } from "zod";
 
-const prisma = new PrismaClient();
+const updateLeadSchema = z.object({
+  status: z.enum(["new", "contacted", "quoted", "won", "lost", "archived"]),
+  adminNotes: z.string().optional(),
+});
 
-// PATCH endpoint for updating a specific lead
 export async function PATCH(
   req: Request,
   { params }: { params: Promise<{ id: string }> }
@@ -11,115 +14,71 @@ export async function PATCH(
   try {
     const { id } = await params;
     const body = await req.json();
-    const { status } = body;
+    const result = updateLeadSchema.safeParse(body);
 
-    if (!status) {
+    if (!result.success) {
+      const firstError = result.error.issues[0];
       return NextResponse.json(
-        { error: "Status is required." },
+        { error: firstError?.message || "Ungültige Eingabe" },
         { status: 400 }
       );
     }
 
-    // Validate status value
-    const validStatuses = ["NEW", "IN_PROGRESS", "COMPLETED", "CANCELLED"];
-    if (!validStatuses.includes(status)) {
-      return NextResponse.json(
-        { error: `Invalid status. Must be one of: ${validStatuses.join(", ")}` },
-        { status: 400 }
-      );
-    }
+    const pb = await getAdminPocketBase();
 
-    const updatedLead = await prisma.lead.update({
-      where: { id },
-      data: { status },
+    const record = await pb.collection("leads").update(id, {
+      status: result.data.status,
+      admin_notes: result.data.adminNotes || "",
     });
 
+    return NextResponse.json({ success: true, lead: record }, { status: 200 });
+  } catch (error) {
+    console.error("Error updating lead:", error);
     return NextResponse.json(
-      { success: true, lead: updatedLead },
-      { status: 200 }
-    );
-   } catch (error: unknown) {
-    console.error("Error updating lead status:", error);
-    
-    if (error instanceof Error && error.name === "PrismaClientKnownRequestError" && (error as { code?: string }).code === "P2025") {
-      return NextResponse.json(
-        { error: "Lead not found." },
-        { status: 404 }
-      );
-    }
-    
-    const errorMessage = error instanceof Error ? error.message : "Unknown error";
-    return NextResponse.json(
-      { 
-        error: "Internal server error occurred while updating the lead.",
-        details: process.env.NODE_ENV === "development" ? errorMessage : undefined
-      },
+      { error: "Lead konnte nicht aktualisiert werden." },
       { status: 500 }
     );
   }
 }
 
-// DELETE endpoint for removing a lead
 export async function DELETE(
   req: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const { id } = await params;
+    const pb = await getAdminPocketBase();
 
-    await prisma.lead.delete({
-      where: { id },
-    });
+    await pb.collection("leads").delete(id);
 
     return NextResponse.json(
-      { success: true, message: "Lead successfully deleted." },
+      { success: true, message: "Lead erfolgreich gelöscht." },
       { status: 200 }
     );
-   } catch (error: unknown) {
+  } catch (error) {
     console.error("Error deleting lead:", error);
-    
-    if (error instanceof Error && error.name === "PrismaClientKnownRequestError" && (error as { code?: string }).code === "P2025") {
-      return NextResponse.json(
-        { error: "Lead not found." },
-        { status: 404 }
-      );
-    }
-    
-    const errorMessage = error instanceof Error ? error.message : "Unknown error";
     return NextResponse.json(
-      { 
-        error: "Internal server error occurred while deleting the lead.",
-        details: process.env.NODE_ENV === "development" ? errorMessage : undefined
-      },
+      { error: "Lead konnte nicht gelöscht werden." },
       { status: 500 }
     );
   }
 }
 
-// GET endpoint for fetching a specific lead
 export async function GET(
   req: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const { id } = await params;
+    const pb = await getAdminPocketBase();
 
-    const lead = await prisma.lead.findUnique({
-      where: { id },
-    });
+    const record = await pb.collection("leads").getOne(id);
 
-    if (!lead) {
-      return NextResponse.json(
-        { error: "Lead not found." },
-        { status: 404 }
-      );
-    }
-
-    return NextResponse.json({ lead }, { status: 200 });
-    } catch (error: unknown) {
+    return NextResponse.json({ lead: record }, { status: 200 });
+  } catch (error) {
     console.error("Error fetching lead:", error);
     return NextResponse.json(
-      { error: "Failed to fetch lead." },
+      { error: "Lead konnte nicht geladen werden." },
       { status: 500 }
     );
   }

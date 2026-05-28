@@ -16,6 +16,7 @@ export default function Kontakt() {
     subject: "Allgemeine Anfrage",
     message: "",
   });
+  const [consentPrivacy, setConsentPrivacy] = useState(false);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -31,14 +32,12 @@ export default function Kontakt() {
     setError(null);
 
     try {
-      // Basic validation
       if (!formData.name.trim() || !formData.email.trim()) {
         setError("Bitte geben Sie Ihren Namen und Ihre E-Mail-Adresse ein.");
         setLoading(false);
         return;
       }
 
-      // Simple email validation
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(formData.email)) {
         setError("Bitte geben Sie eine gültige E-Mail-Adresse ein.");
@@ -46,15 +45,28 @@ export default function Kontakt() {
         return;
       }
 
-      // Simulate API call (for now, as we don't have a dedicated contact endpoint)
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      if (!consentPrivacy) {
+        setError("Bitte stimmen Sie der Datenschutzerklärung zu.");
+        setLoading(false);
+        return;
+      }
 
-      // In production, you would send this to your API
-      // const response = await fetch('/api/contact', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify(formData)
-      // });
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...formData,
+          consentPrivacy: true,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        setError(result.error || "Ein Fehler ist aufgetreten.");
+        setLoading(false);
+        return;
+      }
 
       setSuccess(true);
       setFormData({
@@ -64,6 +76,7 @@ export default function Kontakt() {
         subject: "Allgemeine Anfrage",
         message: "",
       });
+      setConsentPrivacy(false);
     } catch {
       setError("Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.");
     } finally {
@@ -276,11 +289,25 @@ export default function Kontakt() {
                     />
                   </div>
 
+                  <div className="flex items-start gap-3 p-4 bg-primary/5 rounded-xl border border-primary/10">
+                    <input
+                      type="checkbox"
+                      id="consent-privacy"
+                      checked={consentPrivacy}
+                      onChange={(e) => setConsentPrivacy(e.target.checked)}
+                      className="mt-1 h-4 w-4 rounded border-primary/30 text-accent focus:ring-accent"
+                    />
+                    <label htmlFor="consent-privacy" className="text-sm text-foreground/70">
+                      Ich stimme der <Link href="/datenschutz" className="text-accent hover:underline">Datenschutzerklärung</Link> zu. 
+                      Meine Daten werden ausschließlich zur Bearbeitung meiner Anfrage verwendet.
+                    </label>
+                  </div>
+
                   <Button
                     type="submit"
                     variant="accent"
                     size="lg"
-                    disabled={loading}
+                    disabled={loading || !consentPrivacy}
                     className="w-full group"
                   >
                     {loading ? (

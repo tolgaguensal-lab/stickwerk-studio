@@ -1,120 +1,83 @@
 import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
+import { getAdminPocketBase } from "@/lib/pocketbase/server";
+import { z } from "zod";
 
-const prisma = new PrismaClient();
+const leadSchema = z.object({
+  name: z.string().min(1, "Name ist erforderlich"),
+  email: z.string().email("Ungültige E-Mail-Adresse"),
+  phone: z.string().optional(),
+  company: z.string().optional(),
+  message: z.string().optional(),
+  patchConfig: z.object({}).passthrough().optional(),
+  estimatedPriceMin: z.number().optional(),
+  estimatedPriceMax: z.number().optional(),
+  consentPrivacy: z.boolean().refine((val) => val === true, {
+    message: "Datenschutz-Einwilligung erforderlich",
+  }),
+});
 
 export async function POST(req: Request) {
   try {
-    // Handle both FormData and JSON
-    let body: Record<string, unknown>;
-    const contentType = req.headers.get("content-type");
+    const body = await req.json();
+    const result = leadSchema.safeParse(body);
 
-    if (contentType?.includes("application/json")) {
-      body = await req.json();
-    } else if (contentType?.includes("multipart/form-data")) {
-      const formData = await req.formData();
-      body = Object.fromEntries(formData.entries());
-    } else {
-      // Try JSON first, fall back to FormData
-      try {
-        body = await req.json();
-      } catch {
-        const formData = await req.formData();
-        body = Object.fromEntries(formData.entries());
-      }
-    }
-
-    // Parse calculationData if it's a string (from FormData)
-    if (body.calculationData && typeof body.calculationData === "string") {
-      try {
-        body.calculationData = JSON.parse(body.calculationData);
-      } catch {
-        body.calculationData = {};
-      }
-    }
-
-    const name = (body.name as string) || "";
-    const email = (body.email as string) || "";
-    const phone = body.phone as string | undefined;
-    const message = body.message as string | undefined;
-    const calculationData = body.calculationData as Record<string, unknown> | undefined;
-
-    if (!name || !email) {
+    if (!result.success) {
+      const firstError = result.error.issues[0];
       return NextResponse.json(
-        { error: "Name and email are required." },
+        { error: firstError?.message || "Ungültige Eingabe" },
         { status: 400 }
       );
     }
 
-    // Basic email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      return NextResponse.json(
-        { error: "Please provide a valid email address." },
-        { status: 400 }
-      );
-    }
+    const { name, email, phone, company, message, patchConfig, estimatedPriceMin, estimatedPriceMax, consentPrivacy } = result.data;
+    const pb = await getAdminPocketBase();
 
-    const lead = await prisma.lead.create({
-      data: {
-        name,
-        email,
-        phone,
-        message,
-        calculationData: calculationData as object || {},
-        status: "NEW",
-      },
+    const record = await pb.collection("leads").create({
+      name,
+      email,
+      phone: phone || "",
+      company: company || "",
+      message: message || "",
+      patch_config: patchConfig || {},
+      estimated_price_min: estimatedPriceMin || 0,
+      estimated_price_max: estimatedPriceMax || 0,
+      status: "new",
+      source: "website",
+      consent_privacy: consentPrivacy,
+      consent_timestamp: new Date().toISOString(),
+      privacy_version: "1.0",
     });
 
     return NextResponse.json(
       {
         success: true,
-        id: lead.id,
-        message: "Lead successfully created. We will contact you within 24-48 hours.",
+        id: record.id,
+        message: "Ihre Anfrage wurde erfolgreich gespeichert. Wir melden uns innerhalb von 24-48 Stunden.",
       },
       { status: 201 }
     );
-  } catch (error: unknown) {
+  } catch (error) {
     console.error("Lead creation error:", error);
-
-    // Handle specific database errors
-    if (
-      error instanceof Error &&
-      // @ts-expect-error - accessing code property for Prisma errors
-      error.code === "P2002"
-    ) {
-      return NextResponse.json(
-        { error: "A lead with this email already exists." },
-        { status: 409 }
-      );
-    }
-
-    const errorMessage =
-      error instanceof Error ? error.message : "Unknown error";
-
     return NextResponse.json(
-      {
-        error: "Internal server error occurred while saving the lead.",
-        details:
-          process.env.NODE_ENV === "development" ? errorMessage : undefined,
-      },
+      { error: "Interner Serverfehler." },
       { status: 500 }
     );
   }
 }
 
-// GET endpoint for admin dashboard
 export async function GET() {
   try {
-    const leads = await prisma.lead.findMany({
-      orderBy: { createdAt: "desc" },
+    const pb = await getAdminPocketBase();
+
+    const records = await pb.collection("leads").getFullList({
+      sort: "-created",
     });
 
-    return NextResponse.json({ leads }, { status: 200 });
-  } catch (error: unknown) {
+    return NextResponse.json({ leads: records }, { status: 200 });
+  } catch (error) {
     console.error("Error fetching leads:", error);
     return NextResponse.json(
-      { error: "Failed to fetch leads." },
+      { error: "Leads konnten nicht geladen werden." },
       { status: 500 }
     );
   }

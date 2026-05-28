@@ -93,6 +93,8 @@ export default function PatchCalculator() {
     message: "",
   });
 
+  const [consentPrivacy, setConsentPrivacy] = useState(false);
+
   const calculatePrice = () => {
     const shapeBase = CONFIG.shapes.find(s => s.id === selections.shape)?.basePrice || 15;
     const sizeMult = CONFIG.sizes.find(s => s.id === selections.size)?.multiplier || 1;
@@ -139,7 +141,10 @@ export default function PatchCalculator() {
         email: formData.email.trim(),
         phone: formData.phone.trim() || null,
         message: formData.message.trim() || null,
-        calculationData: selections,
+        patchConfig: selections,
+        estimatedPriceMin: priceRange.min,
+        estimatedPriceMax: priceRange.max,
+        consentPrivacy: consentPrivacy,
         designFile: designFile ? {
           name: designFile.name,
           size: designFile.size,
@@ -779,14 +784,17 @@ export default function PatchCalculator() {
                     />
                   </div>
                   
-                  {/* GDPR notice */}
-                  <div className="p-4 bg-primary/5 rounded-xl border border-primary/10 text-sm text-foreground/70">
-                    <div className="flex items-center gap-2 mb-2">
-                      <ShieldCheck className="w-4 h-4 text-primary" />
-                      <span className="font-bold text-primary">DSGVO konform:</span>
-                    </div>
-                    Ihre Daten werden ausschließlich für die Angebotserstellung verwendet und nicht an Dritte weitergegeben. 
-                    Sie können Ihre Daten jederzeit löschen lassen.
+                  <div className="flex items-start gap-3 p-4 bg-primary/5 rounded-xl border border-primary/10">
+                    <input
+                      type="checkbox"
+                      id="consent-privacy-calc"
+                      checked={consentPrivacy}
+                      onChange={(e) => setConsentPrivacy(e.target.checked)}
+                      className="mt-1 h-4 w-4 rounded border-primary/30 text-accent focus:ring-accent"
+                    />
+                    <label htmlFor="consent-privacy-calc" className="text-sm text-foreground/70">
+                      Ich stimme der Datenschutzerklärung zu. Meine Daten werden ausschließlich für die Angebotserstellung verwendet.
+                    </label>
                   </div>
                   
                   <div className="flex gap-4 pt-4">
@@ -796,7 +804,7 @@ export default function PatchCalculator() {
                     <Button 
                       variant="accent" 
                       type="submit" 
-                      disabled={loading} 
+                      disabled={loading || !consentPrivacy} 
                       className="flex-1"
                     >
                       {loading ? (
