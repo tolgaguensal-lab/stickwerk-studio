@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Mail, Phone, MapPin, Clock, Send, CheckCircle2, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -20,6 +20,11 @@ export default function Kontakt() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    (window as any).__setConsentPrivacy = setConsentPrivacy;
+    return () => { delete (window as any).__setConsentPrivacy; };
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -293,7 +298,6 @@ export default function Kontakt() {
                     <input
                       type="checkbox"
                       id="consent-privacy"
-                      checked={consentPrivacy}
                       onChange={(e) => setConsentPrivacy(e.target.checked)}
                       className="mt-1 h-4 w-4 rounded border-primary/30 text-accent focus:ring-accent"
                     />

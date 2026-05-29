@@ -19,6 +19,11 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
 
+  useEffect(() => {
+    (window as any).__setMobileMenuOpen = setIsOpen;
+    return () => { delete (window as any).__setMobileMenuOpen; };
+  }, []);
+
   // Handle hash navigation for smooth scrolling
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -111,7 +116,7 @@ export default function Navbar() {
           <div className="md:hidden">
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="text-primary">
+                <Button variant="ghost" size="icon" className="text-primary" aria-label="Menü">
                   <Menu className="w-6 h-6" />
                 </Button>
               </SheetTrigger>

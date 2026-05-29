@@ -55,7 +55,6 @@ stickwerk-studio/
 │   └── lib/              # Hilfsfunktionen
 │       └── pocketbase/   # PocketBase Client
 ├── public/
-│   ├── images/           # Hintergrundbilder (CC0 lizenziert)
 │   └── logo.jpg          # Firmen-Logo
 ├── deploy/               # Docker Compose für ZimaOS
 ├── docs/                 # Dokumentation
@@ -126,22 +125,6 @@ http://<ZIMAOS-IP>:3034
 ```
 
 Siehe [DEPLOYMENT.md](./DEPLOYMENT.md) für Details.
-
----
-
-## 🎨 Assets & Lizenzen
-
-### Bilder in `public/images/`
-Die Hintergrundbilder sind **CC0-lizenziert** von [Unsplash](https://unsplash.com) und frei für kommerzielle Nutzung
-ohne Attribution (Quellenangabe) erforderlich.
-
-| Datei | Beschreibung | Quelle |
-|-------|--------------|---------|
-| `embroidery-machine.jpg` | Stickmaschine (Process Section Hintergrund) | [Unsplash](https://unsplash.com) CC0 |
-| `embroidery-closeup.jpg` | Nahaufnahme Stickerei (Calculator Section Hintergrund) | [Unsplash](https://unsplash.com) CC0 |
-| `texture-fabric.jpg` | Textilstuktur (Trust Section Hintergrund) | [Unsplash](https://unsplash.com) CC0 |
-
-** Lizenzbestätigung**: Alle Bilder unterliegen der [Unsplash Lizenz](https://unsplash.com/license), die kostenlose Nutzung für kommerzielle und nicht-kommerzielle Zwecke ohne Attribution erlaubt.
 
 ---
 

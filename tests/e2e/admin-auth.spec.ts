@@ -12,8 +12,8 @@ test.describe("Admin Area", () => {
   test("should display admin dashboard", async ({ page }) => {
     await page.goto("/admin");
     
-    // Should show admin interface
-    await expect(page.locator("text=Admin")).toBeVisible();
+    // Should show admin interface with Lead Management heading
+    await expect(page.getByRole("heading", { name: /lead management/i })).toBeVisible({ timeout: 10000 });
   });
 });
 

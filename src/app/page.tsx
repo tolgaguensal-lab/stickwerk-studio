@@ -296,8 +296,7 @@ export default function LandingPage() {
       </section>
 
       {/* Process Section */}
-      <section id="prozess" className="py-20 px-6 bg-cover bg-center bg-fixed relative" style={{ backgroundImage: "url(/images/embroidery-machine.jpg)" }}>
-        <div className="absolute inset-0 bg-background/60 -z-10" />
+      <section id="prozess" className="py-20 px-6">
         <div className="max-w-6xl mx-auto">
           <motion.div 
             initial={{ opacity: 0, y: 40 }}
@@ -365,8 +364,7 @@ export default function LandingPage() {
       </section>
 
       {/* Calculator Section */}
-      <section id="calculator" className="py-20 px-6 bg-primary/5 bg-cover bg-center relative" style={{ backgroundImage: "url(/images/embroidery-closeup.jpg)" }}>
-        <div className="absolute inset-0 bg-background/90 -z-10" />
+      <section id="calculator" className="py-20 px-6 bg-primary/5">
         <div className="max-w-6xl mx-auto">
           <motion.div 
             initial={{ opacity: 0, y: 40 }}
@@ -395,8 +393,7 @@ export default function LandingPage() {
       </section>
 
       {/* Trust Elements */}
-      <section id="vertrauen" className="py-20 px-6 bg-cover bg-center relative" style={{ backgroundImage: "url(/images/texture-fabric.jpg)" }}>
-        <div className="absolute inset-0 bg-background/80 -z-10" />
+      <section id="vertrauen" className="py-20 px-6">
         <div className="max-w-6xl mx-auto">
           <motion.div 
             initial={{ opacity: 0, y: 40 }}
