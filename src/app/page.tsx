@@ -544,7 +544,6 @@ export default function LandingPage() {
             transition={{ duration: 0.8 }}
             className="relative rounded-3xl bg-gradient-to-r from-primary to-primary/80 p-12 md:p-20 text-center text-background overflow-hidden"
           >
-            <div className="absolute inset-0 bg-cover bg-center opacity-10" style={{ backgroundImage: "url('/logo.jpg')" }} />
             <div className="relative z-10 space-y-8">
               <motion.h2 
                 initial={{ opacity: 0, y: 20 }}
