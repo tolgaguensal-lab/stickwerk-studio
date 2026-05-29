@@ -22,8 +22,8 @@ export default function Kontakt() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    (window as any).__setConsentPrivacy = setConsentPrivacy;
-    return () => { delete (window as any).__setConsentPrivacy; };
+    (window as unknown as { __setConsentPrivacy: (value: boolean) => void }).__setConsentPrivacy = setConsentPrivacy;
+    return () => { delete (window as unknown as { __setConsentPrivacy: unknown }).__setConsentPrivacy; };
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {

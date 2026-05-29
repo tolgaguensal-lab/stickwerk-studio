@@ -20,8 +20,8 @@ export default function Navbar() {
   const pathname = usePathname();
 
   useEffect(() => {
-    (window as any).__setMobileMenuOpen = setIsOpen;
-    return () => { delete (window as any).__setMobileMenuOpen; };
+    (window as unknown as { __setMobileMenuOpen: (value: boolean) => void }).__setMobileMenuOpen = setIsOpen;
+    return () => { delete (window as unknown as { __setMobileMenuOpen: unknown }).__setMobileMenuOpen; };
   }, []);
 
   // Handle hash navigation for smooth scrolling

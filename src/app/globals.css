@@ -602,12 +602,11 @@ a:hover {
    DARK MODE SUPPORT (Optional - falls benötigt)
    --------------------------------------------------------------------- */
 @media (prefers-color-scheme: dark) {
-  :root {
+   :root {
     --color-background: #0F0F0F;
     --color-foreground: #F5F5F5;
     --color-soft-white: #1A1A1A;
     --color-border-gray: #333333;
-    --color primary: #4D90FE;
     --color-accent: #D4A059;
   }
 }
