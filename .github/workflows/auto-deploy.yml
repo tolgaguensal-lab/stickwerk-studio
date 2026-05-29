@@ -1,14 +1,6 @@
 name: Auto-Deploy on Push
 
 on:
-  push:
-    branches:
-      - main
-    paths-ignore:
-      - "README.md"
-      - "docs/**"
-      - ".gitignore"
-      - "CHANGELOG.md"
   workflow_dispatch:
 
 jobs:
@@ -43,34 +35,7 @@ jobs:
       - name: Run tests
         run: npm test || true
 
-      - name: Get version from package.json
-        id: version
-        run: |
-          VERSION=$(node -p "require('./package.json').version")
-          echo "tag=v${VERSION}" >> $GITHUB_OUTPUT
-          echo "version=${VERSION}" >> $GITHUB_OUTPUT
-          echo "Version: v${VERSION}"
-      
-      - name: Check if tag exists locally and remotely
-        id: check
-        run: |
-          TAG="${{ steps.version.outputs.tag }}"
-          LOCAL_EXISTS=$(git tag -l "$TAG" | wc -l)
-          REMOTE_EXISTS=$(git ls-remote --tags origin "$TAG" | wc -l)
-          if [ "$LOCAL_EXISTS" -gt 0 ] || [ "$REMOTE_EXISTS" -gt 0 ]; then
-            echo "exists=true" >> $GITHUB_OUTPUT
-            echo "Tag $TAG already exists"
-          else
-            echo "exists=false" >> $GITHUB_OUTPUT
-            echo "Tag $TAG does not exist, will create"
-          fi
-      
-      - name: Create and push Git tag
-        if: steps.check.outputs.exists == 'false'
-        run: |
-          TAG="${{ steps.version.outputs.tag }}"
-          git config user.name "GitHub Actions"
-          git config user.email "actions@github.com"
-          git tag -a "$TAG" -m "Release $TAG"
-          git push origin "$TAG"
-          echo "Created and pushed tag: $TAG"
+       - name: Build
+         run: npm run build
+         env:
+           DATABASE_URL: "postgresql://user:pass@localhost:5432/db"

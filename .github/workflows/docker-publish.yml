@@ -48,37 +48,12 @@ jobs:
          env:
            DATABASE_URL: "postgresql://user:pass@localhost:5432/db"
 
-      - name: Get version from package.json
-        id: version
-        run: |
-          VERSION=$(node -p "require('./package.json').version")
-          echo "tag=v${VERSION}" >> $GITHUB_OUTPUT
-          echo "version=${VERSION}" >> $GITHUB_OUTPUT
-          echo "Version: v${VERSION}"
-
-      - name: Check if tag exists locally and remotely
-        id: check
-        run: |
-          TAG="${{ steps.version.outputs.tag }}"
-          LOCAL_EXISTS=$(git tag -l "$TAG" | wc -l)
-          REMOTE_EXISTS=$(git ls-remote --tags origin "$TAG" | wc -l)
-          if [ "$LOCAL_EXISTS" -gt 0 ] || [ "$REMOTE_EXISTS" -gt 0 ]; then
-            echo "exists=true" >> $GITHUB_OUTPUT
-            echo "Tag $TAG already exists"
-          else
-            echo "exists=false" >> $GITHUB_OUTPUT
-            echo "Tag $TAG does not exist, will create"
-          fi
-
-      - name: Create and push Git tag
-        if: steps.check.outputs.exists == 'false'
-        run: |
-          TAG="${{ steps.version.outputs.tag }}"
-          git config user.name "GitHub Actions"
-          git config user.email "actions@github.com"
-          git tag -a "$TAG" -m "Release $TAG"
-          git push origin "$TAG"
-          echo "Created and pushed tag: $TAG"
+       - name: Get version from package.json
+         id: version
+         run: |
+           VERSION=$(node -p "require('./package.json').version")
+           echo "version=${VERSION}" >> $GITHUB_OUTPUT
+           echo "Version: v${VERSION}"
 
       - name: Log in to GHCR
         uses: docker/login-action@v3
@@ -105,17 +80,7 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
-      - name: Update ZimaOS compose with version tag
-        run: |
-          VERSION="${{ steps.version.outputs.version }}"
-          IMAGE="ghcr.io/${{ env.IMAGE_NAME }}:${VERSION}"
-          
-          # Update deploy/zimaos-compose.yml
-          sed -i "s|image: ghcr.io/${{ env.IMAGE_NAME }}:latest|image: ${IMAGE}|g" deploy/zimaos-compose.yml
-          
-          # Commit and push
-          git config user.name "GitHub Actions"
-          git config user.email "actions@github.com"
-          git add deploy/zimaos-compose.yml
-          git diff --cached --quiet || git commit -m "chore: update zimaos image to v${VERSION}"
-          git push origin main
+       - name: Trigger ZimaOS Deploy
+         run: |
+           echo "New image pushed to ghcr.io/${{ env.IMAGE_NAME }}:latest"
+           echo "To deploy on ZimaOS, run: docker compose -f deploy/zimaos-compose.yml pull && docker compose -f deploy/zimaos-compose.yml up -d"
