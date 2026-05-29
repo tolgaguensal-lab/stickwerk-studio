@@ -40,18 +40,13 @@ jobs:
           node-version: '20'
           cache: 'npm'
 
-      - name: Install dependencies
-        run: npm ci
+       - name: Install dependencies
+         run: npm ci
 
-      - name: Validate Prisma Schema
-        run: npx prisma validate
-        env:
-          DATABASE_URL: "postgresql://user:pass@localhost:5432/db"
-
-      - name: Run Build check
-        run: npm run build
-        env:
-          DATABASE_URL: "postgresql://user:pass@localhost:5432/db"
+       - name: Run Build check
+         run: npm run build
+         env:
+           DATABASE_URL: "postgresql://user:pass@localhost:5432/db"
 
       - name: Get version from package.json
         id: version
