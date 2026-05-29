@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "framer-motion";
+import { useCallback } from "react";
 import Image from "next/image";
 import { ArrowRight, PenTool, Zap, Heart, ShieldCheck, Users, TrendingUp, Clock, Star, CheckCircle2, Target, Award, FileText, Truck, Smile, Sparkles, Bolt, Mail } from "lucide-react";
 import PatchCalculator from "@/components/PatchCalculator";
@@ -12,6 +13,13 @@ export default function LandingPage() {
   const { scrollYProgress } = useScroll();
   const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
   const scale = useTransform(scrollYProgress, [0, 0.2], [1, 0.95]);
+
+  const scrollToSection = useCallback((id: string) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, []);
 
   const processSteps = [
     {
@@ -173,6 +181,7 @@ export default function LandingPage() {
             <Button 
               size="lg" 
               className="px-8 py-6 text-lg rounded-full group bg-primary text-background hover:bg-primary/90 transition-all shadow-lg hover:shadow-xl"
+              onClick={() => scrollToSection("calculator")}
             >
               Jetzt konfigurieren 
               <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -181,6 +190,7 @@ export default function LandingPage() {
               size="lg" 
               variant="outline" 
               className="px-8 py-6 text-lg rounded-full group border-2 border-primary/20 hover:border-primary/40"
+              onClick={() => scrollToSection("cta")}
             >
               <Smile className="w-5 h-5 mr-2" />
               Kostenlose Beratung
@@ -286,7 +296,8 @@ export default function LandingPage() {
       </section>
 
       {/* Process Section */}
-      <section id="prozess" className="py-20 px-6">
+      <section id="prozess" className="py-20 px-6 bg-cover bg-center bg-fixed relative" style={{ backgroundImage: "url(/images/embroidery-machine.jpg)" }}>
+        <div className="absolute inset-0 bg-background/60 -z-10" />
         <div className="max-w-6xl mx-auto">
           <motion.div 
             initial={{ opacity: 0, y: 40 }}
@@ -354,7 +365,8 @@ export default function LandingPage() {
       </section>
 
       {/* Calculator Section */}
-      <section id="calculator" className="py-20 px-6 bg-primary/5">
+      <section id="calculator" className="py-20 px-6 bg-primary/5 bg-cover bg-center relative" style={{ backgroundImage: "url(/images/embroidery-closeup.jpg)" }}>
+        <div className="absolute inset-0 bg-background/90 -z-10" />
         <div className="max-w-6xl mx-auto">
           <motion.div 
             initial={{ opacity: 0, y: 40 }}
@@ -383,7 +395,8 @@ export default function LandingPage() {
       </section>
 
       {/* Trust Elements */}
-      <section id="vertrauen" className="py-20 px-6">
+      <section id="vertrauen" className="py-20 px-6 bg-cover bg-center relative" style={{ backgroundImage: "url(/images/texture-fabric.jpg)" }}>
+        <div className="absolute inset-0 bg-background/80 -z-10" />
         <div className="max-w-6xl mx-auto">
           <motion.div 
             initial={{ opacity: 0, y: 40 }}
@@ -562,6 +575,7 @@ export default function LandingPage() {
                 <Button 
                   size="lg" 
                   className="px-8 py-6 text-lg rounded-full group bg-accent text-primary hover:bg-accent/90 transition-all shadow-lg hover:shadow-xl"
+                  onClick={() => scrollToSection("calculator")}
                 >
                   Jetzt konfigurieren 
                   <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -570,6 +584,7 @@ export default function LandingPage() {
                   size="lg" 
                   variant="outline" 
                   className="px-8 py-6 text-lg rounded-full group border-2 border-background/30 hover:border-background/50 text-background hover:text-background/90"
+                  onClick={() => window.location.href = "mailto:info@stickwerk-studio.de"}
                 >
                   <Mail className="w-5 h-5 mr-2" />
                   Anfrage per E-Mail
