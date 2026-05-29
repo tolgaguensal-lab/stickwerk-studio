@@ -3,32 +3,32 @@ import Link from "next/link";
 
 export default function Datenschutz() {
   return (
-    <div className="min-h-screen bg-background py-12 px-6">
+    <div className="min-h-screen bg-machinery-silver py-12 px-6">
       <div className="max-w-4xl mx-auto space-y-8">
         <div className="text-center">
-          <h1 className="text-4xl md:text-5xl font-serif font-bold text-primary mb-4">
+          <h1 className="text-4xl md:text-5xl font-serif font-bold text-industry-gray mb-4">
             Datenschutzerkl&auml;rung
           </h1>
-          <p className="text-foreground/70">
+          <p className="text-industry-gray/70">
             Informationen &uuml;ber die Erhebung personenbezogener Daten
           </p>
         </div>
 
         <div className="flex justify-start">
-          <Link href="/" className="text-primary hover:text-accent transition-colors flex items-center gap-2">
+          <Link href="/" className="text-industry-gray hover:text-craft-gold transition-colors flex items-center gap-2">
             &larr; Zur&uuml;ck zur Startseite
           </Link>
         </div>
 
-        <Card className="bg-white/60 backdrop-blur-sm border-primary/10">
+        <Card className="bg-soft-white backdrop-blur-sm border-industry-gray/10">
           <CardHeader>
-            <CardTitle className="text-2xl text-primary">
+            <CardTitle className="text-2xl text-industry-gray">
               Datenschutzerkl&auml;rung
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-8 text-foreground/80">
+          <CardContent className="space-y-8 text-industry-gray/80">
             <section className="space-y-4">
-              <h2 className="text-xl font-bold text-primary">
+              <h2 className="text-xl font-bold text-industry-gray">
                 1. Verantwortlicher und Kontaktdaten
               </h2>
               <div className="space-y-2">
@@ -44,13 +44,13 @@ export default function Datenschutz() {
             </section>
 
             <section className="space-y-4">
-              <h2 className="text-xl font-bold text-primary">
+              <h2 className="text-xl font-bold text-industry-gray">
                 2. Erhebung und Speicherung personenbezogener Daten sowie Art und
                 Zweck von deren Verwendung
               </h2>
 
               <div className="space-y-4">
-                <h3 className="text-lg font-semibold text-primary">
+                <h3 className="text-lg font-semibold text-industry-gray">
                   a) Beim Besuch der Website
                 </h3>
                 <p>
@@ -77,7 +77,7 @@ export default function Datenschutz() {
               </div>
 
               <div className="space-y-4">
-                <h3 className="text-lg font-semibold text-primary">
+                <h3 className="text-lg font-semibold text-industry-gray">
                   b) Bei Nutzung unseres Patch-Konfigurators
                 </h3>
                 <p>
@@ -110,7 +110,7 @@ export default function Datenschutz() {
             </section>
 
             <section className="space-y-4">
-              <h2 className="text-xl font-bold text-primary">
+              <h2 className="text-xl font-bold text-industry-gray">
                 3. Weitergabe von Daten
               </h2>
               <p>
@@ -146,7 +146,7 @@ export default function Datenschutz() {
             </section>
 
             <section className="space-y-4">
-              <h2 className="text-xl font-bold text-primary">
+              <h2 className="text-xl font-bold text-industry-gray">
                 4. Betroffenenrechte
               </h2>
               <p>Sie haben das Recht:</p>
@@ -206,7 +206,7 @@ export default function Datenschutz() {
             </section>
 
             <section className="space-y-4">
-              <h2 className="text-xl font-bold text-primary">
+              <h2 className="text-xl font-bold text-industry-gray">
                 5. Speicherdauer
               </h2>
               <p>
@@ -220,7 +220,7 @@ export default function Datenschutz() {
             </section>
 
             <section className="space-y-4">
-              <h2 className="text-xl font-bold text-primary">
+              <h2 className="text-xl font-bold text-industry-gray">
                 6. Aktualit&auml;t und &Auml;nderung dieser
                 Datenschutzerkl&auml;rung
               </h2>
