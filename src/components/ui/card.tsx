@@ -1,12 +1,13 @@
 import * as React from "react";
 import { cn } from "@/lib/utils";
 
+/* NEUES DESIGNSYSTEM - Stickwerk-Studio */
 const Card = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => (
     <div
       ref={ref}
       className={cn(
-        "rounded-3xl border-2 border-primary/10 bg-white text-foreground shadow-sm transition-all hover:border-primary/20",
+        "rounded-xl border border-border-gray bg-soft-white text-industry-gray shadow-md transition-all",
         className
       )}
       {...props}
@@ -30,7 +31,7 @@ const CardTitle = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<HT
   ({ className, ...props }, ref) => (
     <h3
       ref={ref}
-      className={cn("text-2xl font-serif font-bold leading-none tracking-tight text-primary", className)}
+      className={cn("text-2xl font-serif font-bold leading-none tracking-tight text-industry-gray", className)}
       {...props}
     />
   )
@@ -40,7 +41,7 @@ CardTitle.displayName = "CardTitle";
 const CardDescription = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<HTMLParagraphElement>>(
   ({ className, ...props }) => (
     <p
-      className={cn("text-sm text-foreground/60", className)}
+      className={cn("text-sm text-industry-gray/60", className)}
       {...props}
     />
   )
