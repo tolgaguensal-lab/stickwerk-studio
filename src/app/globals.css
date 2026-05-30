@@ -16,7 +16,7 @@
   --color-card-foreground: #111111;
   --color-popover: #FFF8EC;
   --color-popover-foreground: #111111;
-  --color-primary: #111111;             /* Schwarz - Primäre Buttons */
+  --color-primary: #8A6A3F;             /* Warmes Braun/Gold - Primäre Buttons */
   --color-primary-foreground: #FFF8EC;  /* Warmweiß - Text auf primären Buttons */
   --color-secondary: #D8C7AE;           /* Warmer Sand/Tan - Sekundäre Buttons */
   --color-secondary-foreground: #111111;
@@ -135,7 +135,7 @@
   --color-card-foreground: #111111;
   --color-popover: #FFF8EC;
   --color-popover-foreground: #111111;
-  --color-primary: #111111;
+  --color-primary: #8A6A3F;
   --color-primary-foreground: #FFF8EC;
   --color-secondary: #D8C7AE;
   --color-secondary-foreground: #111111;
