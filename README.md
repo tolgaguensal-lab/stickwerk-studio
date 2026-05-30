@@ -1,24 +1,24 @@
 # 🧵 Stickwerk-Studio
 
-**Fäden, die Marken sichtbar machen.**
+**Fäden, die Marken sichtbar machen.** v0.4.0
 
 > ⚠️ **Legal Notice:** This project is proprietary. All rights reserved. Unauthorized use, reproduction, or distribution of this software is strictly prohibited. See [LICENSE](./LICENSE) for details.
 
-Professionelle Website für Maschinenstickerei und Custom Patches im DACH-Raum. Interaktiver Patch-Kontaktformular, Lead-Verwaltung und Admin-Dashboard.
+Professionelle Website für Maschinenstickerei und Custom Patches im DACH-Raum. Interaktiver Patch-Konfigurator, Lead-Verwaltung und Admin-Dashboard.
 
 ---
 
 ## ✨ Features
 
 ### Für Kunden
-- **Patch-Kontaktformular** mit 11-Schritte-Konfigurator
-- **Preisberechnung** in Echtzeit basierend auf Größe, Komplexität und Menge
-- **Kontaktformular** mit Datenschutz-Checkbox
+- **Patch-Konfigurator** mit 11-Schritte-Konfigurator und Echtzeit-Preisberechnung
+- **Kontaktformular** mit DSGVO-konformer Datenschutz-Checkbox
 - **Rechtliche Seiten** (Impressum, Datenschutz, AGB)
+- **Originäres Design-System** mit Industry Gray, Craft Gold und Precision Blue
 
 ### Für Administration
 - **Admin-Dashboard** zur Lead-Verwaltung
-- **Status-Tracking** (new → contacted → quoted → won/lost)
+- **Status-Tracking** (new → in_progress → completed → cancelled)
 - **PocketBase** als datastore (über ZimaOS App Store)
 
 ---
@@ -29,10 +29,30 @@ Professionelle Website für Maschinenstickerei und Custom Patches im DACH-Raum. 
 |-------|-------------|
 | **Framework** | Next.js 16 (App Router) |
 | **Sprache** | TypeScript |
-| **Styling** | Tailwind CSS |
+| **Styling** | Tailwind CSS + Originäres Design-System |
 | **Animation** | Framer Motion |
+| **Icons** | Lucide React (MIT) |
+| **Fonts** | Inter + Playfair Display (Google Fonts, MIT) |
 | **Datenbank** | PocketBase (ZimaOS App Store) |
 | **Deployment** | Docker + ZimaOS + Pangolin |
+
+---
+
+## 🎨 Design-System
+
+Eigenständiges, originäres Design (keine Elemente aus externen Referenzen kopiert):
+
+| Token | Wert | Verwendung |
+|-------|------|------------|
+| **Industry Gray** | `#1E1E1E` | Primärtext, Überschriften |
+| **Machinery Silver** | `#F5F5F5` | Seitenhintergrund |
+| **Soft White** | `#FAFAFA` | Karten, Container |
+| **Precision Blue** | `#0066CC` | Links, technische Akzente |
+| **Craft Gold** | `#C5A059` | CTA-Buttons, Highlights |
+| **Signal Red** | `#D32F2F` | Fehler, Warnungen |
+| **Muted Green** | `#4CAF50` | Erfolge, Bestätigungen |
+
+Siehe [DESIGN-COMPLIANCE.md](./docs/DESIGN-COMPLIANCE.md) für vollständige Compliance-Dokumentation.
 
 ---
 
@@ -43,7 +63,7 @@ stickwerk-studio/
 ├── src/
 │   ├── app/              # Next.js App Router
 │   │   ├── admin/        # Admin-Dashboard
-│   │   ├── api/          # API-Routes
+│   │   ├── api/          # API-Routes (contact, health, leads)
 │   │   ├── kontakt/      # Kontaktformular
 │   │   ├── impressum/    # Impressum
 │   │   ├── datenschutz/  # Datenschutzerklärung
@@ -51,14 +71,14 @@ stickwerk-studio/
 │   ├── components/       # React-Komponenten
 │   │   ├── PatchCalculator.tsx
 │   │   ├── Navbar.tsx
-│   │   └── ui/           # UI-Komponenten
+│   │   ├── Scene.tsx
+│   │   ├── SmoothScroll.tsx
+│   │   └── ui/           # UI-Komponenten (Button, Card, Input, etc.)
 │   └── lib/              # Hilfsfunktionen
 │       └── pocketbase/   # PocketBase Client
-├── public/
-│   └── logo.jpg          # Firmen-Logo
-├── deploy/               # Docker Compose für ZimaOS
+├── deploy/               # ZimaOS Docker Compose
 ├── docs/                 # Dokumentation
-├── scripts/              # Hilfsscripts
+├── scripts/              # Debug-Script für ZimaOS
 └── tests/                # E2E Tests (Playwright)
 ```
 
@@ -80,7 +100,7 @@ npm install
 ### Environment Variables
 ```bash
 cp .env.example .env
-# .env编辑ieren
+# .env mit eigenen Werten ausfüllen
 ```
 
 ### Entwicklungsserver
@@ -109,14 +129,12 @@ npm run test:e2e    # Playwright E2E Tests
 ghcr.io/tolgaguensal-lab/stickwerk-studio:latest
 ```
 
-### ZimaOS Setup
-1. PocketBase über App Store installieren
-2. `deploy/zimaos-compose.yml` auf ZimaOS kopieren
-3. `.env` mit PocketBase-Zugangsdaten erstellen
-4. Container starten:
+### Auf ZimaOS deployen
 ```bash
-docker compose -f zimaos-compose.yml pull
-docker compose -f zimaos-compose.yml up -d
+# 1. zimaos-compose.yml und .env auf ZimaOS kopieren
+# 2. Container starten:
+docker compose -f deploy/zimaos-compose.yml pull
+docker compose -f deploy/zimaos-compose.yml up -d
 ```
 
 ### Pangolin Resource Target
@@ -124,26 +142,27 @@ docker compose -f zimaos-compose.yml up -d
 http://<ZIMAOS-IP>:3034
 ```
 
-Siehe [DEPLOYMENT.md](./DEPLOYMENT.md) für Details.
+Siehe [DEPLOYMENT.md](./DEPLOYMENT.md) für detaillierte Deployment-Anleitung.
 
 ---
 
-
 ## 📄 Dokumentation
 
-- [DEPLOYMENT.md](./DEPLOYMENT.md) - Deployment-Anleitung
-- [docs/PANGOLIN-ZIMAOS-DEBUG.md](./docs/PANGOLIN-ZIMAOS-DEBUG.md) - Debug-Dokumentation
+- [DEPLOYMENT.md](./DEPLOYMENT.md) - Vollständige Deployment-Anleitung
+- [docs/DESIGN-COMPLIANCE.md](./docs/DESIGN-COMPLIANCE.md) - Design-System Compliance
 - [docs/DSGVO-CHECKLISTE.md](./docs/DSGVO-CHECKLISTE.md) - DSGVO-Checkliste
+- [docs/PANGOLIN-ZIMAOS-DEBUG.md](./docs/PANGOLIN-ZIMAOS-DEBUG.md) - Debug-Dokumentation
 
 ---
 
 ## 📅 Roadmap
 
-- [x] Patch-Kontaktformular (11 Schritte)
+- [x] Patch-Konfigurator (11 Schritte)
 - [x] Admin-Dashboard
 - [x] Docker Deployment
 - [x] Pangolin Integration
 - [x] PocketBase Backend
+- [x] Originäres Design-System
 - [ ] E2E Tests vollständig
 - [ ] E-Mail-Benachrichtigungen
 - [ ] DSGVO finale Prüfung

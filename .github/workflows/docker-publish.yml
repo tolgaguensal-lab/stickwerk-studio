@@ -40,29 +40,29 @@ jobs:
           node-version: '20'
           cache: 'npm'
 
-       - name: Install dependencies
-         run: npm ci
+      - name: Install dependencies
+        run: npm ci
 
-       - name: Run Build check
-         run: npm run build
-         env:
-           DATABASE_URL: "postgresql://user:pass@localhost:5432/db"
+      - name: Run Build check
+        run: npm run build
+        env:
+          DATABASE_URL: "postgresql://user:pass@localhost:5432/db"
 
-        - name: Get version from package.json
-          id: version
-          run: |
-            VERSION=$(node -p "require('./package.json').version")
-            echo "version=${VERSION}" >> $GITHUB_OUTPUT
-            echo "Version: v${VERSION}"
+      - name: Get version from package.json
+        id: version
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          echo "version=${VERSION}" >> $GITHUB_OUTPUT
+          echo "Version: v${VERSION}"
 
-        - name: Create and push git tag
-          run: |
-            git config --global user.name "GitHub Actions"
-            git config --global user.email "actions@github.com"
-            git tag v${{ steps.version.outputs.version }}.${{ github.run_number }}
-            git push origin v${{ steps.version.outputs.version }}.${{ github.run_number }}
+      - name: Create and push git tag
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git tag v${{ steps.version.outputs.version }}.${{ github.run_number }}
+          git push origin v${{ steps.version.outputs.version }}.${{ github.run_number }}
 
-       - name: Log in to GHCR
+      - name: Log in to GHCR
         uses: docker/login-action@v3
         with:
           registry: ${{ env.REGISTRY }}
@@ -87,7 +87,7 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
-       - name: Trigger ZimaOS Deploy
-         run: |
-           echo "New image pushed to ghcr.io/${{ env.IMAGE_NAME }}:latest"
-           echo "To deploy on ZimaOS, run: docker compose -f deploy/zimaos-compose.yml pull && docker compose -f deploy/zimaos-compose.yml up -d"
+      - name: Trigger ZimaOS Deploy
+        run: |
+          echo "New image pushed to ghcr.io/${{ env.IMAGE_NAME }}:latest"
+          echo "To deploy on ZimaOS, run: docker compose -f deploy/zimaos-compose.yml pull && docker compose -f deploy/zimaos-compose.yml up -d"
