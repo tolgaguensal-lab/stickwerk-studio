@@ -70,7 +70,7 @@ export async function GET() {
     const pb = await getAdminPocketBase();
 
     const records = await pb.collection("leads").getFullList({
-      sort: "-created",
+      sort: "-id",
     });
 
     return NextResponse.json({ leads: records }, { status: 200 });
