@@ -130,7 +130,7 @@ export default function LandingPage() {
   return (
     <main className="relative z-10">
        {/* Hero Section */}
-       <section className="min-h-[80vh] flex flex-col items-center justify-center text-center px-6 pt-24 pb-16 bg-gradient-to-b from-canvas-white via-canvas-white to-paper-gray">
+       <section className="min-h-[80vh] flex flex-col items-center justify-center text-center px-6 pt-8 md:pt-16 pb-16 bg-gradient-to-b from-canvas-white via-canvas-white to-paper-gray">
          <motion.div 
            style={{ opacity, scale }}
            className="max-w-4xl space-y-8"

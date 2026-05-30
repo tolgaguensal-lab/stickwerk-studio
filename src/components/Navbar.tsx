@@ -17,46 +17,47 @@ import { usePathname } from "next/navigation";
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
+  const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
   const { scrollY } = useScroll();
 
-  // Scroll tracking: bg opacity goes from 70% to 95%, shadow appears after 80px
-  const bgOpacity = useTransform(scrollY, [0, 160], [0.7, 0.95]);
+  // Scroll tracking
+  const bgOpacity = useTransform(scrollY, [0, 200], [0.6, 0.95]);
   const navBg = useTransform(bgOpacity, (o) => `rgba(247, 241, 230, ${o})`);
-  const borderOpacity = useTransform(scrollY, [0, 80], [0, 1]);
+  const shadowOpacity = useTransform(scrollY, [0, 200], [0, 1]);
+  const navShadow = useTransform(shadowOpacity, (o) => `0 1px 3px rgba(0,0,0,${o * 0.06}), 0 1px 2px rgba(0,0,0,${o * 0.04})`);
 
   useEffect(() => {
     (window as unknown as { __setMobileMenuOpen: (value: boolean) => void }).__setMobileMenuOpen = setIsOpen;
     return () => { delete (window as unknown as { __setMobileMenuOpen: unknown }).__setMobileMenuOpen; };
   }, []);
 
-  // Handle hash navigation for smooth scrolling
+  // Handle hash navigation
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const hash = window.location.hash;
       if (hash) {
         const element = document.querySelector(hash);
         if (element) {
-          element.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start',
-          });
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
       }
     }
   }, [pathname]);
 
-  // Track active section based on scroll position
+  // Track scrolled state and active section
   useEffect(() => {
     const sections = [
       { id: "features", label: "Leistungen" },
       { id: "calculator", label: "Konfigurator" },
       { id: "faq", label: "FAQ" },
-      { id: "kontakt", label: "Kontakt" },
     ];
 
     const handleScroll = () => {
-      const scrollPos = window.scrollY + 120;
+      const pos = window.scrollY;
+      setScrolled(pos > 50);
+
+      const scrollPos = pos + 140;
       let current = "";
 
       for (const section of sections) {
@@ -71,9 +72,7 @@ export default function Navbar() {
         }
       }
 
-      // If on /kontakt page, mark it active
       if (pathname === "/kontakt") current = "kontakt";
-
       setActiveSection(current);
     };
 
@@ -82,15 +81,11 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [pathname]);
 
-  // Helper function for smooth scroll navigation
   const handleHashNav = (e: React.MouseEvent, targetHash: string) => {
     e.preventDefault();
     const element = document.querySelector(targetHash);
     if (element) {
-      element.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
-      });
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
       window.history.pushState(null, '', targetHash);
     }
     setIsOpen(false);
@@ -110,130 +105,130 @@ export default function Navbar() {
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      style={{ backgroundColor: navBg }}
-      className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md transition-shadow duration-300"
+      style={{
+        backgroundColor: navBg,
+        boxShadow: navShadow,
+      }}
+      className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md"
     >
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="flex items-center justify-between h-16 md:h-20">
+      <div className="px-6 lg:px-10">
+        <div className="flex items-center justify-between h-20 lg:h-24">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-3 group">
-            <div className="relative">
+          <Link href="/" className="flex items-center gap-4 group shrink-0">
+            <div className="relative w-14 h-14 lg:w-16 lg:h-16 rounded-xl overflow-hidden shadow-sm ring-1 ring-border/30 group-hover:ring-accent/30 transition-all duration-300">
               <Image
                 src="/logo.jpg"
                 alt="Stickwerk-Studio Logo"
-                width={52}
-                height={52}
-                className="rounded-xl shadow-sm ring-1 ring-border/40 group-hover:shadow-md group-hover:ring-accent/30 transition-all duration-300"
-                loading="eager"
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 56px, 64px"
+                priority
               />
             </div>
             <div className="flex flex-col">
-              <span className="text-lg md:text-xl font-serif font-semibold text-foreground tracking-tight leading-tight">
+              <span className="text-xl lg:text-2xl font-serif font-bold text-foreground tracking-tight leading-none">
                 Stickwerk-Studio
               </span>
-              <span className="text-[10px] md:text-[11px] text-accent/70 font-sans tracking-[0.2em] uppercase hidden sm:block">
-                Maschinenstickerei
+              <span className="text-[10px] lg:text-xs text-accent/60 font-sans tracking-[0.25em] uppercase mt-1">
+                Maschinenstickerei &amp; Custom Patches
               </span>
             </div>
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-1">
-            {navLinks.map((link) =>
-              link.hash ? (
-                <a
+          <div className="hidden lg:flex items-center gap-2">
+            {navLinks.map((link) => {
+              const active = isActive(link.id);
+              const Comp = link.hash ? "a" : Link;
+              const props = link.hash
+                ? { href: link.href, onClick: (e: React.MouseEvent) => handleHashNav(e, link.href) }
+                : { href: link.href };
+
+              return (
+                <Comp
                   key={link.id}
-                  href={link.href}
-                  onClick={(e) => handleHashNav(e, link.href)}
-                  className={`relative px-4 py-2 text-sm tracking-wide font-medium transition-colors rounded-lg ${
-                    isActive(link.id)
-                      ? "text-accent bg-accent/5"
-                      : "text-muted-foreground hover:text-foreground hover:bg-foreground/5"
+                  {...props}
+                  className={`relative px-5 py-2.5 text-[15px] font-medium tracking-wide transition-all duration-200 rounded-xl ${
+                    active
+                      ? "text-accent bg-accent/8"
+                      : "text-muted-foreground/90 hover:text-foreground hover:bg-foreground/5"
                   }`}
                 >
                   {link.label}
-                  {isActive(link.id) && (
+                  {active && (
                     <motion.span
                       layoutId="nav-indicator"
-                      className="absolute bottom-0 left-2 right-2 h-0.5 bg-accent rounded-full"
+                      className="absolute bottom-0 left-3 right-3 h-0.5 bg-accent rounded-full"
                       transition={{ type: "spring", stiffness: 380, damping: 30 }}
                     />
                   )}
-                </a>
-              ) : (
-                <Link
-                  key={link.id}
-                  href={link.href}
-                  className={`relative px-4 py-2 text-sm tracking-wide font-medium transition-colors rounded-lg ${
-                    isActive(link.id)
-                      ? "text-accent bg-accent/5"
-                      : "text-muted-foreground hover:text-foreground hover:bg-foreground/5"
-                  }`}
-                >
-                  {link.label}
-                  {isActive(link.id) && (
-                    <motion.span
-                      layoutId="nav-indicator"
-                      className="absolute bottom-0 left-2 right-2 h-0.5 bg-accent rounded-full"
-                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                    />
-                  )}
-                </Link>
-              )
-            )}
-            <div className="ml-4 pl-4 border-l border-border">
+                </Comp>
+              );
+            })}
+            <div className="ml-6 pl-6 border-l border-border/60">
               <Button
                 variant="default"
-                size="sm"
+                size="default"
                 onClick={(e) => handleHashNav(e, "#calculator")}
-                className="bg-accent text-accent-foreground hover:bg-accent/90 shadow-sm"
+                className="bg-accent text-accent-foreground hover:bg-accent/90 shadow-sm px-6 py-2.5 h-auto text-[15px] font-medium"
               >
                 Jetzt konfigurieren
               </Button>
             </div>
           </div>
 
-          {/* Mobile Menu */}
-          <div className="md:hidden">
+          {/* Mobile Menu Trigger */}
+          <div className="flex lg:hidden items-center gap-3">
+            <Button
+              variant="default"
+              size="sm"
+              onClick={(e) => handleHashNav(e, "#calculator")}
+              className="bg-accent text-accent-foreground hover:bg-accent/90 shadow-sm text-xs px-4 h-9"
+            >
+              Konfigurieren
+            </Button>
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="text-foreground hover:bg-foreground/5" aria-label="Menü">
-                  <Menu className="w-6 h-6" />
+                <Button variant="ghost" size="icon" className="text-foreground hover:bg-foreground/5 w-10 h-10" aria-label="Menü">
+                  <Menu className="w-5 h-5" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="w-[300px] sm:w-[400px] bg-card border-l border-border">
-                <div className="flex flex-col h-full">
-                  <div className="flex items-center justify-between mb-8 pt-2">
+              <SheetContent side="right" className="w-full sm:w-[400px] bg-card border-l border-border p-0">
+                <div className="flex flex-col h-full px-6 py-6">
+                  <div className="flex items-center justify-between mb-10">
                     <div className="flex items-center gap-3">
-                      <Image
-                        src="/logo.jpg"
-                        alt="Stickwerk-Studio Logo"
-                        width={40}
-                        height={40}
-                        className="rounded-lg shadow-sm ring-1 ring-border/40"
-                      />
-                      <span className="font-serif font-semibold text-foreground tracking-tight">Stickwerk-Studio</span>
+                      <div className="w-10 h-10 rounded-lg overflow-hidden ring-1 ring-border/30">
+                        <Image
+                          src="/logo.jpg"
+                          alt="Stickwerk-Studio Logo"
+                          width={40}
+                          height={40}
+                          className="object-cover w-full h-full"
+                        />
+                      </div>
+                      <span className="font-serif font-semibold text-foreground text-lg tracking-tight">Stickwerk-Studio</span>
                     </div>
                     <Button
                       variant="ghost"
                       size="icon"
                       onClick={() => setIsOpen(false)}
-                      className="text-foreground hover:bg-foreground/5"
+                      className="text-foreground hover:bg-foreground/5 w-10 h-10"
                     >
-                      <X className="w-6 h-6" />
+                      <X className="w-5 h-5" />
                     </Button>
                   </div>
 
-                  <div className="flex flex-col gap-2">
-                    {navLinks.map((link) =>
-                      link.hash ? (
+                  <div className="flex flex-col gap-1">
+                    {navLinks.map((link) => {
+                      const active = isActive(link.id);
+                      return link.hash ? (
                         <SheetClose asChild key={link.id}>
                           <a
                             href={link.href}
                             onClick={(e) => handleHashNav(e, link.href)}
-                            className={`text-base px-4 py-3 rounded-xl transition-colors ${
-                              isActive(link.id)
-                                ? "text-accent bg-accent/5 font-semibold"
+                            className={`text-lg px-4 py-3.5 rounded-xl transition-colors ${
+                              active
+                                ? "text-accent bg-accent/8 font-semibold"
                                 : "text-muted-foreground hover:text-foreground hover:bg-foreground/5"
                             }`}
                           >
@@ -244,24 +239,24 @@ export default function Navbar() {
                         <SheetClose asChild key={link.id}>
                           <Link
                             href={link.href}
-                            className={`text-base px-4 py-3 rounded-xl transition-colors ${
-                              isActive(link.id)
-                                ? "text-accent bg-accent/5 font-semibold"
+                            className={`text-lg px-4 py-3.5 rounded-xl transition-colors ${
+                              active
+                                ? "text-accent bg-accent/8 font-semibold"
                                 : "text-muted-foreground hover:text-foreground hover:bg-foreground/5"
                             }`}
                           >
                             {link.label}
                           </Link>
                         </SheetClose>
-                      )
-                    )}
+                      );
+                    })}
                   </div>
 
-                  <div className="mt-auto pt-8">
+                  <div className="mt-auto pt-10">
                     <SheetClose asChild>
                       <Button
                         variant="default"
-                        className="w-full bg-accent text-accent-foreground hover:bg-accent/90 shadow-sm"
+                        className="w-full bg-accent text-accent-foreground hover:bg-accent/90 shadow-sm h-12 text-base"
                         onClick={(e) => handleHashNav(e, "#calculator")}
                       >
                         Jetzt konfigurieren
@@ -275,11 +270,8 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Bottom border that fades in on scroll */}
-      <motion.div
-        style={{ opacity: borderOpacity }}
-        className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border to-transparent"
-      />
+      {/* Bottom border */}
+      <div className={`absolute bottom-0 left-0 right-0 h-px bg-border/50 transition-opacity duration-300 ${scrolled ? 'opacity-100' : 'opacity-0'}`} />
     </motion.nav>
   );
 }
