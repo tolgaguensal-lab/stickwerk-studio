@@ -141,7 +141,7 @@ export default function LandingPage() {
              transition={{ duration: 0.8, ease: "easeOut" }}
              className="relative inline-block mb-6"
            >
-             <div className="absolute inset-0 bg-gradient-to-r from-signal-green/20 to-deep-charcoal/20 rounded-full blur-3xl animate-pulse" />
+             <div className="absolute inset-0 bg-gradient-to-r from-accent/20 to-muted-foreground/20 rounded-full blur-3xl animate-pulse" />
              <div className="relative z-10 p-3 bg-canvas-white rounded-xl border-2 border-canvas-white">
                <Image 
                  src="/logo.jpg" 
@@ -160,7 +160,7 @@ export default function LandingPage() {
              className="text-5xl md:text-7xl font-serif font-bold text-midnight-ink leading-tight"
            >
              Präzision, die <br /> 
-             <span className="text-signal-green">sichtbar bleibt</span>
+             <span className="text-accent">sichtbar bleibt</span>
            </motion.h1>
            
            <motion.p 
@@ -229,7 +229,7 @@ export default function LandingPage() {
              <p className="text-xl text-deep-charcoal/70 max-w-2xl mx-auto">
                Warum Kunden uns vertrauen – seit über 5 Jahren.
              </p>
-             <div className="w-24 h-1 bg-signal-green mx-auto rounded-full" />
+             <div className="w-24 h-1 bg-accent mx-auto rounded-full" />
            </motion.div>
  
            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -268,7 +268,7 @@ export default function LandingPage() {
              <p className="text-xl text-deep-charcoal/70 max-w-2xl mx-auto">
                Egal ob Einzelstück oder Serienproduktion – wir finden die perfekte Lösung.
              </p>
-             <div className="w-24 h-1 bg-signal-green mx-auto rounded-full" />
+             <div className="w-24 h-1 bg-accent mx-auto rounded-full" />
            </motion.div>
  
            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -282,12 +282,12 @@ export default function LandingPage() {
                  whileHover={{ y: -5 }}
                  className="card p-6 group overflow-hidden"
                >
-                 <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-signal-green to-deep-charcoal opacity-20" />
-                 <div className="w-14 h-14 rounded-lg bg-signal-green/10 text-signal-green flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                 <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-accent to-muted-foreground opacity-20" />
+                 <div className="w-14 h-14 rounded-lg bg-accent/10 text-accent flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                    {audience.icon}
                  </div>
                  <h3 className="text-xl font-serif font-bold text-midnight-ink mb-2">{audience.title}</h3>
-                 <p className="text-sm font-medium text-signal-green mb-3">{audience.tagline}</p>
+                 <p className="text-sm font-medium text-accent mb-3">{audience.tagline}</p>
                  <p className="text-deep-charcoal/70 leading-relaxed text-sm">{audience.description}</p>
                </motion.div>
              ))}
@@ -309,12 +309,12 @@ export default function LandingPage() {
              <p className="text-xl text-deep-charcoal/70 max-w-2xl mx-auto">
                Von der ersten Idee bis zum fertigen Patch – transparent und unkompliziert.
              </p>
-             <div className="w-24 h-1 bg-signal-green mx-auto rounded-full" />
+             <div className="w-24 h-1 bg-accent mx-auto rounded-full" />
            </motion.div>
  
            <div className="relative">
              {/* Timeline line */}
-             <div className="absolute left-8 top-0 bottom-0 w-1 bg-gradient-to-b from-midnight-ink/20 via-signal-green/20 to-deep-charcoal/20 hidden lg:block" />
+             <div className="absolute left-8 top-0 bottom-0 w-1 bg-gradient-to-b from-foreground/20 via-accent/20 to-muted-foreground/20 hidden lg:block" />
              
              <div className="space-y-12">
                {processSteps.map((step, i) => (
@@ -335,7 +335,7 @@ export default function LandingPage() {
                    
                    {/* Icon */}
                    <div className="lg:col-span-1 flex justify-center">
-                     <div className="w-14 h-14 rounded-xl bg-signal-green/10 text-midnight-ink flex items-center justify-center">
+                     <div className="w-14 h-14 rounded-xl bg-accent/10 text-foreground flex items-center justify-center">
                        {step.icon}
                      </div>
                    </div>
@@ -354,7 +354,7 @@ export default function LandingPage() {
                    
                    {/* Connector */}
                    {i < processSteps.length - 1 && (
-                     <div className="absolute left-8 top-20 lg:top-8 w-1 h-16 bg-gradient-to-b from-midnight-ink/20 to-signal-green/20 hidden lg:block" />
+                     <div className="absolute left-8 top-20 lg:top-8 w-1 h-16 bg-gradient-to-b from-midnight-ink/20 to-accent/20 hidden lg:block" />
                    )}
                  </motion.div>
                ))}
@@ -377,7 +377,7 @@ export default function LandingPage() {
              <p className="text-xl text-deep-charcoal/70 max-w-2xl mx-auto">
                Gestalten Sie Ihren Patch in Echtzeit und erhalten Sie eine sofortige Kostenschätzung.
              </p>
-             <div className="w-24 h-1 bg-signal-green mx-auto rounded-full" />
+             <div className="w-24 h-1 bg-accent mx-auto rounded-full" />
            </motion.div>
            
            <motion.div 
@@ -406,7 +406,7 @@ export default function LandingPage() {
              <p className="text-xl text-deep-charcoal/70 max-w-2xl mx-auto">
                Qualität, die überzeugt. Service, der begeistert.
              </p>
-             <div className="w-24 h-1 bg-signal-green mx-auto rounded-full" />
+             <div className="w-24 h-1 bg-accent mx-auto rounded-full" />
            </motion.div>
  
            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -420,7 +420,7 @@ export default function LandingPage() {
                  whileHover={{ y: -5, scale: 1.02 }}
                  className="card text-center"
                >
-                 <div className="w-16 h-16 rounded-xl bg-signal-green/10 text-signal-green flex items-center justify-center mx-auto mb-6">
+                 <div className="w-16 h-16 rounded-xl bg-accent/10 text-accent flex items-center justify-center mx-auto mb-6">
                    {element.icon}
                  </div>
                  <h3 className="text-xl font-serif font-bold text-midnight-ink mb-3">{element.title}</h3>
@@ -461,7 +461,7 @@ export default function LandingPage() {
                  <CardContent className="p-6">
                    <div className="flex items-center mb-4">
                      {[...Array(testimonial.stars)].map((_, j) => (
-                       <Star key={j} className="w-5 h-5 text-signal-green fill-signal-green" />
+                       <Star key={j} className="w-5 h-5 text-accent fill-accent" />
                      ))}
                      {[...Array(5 - testimonial.stars)].map((_, j) => (
                        <Star key={j + testimonial.stars} className="w-5 h-5 text-deep-charcoal/30" />
@@ -500,7 +500,7 @@ export default function LandingPage() {
              <p className="text-xl text-deep-charcoal/70 max-w-2xl mx-auto">
                Alles, was Sie über unsere Patches wissen müssen.
              </p>
-             <div className="w-24 h-1 bg-signal-green mx-auto rounded-full" />
+             <div className="w-24 h-1 bg-accent mx-auto rounded-full" />
            </motion.div>
  
            <motion.div
@@ -521,7 +521,7 @@ export default function LandingPage() {
                  { id: "payment", question: "Welche Zahlungsmethoden akzeptiert ihr?", answer: "Wir akzeptieren Vorkasse (Banküberweisung), PayPal und Rechnung für Geschäftskunden. Bei Erstbestellungen bitten wir um Vorkasse. Ab der zweiten Bestellung können wir auch Rechnung anbieten." }
                ].map((item, i) => (
                  <AccordionItem key={item.id} value={`item-${i}`} className="rounded-xl border-0 bg-canvas-white">
-                   <AccordionTrigger className="text-lg font-regular text-midnight-ink hover:text-signal-green transition-colors px-6 py-4">
+                   <AccordionTrigger className="text-lg font-regular text-midnight-ink hover:text-accent transition-colors px-6 py-4">
                      {item.question}
                    </AccordionTrigger>
                    <AccordionContent className="text-deep-charcoal/70 leading-relaxed px-6 pb-4">
@@ -549,7 +549,7 @@ export default function LandingPage() {
                  initial={{ opacity: 0, y: 20 }}
                  animate={{ opacity: 1, y: 0 }}
                  transition={{ duration: 0.6, delay: 0.2 }}
-                 className="text-4xl md:text-5xl font-serif font-bold text-signal-green"
+                 className="text-4xl md:text-5xl font-serif font-bold text-accent-foreground"
                >
                  Bereit für Ihre 
                  <span className="block">perfekten Patches?</span>
@@ -608,11 +608,11 @@ export default function LandingPage() {
              <div className="space-y-4">
                <h4 className="font-bold text-midnight-ink text-lg">Navigation</h4>
                <div className="space-y-2">
-                 <a href="#features" className="block text-deep-charcoal/70 hover:text-signal-green transition-colors text-sm nav-link">Leistungen</a>
-                 <a href="#zielgruppen" className="block text-deep-charcoal/70 hover:text-signal-green transition-colors text-sm nav-link">Zielgruppen</a>
-                 <a href="#prozess" className="block text-deep-charcoal/70 hover:text-signal-green transition-colors text-sm nav-link">Prozess</a>
-                 <a href="#calculator" className="block text-deep-charcoal/70 hover:text-signal-green transition-colors text-sm nav-link">Konfigurator</a>
-                 <a href="#faq" className="block text-deep-charcoal/70 hover:text-signal-green transition-colors text-sm nav-link">FAQ</a>
+                 <a href="#features" className="block text-deep-charcoal/70 hover:text-accent transition-colors text-sm nav-link">Leistungen</a>
+                 <a href="#zielgruppen" className="block text-deep-charcoal/70 hover:text-accent transition-colors text-sm nav-link">Zielgruppen</a>
+                 <a href="#prozess" className="block text-deep-charcoal/70 hover:text-accent transition-colors text-sm nav-link">Prozess</a>
+                 <a href="#calculator" className="block text-deep-charcoal/70 hover:text-accent transition-colors text-sm nav-link">Konfigurator</a>
+                 <a href="#faq" className="block text-deep-charcoal/70 hover:text-accent transition-colors text-sm nav-link">FAQ</a>
                </div>
              </div>
              <div className="space-y-4">
@@ -626,9 +626,9 @@ export default function LandingPage() {
              <div className="space-y-4">
                <h4 className="font-bold text-midnight-ink text-lg">Rechtliches</h4>
                <div className="space-y-2 text-sm text-deep-charcoal/70">
-                 <a href="/impressum" className="block hover:text-signal-green transition-colors nav-link">Impressum</a>
-                 <a href="/datenschutz" className="block hover:text-signal-green transition-colors nav-link">Datenschutz</a>
-                 <a href="/agb" className="block hover:text-signal-green transition-colors nav-link">AGB</a>
+                 <a href="/impressum" className="block hover:text-accent transition-colors nav-link">Impressum</a>
+                 <a href="/datenschutz" className="block hover:text-accent transition-colors nav-link">Datenschutz</a>
+                 <a href="/agb" className="block hover:text-accent transition-colors nav-link">AGB</a>
                </div>
                <div className="flex gap-3 pt-4">
                  <div className="w-8 h-8 rounded-full bg-ghost-fill flex items-center justify-center text-midnight-ink text-sm font-bold">IG</div>
