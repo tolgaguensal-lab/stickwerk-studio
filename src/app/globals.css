@@ -1,7 +1,6 @@
 /* =====================================================================
    STICKWERK-STUDIO DESIGN SYSTEM
-   Inspiriert von: Claude Type - Gallery of Arched Voids (abstrakte Prinzipien)
-   KEINE direkten Kopien - eigenständige Adaption für Stickwerk-Studio
+   Warm Cream/Eggshell Palette — Handwerksatelier-Ästhetik
    ===================================================================== */
 
 @import "tailwindcss";
@@ -10,28 +9,50 @@
    CUSTOM PROPERTIES
    --------------------------------------------------------------------- */
 :root {
-  /* ===== COLORS =====
-     Adaptiert von Claude Type - warme, neutrale Palette
-     Copyright-freie Farbwerte (funktionale Farben)
-  */
-  --color-canvas-white: #fcfbf7;       /* Warmer Off-White Hintergrund */
-  --color-paper-gray: #e7e4e0;         /* Subtiler Sektionshintergrund */
-  --color-midnight-ink: #0d0d0f;       /* Primärtext - fast schwarz */
-  --color-deep-charcoal: #2b1b1b;      /* Sekundärtext, Borders */
-  --color-ghost-fill: #f5f3f0;         /* Sehr heller Card-Tint */
-  --color-pure-white: #ffffff;         /* Inverse Texte */
-  --color-signal-green: #99ff66;       /* Akzentfarbe (Success) */
-  --color-accent-orange: #e8a87c;      /* Wärmer Akzent für CTAs */
-  --color-signal-red: #e74c3c;         /* Fehler */
+  /* ===== WARM CREAM/Eggshell Palette ===== */
+  --color-background: #F7F1E6;         /* Warmer Creme - Seitenhintergrund */
+  --color-foreground: #111111;          /* Fast Schwarz - Primärtext */
+  --color-card: #FFF8EC;               /* Warmes Eierschale - Karten */
+  --color-card-foreground: #111111;
+  --color-popover: #FFF8EC;
+  --color-popover-foreground: #111111;
+  --color-primary: #111111;             /* Schwarz - Primäre Buttons */
+  --color-primary-foreground: #FFF8EC;  /* Warmweiß - Text auf primären Buttons */
+  --color-secondary: #D8C7AE;           /* Warmer Sand/Tan - Sekundäre Buttons */
+  --color-secondary-foreground: #111111;
+  --color-muted: #EFE3D0;              /* Gedämpftes Creme - Alternativ-Sections */
+  --color-muted-foreground: #3A332C;   /* Warmes Dunkelbraun - sekundärer Text */
+  --color-accent: #8A6A3F;             /* Warmes Braun/Gold - Akzente */
+  --color-accent-foreground: #FFF8EC;
+  --color-destructive: #8B1E1E;        /* Tiefes Rot - Fehler */
+  --color-destructive-foreground: #FFF8EC;
+  --color-success: #1F6B3A;            /* Tiefes Grün - Erfolg */
+  --color-success-foreground: #FFF8EC;
+  --color-border: #D8C7AE;             /* Warmer Sand - Rahmen */
+  --color-input: #D8C7AE;              /* Input-Rahmen */
+  --color-ring: #8A6A3F;               /* Fokus-Ring Akzent */
 
-  /* ===== TYPOGRAPHY - Open Source Fonts =====
-     MagicUIPro (proprietär) → Playfair Display + Inter (MIT Lizenz)
-  */
+  /* Surface Aliase */
+  --color-surface: var(--color-card);
+  --color-surface-muted: var(--color-muted);
+
+  /* ===== Abwärtskompatible Aliase (alte Token-Namen) ===== */
+  --color-canvas-white: #F7F1E6;
+  --color-paper-gray: #EFE3D0;
+  --color-midnight-ink: #111111;
+  --color-deep-charcoal: #3A332C;
+  --color-ghost-fill: #FFF8EC;
+  --color-pure-white: #FFF8EC;
+  --color-signal-green: #1F6B3A;
+  --color-signal-red: #8B1E1E;
+  --color-accent-orange: #8A6A3F;
+
+  /* ===== TYPOGRAPHY - Open Source Fonts ===== */
   --font-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
   --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
 
-  /* Type Scale - Inspiriert von Claude Type: single weight, size hierarchy */
+  /* Type Scale */
   --text-caption: 11px;
   --leading-caption: 1.6;
   --text-body-sm: 12px;
@@ -49,7 +70,7 @@
   --text-display: 56px;
   --leading-display: 1.1;
 
-  /* Font Weights - Single weight approach wie Claude Type */
+  /* Font Weights */
   --font-weight-light: 300;
   --font-weight-regular: 400;
   --font-weight-medium: 500;
@@ -61,7 +82,7 @@
   --tracking-wide: 0.001em;
   --tracking-wider: 0.020em;
 
-  /* ===== SPACING - 4px Basis (Claude Type) ===== */
+  /* ===== SPACING - 4px Basis ===== */
   --spacing-unit: 4px;
   --spacing-4: 4px;
   --spacing-8: 8px;
@@ -84,60 +105,63 @@
   --content-max-width: 1200px;
   --content-narrow: 800px;
 
-  /* ===== BORDER RADIUS =====
-     Claude Type: cards=32px, buttons=100px, imagery=900px, elements=10px
-  */
-  --radius-elements: 10px;
-  --radius-cards: 32px;
-  --radius-buttons: 100px;
-  --radius-imagery: 900px;
+  /* ===== BORDER RADIUS ===== */
   --radius-sm: 6px;
   --radius-md: 10px;
   --radius-lg: 16px;
   --radius-xl: 32px;
+  --radius-elements: 10px;
+  --radius-cards: 32px;
+  --radius-buttons: 100px;
+  --radius-imagery: 900px;
   --radius-full: 100px;
   --radius-arched: 900px;
-
-  /* ===== NO SHADOWS =====
-     Claude Type: flat design, keine Schatten
-     Oberflächen unterscheiden sich durch Hintergrundfarben
-  */
 
   /* ===== TRANSITIONS ===== */
   --transition-fast: 150ms ease;
   --transition-base: 250ms ease;
   --transition-slow: 350ms ease;
-
-  /* ===== SURFACES ===== */
-  --surface-1: var(--color-canvas-white);    /* Primärer Hintergrund */
-  --surface-2: var(--color-paper-gray);       /* Secondary Sections */
-  --surface-3: var(--color-ghost-fill);       /* Card Tint */
 }
 
 /* ---------------------------------------------------------------------
    TAILWIND v4 THEME
    --------------------------------------------------------------------- */
 @theme inline {
-  /* Colors */
-  --color-canvas-white: #fcfbf7;
-  --color-paper-gray: #e7e4e0;
-  --color-midnight-ink: #0d0d0f;
-  --color-deep-charcoal: #2b1b1b;
-  --color-ghost-fill: #f5f3f0;
-  --color-pure-white: #ffffff;
-  --color-signal-green: #99ff66;
-  --color-accent-orange: #e8a87c;
-  --color-signal-red: #e74c3c;
+  /* Warm Cream/Eggshell Palette */
+  --color-background: #F7F1E6;
+  --color-foreground: #111111;
+  --color-card: #FFF8EC;
+  --color-card-foreground: #111111;
+  --color-popover: #FFF8EC;
+  --color-popover-foreground: #111111;
+  --color-primary: #111111;
+  --color-primary-foreground: #FFF8EC;
+  --color-secondary: #D8C7AE;
+  --color-secondary-foreground: #111111;
+  --color-muted: #EFE3D0;
+  --color-muted-foreground: #3A332C;
+  --color-accent: #8A6A3F;
+  --color-accent-foreground: #FFF8EC;
+  --color-destructive: #8B1E1E;
+  --color-destructive-foreground: #FFF8EC;
+  --color-success: #1F6B3A;
+  --color-success-foreground: #FFF8EC;
+  --color-border: #D8C7AE;
+  --color-input: #D8C7AE;
+  --color-ring: #8A6A3F;
+  --color-surface: #FFF8EC;
+  --color-surface-muted: #EFE3D0;
 
-  /* Semantic Colors */
-  --color-background: var(--color-canvas-white);
-  --color-foreground: var(--color-midnight-ink);
-  --color-muted: var(--color-deep-charcoal);
-  --color-surface: var(--color-ghost-fill);
-  --color-accent: var(--color-accent-orange);
-  --color-success: var(--color-signal-green);
-  --color-destructive: var(--color-signal-red);
-  --color-border: var(--color-deep-charcoal);
+  /* Abwärtskompatible Aliase */
+  --color-canvas-white: #F7F1E6;
+  --color-paper-gray: #EFE3D0;
+  --color-midnight-ink: #111111;
+  --color-deep-charcoal: #3A332C;
+  --color-ghost-fill: #FFF8EC;
+  --color-pure-white: #FFF8EC;
+  --color-signal-green: #1F6B3A;
+  --color-signal-red: #8B1E1E;
+  --color-accent-orange: #8A6A3F;
 
   /* Font Families */
   --font-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
@@ -237,8 +261,8 @@ body {
   font-family: var(--font-sans);
   font-size: var(--text-body);
   line-height: var(--leading-body);
-  color: var(--color-midnight-ink);
-  background-color: var(--color-canvas-white);
+  color: var(--color-foreground);
+  background-color: var(--color-background);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -247,10 +271,9 @@ body {
 h1, h2, h3, h4, h5 {
   font-family: var(--font-serif);
   font-weight: var(--font-weight-regular);
-  color: var(--color-midnight-ink);
+  color: var(--color-foreground);
 }
 
-/* Display Headings */
 .heading-display {
   font-family: var(--font-serif);
   font-size: var(--text-display);
@@ -283,7 +306,6 @@ h1, h2, h3, h4, h5 {
   letter-spacing: var(--tracking-wide);
 }
 
-/* Body Text */
 .body-lg {
   font-size: var(--text-body-lg);
   line-height: var(--leading-body-lg);
@@ -302,7 +324,6 @@ h1, h2, h3, h4, h5 {
   letter-spacing: var(--tracking-normal);
 }
 
-/* Caption / Meta */
 .caption {
   font-size: var(--text-caption);
   line-height: var(--leading-caption);
@@ -335,15 +356,14 @@ h1, h2, h3, h4, h5 {
 
 /* ===== CARD STYLES ===== */
 .card {
-  background-color: var(--surface-3);
-  border-radius: var(--radius-cards); /* 32px */
+  background-color: var(--color-card);
+  border-radius: var(--radius-cards);
   padding: var(--card-padding);
-  /* No shadows - flat design */
 }
 
 /* ===== BUTTON PILL STYLES ===== */
 .btn-pill {
-  border-radius: var(--radius-buttons); /* 100px */
+  border-radius: var(--radius-buttons);
   padding: 0 var(--spacing-16);
   font-size: var(--text-body-lg);
   letter-spacing: var(--tracking-wide);
@@ -353,23 +373,21 @@ h1, h2, h3, h4, h5 {
 
 /* ===== IMAGE ARCH STYLES ===== */
 .img-arch {
-  border-radius: var(--radius-imagery) var(--radius-imagery) 0 0; /* 900px top arch */
+  border-radius: var(--radius-imagery) var(--radius-imagery) 0 0;
   overflow: hidden;
 }
 
 .img-arch-all {
-  border-radius: var(--radius-imagery); /* 900px all sides - arched rectangle */
+  border-radius: var(--radius-imagery);
   overflow: hidden;
 }
 
 /* ===== UTILITY ===== */
-.surface-1 { background-color: var(--surface-1); }
-.surface-2 { background-color: var(--surface-2); }
-.surface-3 { background-color: var(--surface-3); }
+.surface-1 { background-color: var(--color-background); }
+.surface-2 { background-color: var(--color-surface-muted); }
+.surface-3 { background-color: var(--color-card); }
 
-.text-muted { color: var(--color-deep-charcoal); }
-
-/* Smooth width transitions for mobile nav */
+/* Accordion animations */
 @keyframes accordion-down {
   from { height: 0; }
   to { height: var(--radix-accordion-content-height); }
@@ -381,15 +399,33 @@ h1, h2, h3, h4, h5 {
 }
 
 /* ---------------------------------------------------------------------
-   DARK MODE (Optional)
+   DARK MODE
    --------------------------------------------------------------------- */
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-canvas-white: #1a1a1c;
-    --color-paper-gray: #222224;
-    --color-ghost-fill: #2a2a2c;
-    --color-midnight-ink: #f0f0f0;
-    --color-deep-charcoal: #c0c0c0;
+    --color-background: #1a1815;
+    --color-foreground: #e8e0d8;
+    --color-card: #24211d;
+    --color-card-foreground: #e8e0d8;
+    --color-popover: #24211d;
+    --color-popover-foreground: #e8e0d8;
+    --color-primary: #e8e0d8;
+    --color-primary-foreground: #1a1815;
+    --color-secondary: #3A332C;
+    --color-secondary-foreground: #e8e0d8;
+    --color-muted: #2d2924;
+    --color-muted-foreground: #b8a89a;
+    --color-border: #3A332C;
+    --color-input: #3A332C;
+    --color-surface-muted: #2d2924;
+
+    /* Backward compat */
+    --color-canvas-white: #1a1815;
+    --color-paper-gray: #2d2924;
+    --color-midnight-ink: #e8e0d8;
+    --color-deep-charcoal: #b8a89a;
+    --color-ghost-fill: #24211d;
+    --color-pure-white: #e8e0d8;
   }
 }
 
@@ -405,6 +441,6 @@ h1, h2, h3, h4, h5 {
    SELECTION
    --------------------------------------------------------------------- */
 ::selection {
-  background-color: var(--color-signal-green);
-  color: var(--color-midnight-ink);
+  background-color: var(--color-accent);
+  color: var(--color-accent-foreground);
 }
