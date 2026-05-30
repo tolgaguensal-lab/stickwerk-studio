@@ -61,7 +61,7 @@ export default function Navbar() {
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-        className="fixed top-0 left-0 right-0 z-50 bg-canvas-white/80 backdrop-blur-md border-b border-deep-charcoal/10"
+        className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border"
     >
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex items-center justify-between h-16">
@@ -72,9 +72,9 @@ export default function Navbar() {
               alt="Stickwerk-Studio Logo"
               width={40}
               height={40}
-              className="rounded-xl border-2 border-deep-charcoal/10"
+              className="rounded-xl border-2 border-border"
             />
-            <span className="text-xl font-serif font-regular text-midnight-ink">Stickwerk-Studio</span>
+            <span className="text-xl font-serif font-regular text-foreground">Stickwerk-Studio</span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -82,25 +82,25 @@ export default function Navbar() {
             <a 
               href="#features" 
               onClick={(e) => handleHashNav(e, "#features")}
-              className="text-deep-charcoal/70 hover:text-signal-green transition-colors cursor-pointer nav-link"
+              className="text-muted-foreground hover:text-accent transition-colors cursor-pointer nav-link"
             >
                Leistungen
             </a>
             <a 
               href="#calculator" 
               onClick={(e) => handleHashNav(e, "#calculator")}
-              className="text-deep-charcoal/70 hover:text-signal-green transition-colors cursor-pointer nav-link"
+              className="text-muted-foreground hover:text-accent transition-colors cursor-pointer nav-link"
             >
                Konfigurator
             </a>
             <a 
               href="#faq" 
               onClick={(e) => handleHashNav(e, "#faq")}
-              className="text-deep-charcoal/70 hover:text-signal-green transition-colors cursor-pointer nav-link"
+              className="text-muted-foreground hover:text-accent transition-colors cursor-pointer nav-link"
             >
                FAQ
             </a>
-            <Link href="/kontakt" className="text-deep-charcoal/70 hover:text-signal-green transition-colors nav-link">
+            <Link href="/kontakt" className="text-muted-foreground hover:text-accent transition-colors nav-link">
                Kontakt
             </Link>
             <Button 
@@ -116,19 +116,19 @@ export default function Navbar() {
           <div className="md:hidden">
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="text-deep-charcoal" aria-label="Menü">
+                <Button variant="ghost" size="icon" className="text-foreground" aria-label="Menü">
                   <Menu className="w-6 h-6" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="w-[300px] sm:w-[400px] bg-canvas-white">
+              <SheetContent side="right" className="w-[300px] sm:w-[400px] bg-card">
                 <div className="flex flex-col h-full">
                   <div className="flex items-center justify-between mb-8">
-                    <span className="text-xl font-serif font-regular text-midnight-ink">Menü</span>
+                    <span className="text-xl font-serif font-regular text-foreground">Menü</span>
                     <Button
                       variant="ghost"
                       size="icon"
                       onClick={() => setIsOpen(false)}
-                      className="text-deep-charcoal"
+                      className="text-foreground"
                     >
                       <X className="w-6 h-6" />
                     </Button>
@@ -139,7 +139,7 @@ export default function Navbar() {
                        <a
                          href="#features"
                          onClick={(e) => handleHashNav(e, "#features")}
-                          className="text-lg text-deep-charcoal/70 hover:text-signal-green transition-colors cursor-pointer block"
+                          className="text-lg text-muted-foreground hover:text-accent transition-colors cursor-pointer block"
                         >
                           Leistungen
                         </a>
@@ -148,7 +148,7 @@ export default function Navbar() {
                         <a
                           href="#calculator"
                           onClick={(e) => handleHashNav(e, "#calculator")}
-                          className="text-lg text-deep-charcoal/70 hover:text-signal-green transition-colors cursor-pointer block"
+                          className="text-lg text-muted-foreground hover:text-accent transition-colors cursor-pointer block"
                         >
                           Konfigurator
                         </a>
@@ -157,7 +157,7 @@ export default function Navbar() {
                         <a
                           href="#faq"
                           onClick={(e) => handleHashNav(e, "#faq")}
-                          className="text-lg text-deep-charcoal/70 hover:text-signal-green transition-colors cursor-pointer block"
+                          className="text-lg text-muted-foreground hover:text-accent transition-colors cursor-pointer block"
                         >
                           FAQ
                         </a>
@@ -165,7 +165,7 @@ export default function Navbar() {
                       <SheetClose asChild>
                         <Link
                           href="/kontakt"
-                          className="text-lg text-deep-charcoal/70 hover:text-signal-green transition-colors"
+                          className="text-lg text-muted-foreground hover:text-accent transition-colors"
                        >
                          Kontakt
                        </Link>
