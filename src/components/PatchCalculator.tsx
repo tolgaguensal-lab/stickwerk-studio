@@ -208,16 +208,16 @@ export default function PatchCalculator() {
       <motion.div 
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="text-center py-12 px-6 bg-white rounded-3xl border-2 border-primary/10 shadow-xl max-w-2xl mx-auto"
+        className="text-center py-16 px-8 bg-card rounded-2xl border border-border shadow-sm max-w-2xl mx-auto"
       >
-        <div className="w-20 h-20 bg-accent/20 text-accent rounded-full flex items-center justify-center mx-auto mb-6">
+        <div className="w-20 h-20 bg-accent/10 text-accent rounded-full flex items-center justify-center mx-auto mb-6">
           <Check className="w-10 h-10" />
         </div>
-        <h3 className="text-3xl font-serif font-bold text-primary mb-4">Anfrage erhalten!</h3>
-        <p className="text-foreground/70 mb-8">
+        <h3 className="text-2xl md:text-3xl font-serif font-bold text-foreground mb-4">Anfrage erhalten!</h3>
+        <p className="text-muted-foreground mb-8 max-w-md mx-auto">
           Vielen Dank für Ihr Vertrauen. Wir prüfen Ihre Konfiguration und melden uns innerhalb von 24-48 Stunden mit einem finalen Angebot bei Ihnen.
         </p>
-        <Button variant="outline" onClick={() => { setSubmitted(false); setStep(1); }}>
+        <Button variant="default" onClick={() => { setSubmitted(false); setStep(1); }}>
           Neuen Patch planen
         </Button>
       </motion.div>
@@ -225,10 +225,10 @@ export default function PatchCalculator() {
   }
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+    <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
       
       {/* --- MAIN STEPS --- */}
-      <div className="lg:col-span-2 space-y-6">
+      <div className="lg:col-span-3 space-y-8">
         <AnimatePresence mode="wait">
           {step === 1 && (
             <motion.div
@@ -239,23 +239,23 @@ export default function PatchCalculator() {
               className="space-y-6"
             >
               <div className="flex items-center gap-3 mb-4">
-                <span className="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold">1</span>
-                <h3 className="text-2xl font-serif font-bold text-primary">Form wählen</h3>
+                <span className="w-10 h-10 rounded-full bg-foreground text-card flex items-center justify-center font-bold">1</span>
+                <h3 className="text-2xl font-serif font-bold text-foreground">Form wählen</h3>
               </div>
-              <p className="text-foreground/70 text-sm mb-6">Wählen Sie die Form Ihres Patches. Individuelle Formen sind gegen Aufpreis möglich.</p>
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
-                {CONFIG.shapes.map((shape) => (
+              <p className="text-muted-foreground mb-6">Wählen Sie die Form Ihres Patches. Individuelle Formen sind gegen Aufpreis möglich.</p>
+               <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                 {CONFIG.shapes.map((shape) => (
                   <button
                     key={shape.id}
                     onClick={() => { setSelections(prev => ({ ...prev, shape: shape.id })); setStep(2); }}
                     className={cn(
                       "p-4 sm:p-6 rounded-2xl border-2 transition-all text-center group hover:shadow-md",
-                      selections.shape === shape.id ? "border-accent bg-accent/5 shadow-lg" : "border-primary/10 hover:border-primary/30"
+                      selections.shape === shape.id ? "border-accent bg-accent/5 shadow-sm" : "border-border hover:border-foreground/30"
                     )}
                   >
-                    <div className="text-2xl sm:text-3xl mb-2 group-hover:scale-110 transition-transform">{shape.icon}</div>
-                    <div className="font-medium text-primary text-sm">{shape.name}</div>
-                    <div className="text-xs text-foreground/60 mt-1">{shape.basePrice}€ Basis</div>
+                    <div className="text-3xl mb-2 group-hover:scale-110 transition-transform">{shape.icon}</div>
+                    <div className="font-medium text-foreground">{shape.name}</div>
+                    <div className="text-sm text-muted-foreground mt-1">{shape.basePrice}€ Basis</div>
                   </button>
                 ))}
               </div>
@@ -271,10 +271,10 @@ export default function PatchCalculator() {
               className="space-y-6"
             >
               <div className="flex items-center gap-3 mb-4">
-                <span className="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold">2</span>
-                <h3 className="text-2xl font-serif font-bold text-primary">Größe festlegen</h3>
+                <span className="w-10 h-10 rounded-full bg-foreground text-card flex items-center justify-center font-bold">2</span>
+                <h3 className="text-2xl font-serif font-bold text-foreground">Größe festlegen</h3>
               </div>
-              <p className="text-foreground/70 text-sm mb-6">Die Größe beeinflusst den Preis und die Detailtreue Ihres Designs.</p>
+              <p className="text-muted-foreground mb-6">Die Größe beeinflusst den Preis und die Detailtreue Ihres Designs.</p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {CONFIG.sizes.map((size) => (
                   <button
@@ -282,7 +282,7 @@ export default function PatchCalculator() {
                     onClick={() => { setSelections(prev => ({ ...prev, size: size.id })); setStep(3); }}
                     className={cn(
                       "p-6 rounded-2xl border-2 text-left transition-all flex items-center justify-between hover:shadow-md",
-                      selections.size === size.id ? "border-accent bg-accent/5 shadow-lg" : "border-primary/10 hover:border-primary/30"
+                      selections.size === size.id ? "border-accent bg-accent/5 shadow-sm" : "border-border hover:border-foreground/30"
                     )}
                   >
                     <span className="font-medium text-primary">{size.name}</span>
@@ -305,10 +305,10 @@ export default function PatchCalculator() {
               className="space-y-6"
             >
               <div className="flex items-center gap-3 mb-4">
-                <span className="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold">3</span>
-                <h3 className="text-2xl font-serif font-bold text-primary">Komplexität</h3>
+                <span className="w-10 h-10 rounded-full bg-foreground text-card flex items-center justify-center font-bold">3</span>
+                <h3 className="text-2xl font-serif font-bold text-foreground">Komplexität</h3>
               </div>
-              <p className="text-foreground/70 text-sm mb-6">Mehr Details und Farben erhöhen den Preis. Wir optimieren Ihr Design für beste Ergebnisse.</p>
+              <p className="text-muted-foreground mb-6">Mehr Details und Farben erhöhen den Preis. Wir optimieren Ihr Design für beste Ergebnisse.</p>
               <div className="grid grid-cols-1 gap-4">
                 {CONFIG.complexity.map((comp) => (
                   <button
@@ -316,12 +316,12 @@ export default function PatchCalculator() {
                     onClick={() => { setSelections(prev => ({ ...prev, complexity: comp.id })); setStep(4); }}
                     className={cn(
                       "p-6 rounded-2xl border-2 text-left transition-all hover:shadow-md",
-                      selections.complexity === comp.id ? "border-accent bg-accent/5 shadow-lg" : "border-primary/10 hover:border-primary/30"
+                      selections.complexity === comp.id ? "border-accent bg-accent/5 shadow-sm" : "border-border hover:border-foreground/30"
                     )}
                   >
                     <div className="flex justify-between items-center">
                       <div>
-                        <div className="font-bold text-primary">{comp.name}</div>
+                        <div className="font-bold text-foreground">{comp.name}</div>
                         <div className="text-sm text-foreground/60">{comp.desc}</div>
                       </div>
                       {selections.complexity === comp.id && <Check className="w-5 h-5 text-accent" />}
@@ -344,10 +344,10 @@ export default function PatchCalculator() {
               className="space-y-6"
             >
               <div className="flex items-center gap-3 mb-4">
-                <span className="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold">4</span>
-                <h3 className="text-2xl font-serif font-bold text-primary">Farbanzahl</h3>
+                <span className="w-10 h-10 rounded-full bg-foreground text-card flex items-center justify-center font-bold">4</span>
+                <h3 className="text-2xl font-serif font-bold text-foreground">Farbanzahl</h3>
               </div>
-              <p className="text-foreground/70 text-sm mb-6">Jede zusätzliche Farbe erhöht die Stickzeit und damit den Preis.</p>
+              <p className="text-muted-foreground mb-6">Jede zusätzliche Farbe erhöht die Stickzeit und damit den Preis.</p>
               <div className="p-8 bg-white rounded-3xl border-2 border-primary/10 shadow-sm">
                 <div className="flex items-center justify-between mb-6">
                   <div className="flex items-center gap-3">
@@ -412,10 +412,10 @@ export default function PatchCalculator() {
               className="space-y-6"
             >
               <div className="flex items-center gap-3 mb-4">
-                <span className="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold">5</span>
-                <h3 className="text-2xl font-serif font-bold text-primary">Material</h3>
+                <span className="w-10 h-10 rounded-full bg-foreground text-card flex items-center justify-center font-bold">5</span>
+                <h3 className="text-2xl font-serif font-bold text-foreground">Material</h3>
               </div>
-              <p className="text-foreground/70 text-sm mb-6">Wählen Sie das Material für Ihre Patches. Jedes Material hat unterschiedliche Eigenschaften.</p>
+              <p className="text-muted-foreground mb-6">Wählen Sie das Material für Ihre Patches. Jedes Material hat unterschiedliche Eigenschaften.</p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {CONFIG.materials.map((material) => (
                   <button
@@ -423,12 +423,12 @@ export default function PatchCalculator() {
                     onClick={() => { setSelections(prev => ({ ...prev, material: material.id })); setStep(6); }}
                     className={cn(
                       "p-6 rounded-2xl border-2 text-left transition-all hover:shadow-md",
-                      selections.material === material.id ? "border-accent bg-accent/5 shadow-lg" : "border-primary/10 hover:border-primary/30"
+                      selections.material === material.id ? "border-accent bg-accent/5 shadow-sm" : "border-border hover:border-foreground/30"
                     )}
                   >
                     <div className="flex justify-between items-start">
                       <div>
-                        <div className="font-bold text-primary text-lg">{material.name}</div>
+                        <div className="font-bold text-foreground text-lg">{material.name}</div>
                         <div className="text-sm text-foreground/60 mt-1">{material.desc}</div>
                         {material.price !== 0 && (
                           <div className="text-xs text-accent mt-2">
@@ -456,10 +456,10 @@ export default function PatchCalculator() {
               className="space-y-6"
             >
               <div className="flex items-center gap-3 mb-4">
-                <span className="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold">6</span>
-                <h3 className="text-2xl font-serif font-bold text-primary">Randart</h3>
+                <span className="w-10 h-10 rounded-full bg-foreground text-card flex items-center justify-center font-bold">6</span>
+                <h3 className="text-2xl font-serif font-bold text-foreground">Randart</h3>
               </div>
-              <p className="text-foreground/70 text-sm mb-6">Wählen Sie die Randverarbeitung für Ihren Patch. Der Rand schützt vor Ausfransen und verleiht dem Patch eine professionelle Optik.</p>
+              <p className="text-muted-foreground mb-6">Wählen Sie die Randverarbeitung für Ihren Patch. Der Rand schützt vor Ausfransen und verleiht dem Patch eine professionelle Optik.</p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {CONFIG.edges.map((edge) => (
                   <button
@@ -467,12 +467,12 @@ export default function PatchCalculator() {
                     onClick={() => { setSelections(prev => ({ ...prev, edge: edge.id })); setStep(7); }}
                     className={cn(
                       "p-6 rounded-2xl border-2 text-left transition-all hover:shadow-md",
-                      selections.edge === edge.id ? "border-accent bg-accent/5 shadow-lg" : "border-primary/10 hover:border-primary/30"
+                      selections.edge === edge.id ? "border-accent bg-accent/5 shadow-sm" : "border-border hover:border-foreground/30"
                     )}
                   >
                     <div className="flex justify-between items-start">
                       <div>
-                        <div className="font-bold text-primary text-lg">{edge.name}</div>
+                        <div className="font-bold text-foreground text-lg">{edge.name}</div>
                         <div className="text-sm text-foreground/60 mt-1">{edge.desc}</div>
                         {edge.price !== 0 && (
                           <div className="text-xs text-accent mt-2">
@@ -500,10 +500,10 @@ export default function PatchCalculator() {
                 className="space-y-6"
               >
                 <div className="flex items-center gap-3 mb-4">
-                  <span className="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold">7</span>
-                  <h3 className="text-2xl font-serif font-bold text-primary">Rückseite</h3>
+                  <span className="w-10 h-10 rounded-full bg-foreground text-card flex items-center justify-center font-bold">7</span>
+                  <h3 className="text-2xl font-serif font-bold text-foreground">Rückseite</h3>
                 </div>
-                <p className="text-foreground/70 text-sm mb-6">Wählen Sie die Befestigungsart für Ihren Patch.</p>
+                <p className="text-muted-foreground mb-6">Wählen Sie die Befestigungsart für Ihren Patch.</p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                   {CONFIG.backings.map((back) => (
                     <button
@@ -511,7 +511,7 @@ export default function PatchCalculator() {
                       onClick={() => { setSelections(prev => ({ ...prev, backing: back.id })); setStep(8); }}
                       className={cn(
                         "p-6 rounded-2xl border-2 transition-all text-center hover:shadow-md",
-                        selections.backing === back.id ? "border-accent bg-accent/5 shadow-lg" : "border-primary/10 hover:border-primary/30"
+                        selections.backing === back.id ? "border-accent bg-accent/5 shadow-sm" : "border-border hover:border-foreground/30"
                       )}
                     >
                       <div className="font-medium text-primary">{back.name}</div>
@@ -538,12 +538,12 @@ export default function PatchCalculator() {
                 className="space-y-6"
               >
                 <div className="flex items-center gap-3 mb-4">
-                  <span className="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold">8</span>
-                  <h3 className="text-2xl font-serif font-bold text-primary">Menge</h3>
+                  <span className="w-10 h-10 rounded-full bg-foreground text-card flex items-center justify-center font-bold">8</span>
+                  <h3 className="text-2xl font-serif font-bold text-foreground">Menge</h3>
                 </div>
-                <p className="text-foreground/70 text-sm mb-6">Staffelpreise gelten ab 20, 50 und 100 Stück.</p>
+                <p className="text-muted-foreground mb-6">Staffelpreise gelten ab 20, 50 und 100 Stück.</p>
                 <div className="flex flex-col items-center gap-6 p-8 bg-white rounded-3xl border-2 border-primary/10 shadow-sm">
-                  <div className="text-6xl font-serif font-bold text-primary">{selections.quantity}</div>
+                  <div className="text-5xl font-serif font-bold text-foreground">{selections.quantity}</div>
                   <div className="text-sm text-foreground/60">Stück</div>
                   <div className="flex items-center gap-6">
                     <button 
@@ -579,7 +579,7 @@ export default function PatchCalculator() {
                           : "border-primary/10"
                       )}
                     >
-                      <div className="font-bold text-primary">ab {tier.threshold}+ Stück</div>
+                      <div className="font-bold text-foreground">ab {tier.threshold}+ Stück</div>
                       <div className="text-accent font-bold">- {tier.discount} Rabatt</div>
                     </div>
                   ))}
@@ -609,10 +609,10 @@ export default function PatchCalculator() {
                 className="space-y-6"
               >
                 <div className="flex items-center gap-3 mb-4">
-                  <span className="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold">9</span>
-                  <h3 className="text-2xl font-serif font-bold text-primary">Express-Option</h3>
+                  <span className="w-10 h-10 rounded-full bg-foreground text-card flex items-center justify-center font-bold">9</span>
+                  <h3 className="text-2xl font-serif font-bold text-foreground">Express-Option</h3>
                 </div>
-                <p className="text-foreground/70 text-sm mb-6">Benötigen Sie Ihre Patches besonders schnell? Wählen Sie unsere Express-Optionen.</p>
+                <p className="text-muted-foreground mb-6">Benötigen Sie Ihre Patches besonders schnell? Wählen Sie unsere Express-Optionen.</p>
                 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   {Object.entries(CONFIG.expressMultipliers).map(([key, multiplier]) => {
@@ -626,12 +626,12 @@ export default function PatchCalculator() {
                         }}
                         className={cn(
                           "p-6 rounded-2xl border-2 text-left transition-all hover:shadow-md",
-                          selections.express === expressKey ? "border-accent bg-accent/5 shadow-lg" : "border-primary/10 hover:border-primary/30"
+                          selections.express === expressKey ? "border-accent bg-accent/5 shadow-sm" : "border-border hover:border-foreground/30"
                         )}
                       >
                         <div className="flex justify-between items-start">
                           <div>
-                            <div className="font-bold text-primary text-lg">
+                            <div className="font-bold text-foreground text-lg">
                               {expressKey === "none" ? "Standard" : expressKey === "express" ? "Express" : "Super Express"}
                             </div>
                             <div className="text-sm text-foreground/60 mt-1">
@@ -665,10 +665,10 @@ export default function PatchCalculator() {
                 className="space-y-6"
               >
                 <div className="flex items-center gap-3 mb-4">
-                  <span className="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold">10</span>
-                  <h3 className="text-2xl font-serif font-bold text-primary">Design hochladen (Optional)</h3>
+                  <span className="w-10 h-10 rounded-full bg-foreground text-card flex items-center justify-center font-bold">10</span>
+                  <h3 className="text-2xl font-serif font-bold text-foreground">Design hochladen (Optional)</h3>
                 </div>
-                <p className="text-foreground/70 text-sm mb-6">Laden Sie Ihr Design hoch, um eine genauere Preiskalkulation zu erhalten.</p>
+                <p className="text-muted-foreground mb-6">Laden Sie Ihr Design hoch, um eine genauere Preiskalkulation zu erhalten.</p>
                 <div className="p-8 bg-white rounded-3xl border-2 border-primary/10 border-dashed shadow-sm">
                   <div className="text-center">
                     <Upload className="w-12 h-12 text-primary/40 mx-auto mb-4" />
@@ -728,10 +728,10 @@ export default function PatchCalculator() {
                 className="space-y-6"
               >
                 <div className="flex items-center gap-3 mb-4">
-                  <span className="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold">11</span>
-                  <h3 className="text-2xl font-serif font-bold text-primary">Kontaktdaten</h3>
+                  <span className="w-10 h-10 rounded-full bg-foreground text-card flex items-center justify-center font-bold">11</span>
+                  <h3 className="text-2xl font-serif font-bold text-foreground">Kontaktdaten</h3>
                 </div>
-                <p className="text-foreground/70 text-sm mb-6">Geben Sie Ihre Kontaktdaten an, damit wir Sie für die Offerterstellung erreichen können.</p>
+                <p className="text-muted-foreground mb-6">Geben Sie Ihre Kontaktdaten an, damit wir Sie für die Offerterstellung erreichen können.</p>
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
@@ -822,78 +822,78 @@ variant="default"
       </div>
 
       {/* --- SUMMARY SIDEBAR --- */}
-      <div className="lg:sticky lg:top-24">
-        <Card className="border-2 border-primary/20 shadow-xl overflow-hidden bg-white/80 backdrop-blur-sm">
-          <CardHeader className="bg-primary text-background py-4">
-            <CardTitle className="text-center text-background text-xl">Ihre Konfiguration</CardTitle>
+      <div className="lg:col-span-2 lg:sticky lg:top-24">
+        <Card className="border border-border shadow-sm overflow-hidden bg-card">
+          <CardHeader className="bg-foreground text-card py-5">
+            <CardTitle className="text-center text-lg">Ihre Konfiguration</CardTitle>
           </CardHeader>
-           <CardContent className="p-6 space-y-6">
-            <div className="space-y-3">
-              <div className="flex justify-between text-sm">
-                <span className="text-foreground/60">Form:</span>
-                <span className="font-bold text-primary">{CONFIG.shapes.find(s => s.id === selections.shape)?.name}</span>
-              </div>
-              <div className="flex justify-between text-sm">
-                <span className="text-foreground/60">Größe:</span>
-                <span className="font-bold text-primary">{CONFIG.sizes.find(s => s.id === selections.size)?.name}</span>
-              </div>
-              <div className="flex justify-between text-sm">
-                <span className="text-foreground/60">Komplexität:</span>
-                <span className="font-bold text-primary">{CONFIG.complexity.find(c => c.id === selections.complexity)?.name}</span>
-              </div>
-              <div className="flex justify-between text-sm">
-                <span className="text-foreground/60">Farben:</span>
-                <span className="font-bold text-primary">{selections.colors}</span>
-              </div>
-              <div className="flex justify-between text-sm">
-                <span className="text-foreground/60">Material:</span>
-                <span className="font-bold text-primary">{CONFIG.materials.find(m => m.id === selections.material)?.name}</span>
-              </div>
-              <div className="flex justify-between text-sm">
-                <span className="text-foreground/60">Rand:</span>
-                <span className="font-bold text-primary">{CONFIG.edges.find(e => e.id === selections.edge)?.name}</span>
-              </div>
-              <div className="flex justify-between text-sm">
-                <span className="text-foreground/60">Rückseite:</span>
-                <span className="font-bold text-primary">{CONFIG.backings.find(b => b.id === selections.backing)?.name}</span>
-              </div>
-              <div className="flex justify-between text-sm">
-                <span className="text-foreground/60">Express:</span>
-                <span className="font-bold text-primary">
-                  {selections.express === "none" ? "Standard" : selections.express === "express" ? "Express" : "Super Express"}
-                </span>
-              </div>
-              <div className="flex justify-between text-sm">
-                <span className="text-foreground/60">Menge:</span>
-                <span className="font-bold text-primary">{selections.quantity} Stück</span>
-              </div>
-              <div className="flex justify-between text-sm">
-                <span className="text-foreground/60">Lieferzeit:</span>
-                <span className="font-bold text-primary">{CONFIG.expressDeliveryTimes[selections.express as keyof typeof CONFIG.expressDeliveryTimes]}</span>
-              </div>
-              <div className="h-px bg-primary/10 my-4" />
-              
-              <div className="flex justify-between items-center">
-                <span className="text-lg font-serif font-bold text-primary">Gesamtpreis:</span>
-                <span className="text-2xl font-serif font-black text-accent">{calculatePrice()} €</span>
-              </div>
-              
-              <div className="flex justify-between text-xs text-foreground/60">
-                <span>ca. {priceRange.min} - {priceRange.max} €</span>
-              </div>
-            </div>
-            
-              <div className="p-4 bg-accent/10 rounded-2xl border border-accent/20">
-                <div className="flex gap-3 items-start">
-                  <Info className="w-5 h-5 text-accent shrink-0 mt-0.5" />
-                  <p className="text-xs text-foreground/70 leading-relaxed">
-                    Dies ist eine unverbindliche Kostenschätzung. Der finale Preis wird nach Prüfung Ihres Motivs festgelegt.
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-        </Card>
-      </div>
+           <CardContent className="p-6 md:p-8 space-y-6">
+             <div className="space-y-4">
+               <div className="flex justify-between">
+                 <span className="text-muted-foreground">Form:</span>
+                 <span className="font-semibold text-foreground">{CONFIG.shapes.find(s => s.id === selections.shape)?.name}</span>
+               </div>
+               <div className="flex justify-between">
+                 <span className="text-muted-foreground">Größe:</span>
+                 <span className="font-semibold text-foreground">{CONFIG.sizes.find(s => s.id === selections.size)?.name}</span>
+               </div>
+               <div className="flex justify-between">
+                 <span className="text-muted-foreground">Komplexität:</span>
+                 <span className="font-semibold text-foreground">{CONFIG.complexity.find(c => c.id === selections.complexity)?.name}</span>
+               </div>
+               <div className="flex justify-between">
+                 <span className="text-muted-foreground">Farben:</span>
+                 <span className="font-semibold text-foreground">{selections.colors}</span>
+               </div>
+               <div className="flex justify-between">
+                 <span className="text-muted-foreground">Material:</span>
+                 <span className="font-semibold text-foreground">{CONFIG.materials.find(m => m.id === selections.material)?.name}</span>
+               </div>
+               <div className="flex justify-between">
+                 <span className="text-muted-foreground">Rand:</span>
+                 <span className="font-semibold text-foreground">{CONFIG.edges.find(e => e.id === selections.edge)?.name}</span>
+               </div>
+               <div className="flex justify-between">
+                 <span className="text-muted-foreground">Rückseite:</span>
+                 <span className="font-semibold text-foreground">{CONFIG.backings.find(b => b.id === selections.backing)?.name}</span>
+               </div>
+               <div className="flex justify-between">
+                 <span className="text-muted-foreground">Express:</span>
+                 <span className="font-semibold text-foreground">
+                   {selections.express === "none" ? "Standard" : selections.express === "express" ? "Express" : "Super Express"}
+                 </span>
+               </div>
+               <div className="flex justify-between">
+                 <span className="text-muted-foreground">Menge:</span>
+                 <span className="font-semibold text-foreground">{selections.quantity} Stück</span>
+               </div>
+               <div className="flex justify-between">
+                 <span className="text-muted-foreground">Lieferzeit:</span>
+                 <span className="font-semibold text-foreground">{CONFIG.expressDeliveryTimes[selections.express as keyof typeof CONFIG.expressDeliveryTimes]}</span>
+               </div>
+               <div className="h-px bg-border" />
+               
+               <div className="flex justify-between items-center pt-2">
+                 <span className="text-xl font-serif font-bold text-foreground">Gesamtpreis:</span>
+                 <span className="text-3xl font-serif font-bold text-accent">{calculatePrice()} €</span>
+               </div>
+               
+               <div className="text-sm text-muted-foreground">
+                 ca. {priceRange.min} - {priceRange.max} €
+               </div>
+             </div>
+             
+               <div className="p-4 bg-accent/5 rounded-xl border border-accent/20">
+                 <div className="flex gap-3 items-start">
+                   <Info className="w-5 h-5 text-accent shrink-0 mt-0.5" />
+                   <p className="text-sm text-muted-foreground leading-relaxed">
+                     Dies ist eine unverbindliche Kostenschätzung. Der finale Preis wird nach Prüfung Ihres Motivs festgelegt.
+                   </p>
+                 </div>
+               </div>
+             </CardContent>
+         </Card>
+       </div>
     </div>
   );
 }

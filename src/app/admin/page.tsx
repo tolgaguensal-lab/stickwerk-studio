@@ -90,7 +90,7 @@ export default function AdminDashboard() {
         const data = (await response.json()) as { leads?: Lead[] };
         setLeads(data.leads || []);
       } else {
-        setError("Failed to fetch leads. Please check your connection.");
+        setError("Datenbank nicht erreichbar. Zeige Demo-Daten an.");
       }
     } catch (err: unknown) {
       setError(

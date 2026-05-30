@@ -73,6 +73,7 @@ export default function Navbar() {
               width={40}
               height={40}
               className="rounded-xl border-2 border-border"
+              loading="eager"
             />
             <span className="text-xl font-serif font-regular text-foreground">Stickwerk-Studio</span>
           </Link>
