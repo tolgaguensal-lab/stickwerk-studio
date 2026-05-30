@@ -56,25 +56,25 @@ export default function LandingPage() {
 
   const targetAudiences = [
     {
-      icon: <Users className="w-8 h-8" />,
+      icon: <Users className="w-10 h-10" />,
       title: "Privatkunden",
       description: "Einzelstücke, Geschenke oder persönliche Accessoires für besondere Anlässe.",
       tagline: "Einzigartigkeit für Sie"
     },
     {
-      icon: <ShieldCheck className="w-8 h-8" />,
+      icon: <ShieldCheck className="w-10 h-10" />,
       title: "Vereine & Clubs",
       description: "Team-Patches, Vereins-Logos und Mitglieder-Accessoires für gemeinsame Identität.",
       tagline: "Zusammen. Stark. Sichtbar."
     },
     {
-      icon: <TrendingUp className="w-8 h-8" />,
+      icon: <TrendingUp className="w-10 h-10" />,
       title: "Creator & Merch",
       description: "Branded Patches für Ihre Merch-Kollektion. Perfekt für YouTuber, Streamer und Influencer.",
       tagline: "Ihre Marke. Ihr Style."
     },
     {
-      icon: <Target className="w-8 h-8" />,
+      icon: <Target className="w-10 h-10" />,
       title: "Unternehmen",
       description: "Firmen-Logos, Arbeitskleidung und Werbeartikel für professionellen Auftritt.",
       tagline: "Business mit Stil"
@@ -106,22 +106,22 @@ export default function LandingPage() {
 
   const services = [
     {
-      icon: <PenTool className="w-6 h-6" />,
+      icon: <PenTool className="w-8 h-8" />,
       title: "Digitale Präzision",
       description: "Wir optimieren jedes Motiv für die Stickmaschine, damit jede Linie perfekt sitzt."
     },
     {
-      icon: <Heart className="w-6 h-6" />,
+      icon: <Heart className="w-8 h-8" />,
       title: "Haptische Qualität",
       description: "Nur erstklassige Garne und langlebige Materialien. Qualität, die man fühlt."
     },
     {
-      icon: <Sparkles className="w-6 h-6" />,
+      icon: <Sparkles className="w-8 h-8" />,
       title: "Persönlicher Dialog",
       description: "Individuelle Beratung zu Form und Material für Ihr perfektes Ergebnis."
     },
     {
-      icon: <Bolt className="w-6 h-6" />,
+      icon: <Bolt className="w-8 h-8" />,
       title: "Express-Service",
       description: "Schnelle Produktion für dringende Aufträge ohne Qualitätsverlust."
     }
@@ -227,7 +227,7 @@ export default function LandingPage() {
                  whileHover={{ y: -4 }}
                  className="card p-8 group"
                >
-                 <div className="w-14 h-14 rounded-xl bg-surface-muted text-foreground flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                 <div className="w-16 h-16 rounded-2xl bg-surface-muted text-foreground flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                    {service.icon}
                  </div>
                  <h3 className="text-xl font-serif font-bold text-foreground mb-3">{service.title}</h3>
@@ -266,9 +266,9 @@ export default function LandingPage() {
                  whileHover={{ y: -4 }}
                  className="card p-8 group relative"
                >
-                 <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-accent/60 to-accent/20" />
-                 <div className="w-14 h-14 rounded-xl bg-accent/10 text-accent flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                   {audience.icon}
+                  <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-accent/60 to-accent/20" />
+                  <div className="w-20 h-20 rounded-2xl bg-accent/10 text-accent flex items-center justify-center mb-6 group-hover:scale-110 transition-transform mx-auto">
+                    {audience.icon}
                  </div>
                  <h3 className="text-xl font-serif font-bold text-foreground mb-2">{audience.title}</h3>
                  <p className="text-sm font-medium text-accent mb-3">{audience.tagline}</p>
@@ -308,7 +308,7 @@ export default function LandingPage() {
                  className="card p-6 text-center relative"
                >
                  {/* Step number badge */}
-                 <div className="w-12 h-12 rounded-full bg-foreground text-card flex items-center justify-center font-bold font-serif text-lg mx-auto mb-4">
+                 <div className="w-12 h-12 rounded-full bg-accent/10 text-accent border-2 border-accent/20 flex items-center justify-center font-bold font-serif text-lg mx-auto mb-4">
                    {step.step}
                  </div>
                  

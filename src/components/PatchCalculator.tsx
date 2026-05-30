@@ -239,7 +239,7 @@ export default function PatchCalculator() {
               className="space-y-6"
             >
               <div className="flex items-center gap-3 mb-4">
-                <span className="w-10 h-10 rounded-full bg-foreground text-card flex items-center justify-center font-bold">1</span>
+                <span className="w-10 h-10 rounded-full bg-accent/10 text-accent border-2 border-accent/20 flex items-center justify-center font-bold">1</span>
                 <h3 className="text-2xl font-serif font-bold text-foreground">Form wählen</h3>
               </div>
               <p className="text-muted-foreground mb-6">Wählen Sie die Form Ihres Patches. Individuelle Formen sind gegen Aufpreis möglich.</p>
@@ -271,7 +271,7 @@ export default function PatchCalculator() {
               className="space-y-6"
             >
               <div className="flex items-center gap-3 mb-4">
-                <span className="w-10 h-10 rounded-full bg-foreground text-card flex items-center justify-center font-bold">2</span>
+                <span className="w-10 h-10 rounded-full bg-accent/10 text-accent border-2 border-accent/20 flex items-center justify-center font-bold">2</span>
                 <h3 className="text-2xl font-serif font-bold text-foreground">Größe festlegen</h3>
               </div>
               <p className="text-muted-foreground mb-6">Die Größe beeinflusst den Preis und die Detailtreue Ihres Designs.</p>
@@ -305,7 +305,7 @@ export default function PatchCalculator() {
               className="space-y-6"
             >
               <div className="flex items-center gap-3 mb-4">
-                <span className="w-10 h-10 rounded-full bg-foreground text-card flex items-center justify-center font-bold">3</span>
+                <span className="w-10 h-10 rounded-full bg-accent/10 text-accent border-2 border-accent/20 flex items-center justify-center font-bold">3</span>
                 <h3 className="text-2xl font-serif font-bold text-foreground">Komplexität</h3>
               </div>
               <p className="text-muted-foreground mb-6">Mehr Details und Farben erhöhen den Preis. Wir optimieren Ihr Design für beste Ergebnisse.</p>
@@ -344,7 +344,7 @@ export default function PatchCalculator() {
               className="space-y-6"
             >
               <div className="flex items-center gap-3 mb-4">
-                <span className="w-10 h-10 rounded-full bg-foreground text-card flex items-center justify-center font-bold">4</span>
+                <span className="w-10 h-10 rounded-full bg-accent/10 text-accent border-2 border-accent/20 flex items-center justify-center font-bold">4</span>
                 <h3 className="text-2xl font-serif font-bold text-foreground">Farbanzahl</h3>
               </div>
               <p className="text-muted-foreground mb-6">Jede zusätzliche Farbe erhöht die Stickzeit und damit den Preis.</p>
@@ -412,7 +412,7 @@ export default function PatchCalculator() {
               className="space-y-6"
             >
               <div className="flex items-center gap-3 mb-4">
-                <span className="w-10 h-10 rounded-full bg-foreground text-card flex items-center justify-center font-bold">5</span>
+                <span className="w-10 h-10 rounded-full bg-accent/10 text-accent border-2 border-accent/20 flex items-center justify-center font-bold">5</span>
                 <h3 className="text-2xl font-serif font-bold text-foreground">Material</h3>
               </div>
               <p className="text-muted-foreground mb-6">Wählen Sie das Material für Ihre Patches. Jedes Material hat unterschiedliche Eigenschaften.</p>
@@ -456,7 +456,7 @@ export default function PatchCalculator() {
               className="space-y-6"
             >
               <div className="flex items-center gap-3 mb-4">
-                <span className="w-10 h-10 rounded-full bg-foreground text-card flex items-center justify-center font-bold">6</span>
+                <span className="w-10 h-10 rounded-full bg-accent/10 text-accent border-2 border-accent/20 flex items-center justify-center font-bold">6</span>
                 <h3 className="text-2xl font-serif font-bold text-foreground">Randart</h3>
               </div>
               <p className="text-muted-foreground mb-6">Wählen Sie die Randverarbeitung für Ihren Patch. Der Rand schützt vor Ausfransen und verleiht dem Patch eine professionelle Optik.</p>
@@ -500,7 +500,7 @@ export default function PatchCalculator() {
                 className="space-y-6"
               >
                 <div className="flex items-center gap-3 mb-4">
-                  <span className="w-10 h-10 rounded-full bg-foreground text-card flex items-center justify-center font-bold">7</span>
+                  <span className="w-10 h-10 rounded-full bg-accent/10 text-accent border-2 border-accent/20 flex items-center justify-center font-bold">7</span>
                   <h3 className="text-2xl font-serif font-bold text-foreground">Rückseite</h3>
                 </div>
                 <p className="text-muted-foreground mb-6">Wählen Sie die Befestigungsart für Ihren Patch.</p>
@@ -538,7 +538,7 @@ export default function PatchCalculator() {
                 className="space-y-6"
               >
                 <div className="flex items-center gap-3 mb-4">
-                  <span className="w-10 h-10 rounded-full bg-foreground text-card flex items-center justify-center font-bold">8</span>
+                  <span className="w-10 h-10 rounded-full bg-accent/10 text-accent border-2 border-accent/20 flex items-center justify-center font-bold">8</span>
                   <h3 className="text-2xl font-serif font-bold text-foreground">Menge</h3>
                 </div>
                 <p className="text-muted-foreground mb-6">Staffelpreise gelten ab 20, 50 und 100 Stück.</p>
@@ -609,7 +609,7 @@ export default function PatchCalculator() {
                 className="space-y-6"
               >
                 <div className="flex items-center gap-3 mb-4">
-                  <span className="w-10 h-10 rounded-full bg-foreground text-card flex items-center justify-center font-bold">9</span>
+                  <span className="w-10 h-10 rounded-full bg-accent/10 text-accent border-2 border-accent/20 flex items-center justify-center font-bold">9</span>
                   <h3 className="text-2xl font-serif font-bold text-foreground">Express-Option</h3>
                 </div>
                 <p className="text-muted-foreground mb-6">Benötigen Sie Ihre Patches besonders schnell? Wählen Sie unsere Express-Optionen.</p>
@@ -665,7 +665,7 @@ export default function PatchCalculator() {
                 className="space-y-6"
               >
                 <div className="flex items-center gap-3 mb-4">
-                  <span className="w-10 h-10 rounded-full bg-foreground text-card flex items-center justify-center font-bold">10</span>
+                  <span className="w-10 h-10 rounded-full bg-accent/10 text-accent border-2 border-accent/20 flex items-center justify-center font-bold">10</span>
                   <h3 className="text-2xl font-serif font-bold text-foreground">Design hochladen (Optional)</h3>
                 </div>
                 <p className="text-muted-foreground mb-6">Laden Sie Ihr Design hoch, um eine genauere Preiskalkulation zu erhalten.</p>
@@ -728,7 +728,7 @@ export default function PatchCalculator() {
                 className="space-y-6"
               >
                 <div className="flex items-center gap-3 mb-4">
-                  <span className="w-10 h-10 rounded-full bg-foreground text-card flex items-center justify-center font-bold">11</span>
+                  <span className="w-10 h-10 rounded-full bg-accent/10 text-accent border-2 border-accent/20 flex items-center justify-center font-bold">11</span>
                   <h3 className="text-2xl font-serif font-bold text-foreground">Kontaktdaten</h3>
                 </div>
                 <p className="text-muted-foreground mb-6">Geben Sie Ihre Kontaktdaten an, damit wir Sie für die Offerterstellung erreichen können.</p>
@@ -824,8 +824,8 @@ variant="default"
       {/* --- SUMMARY SIDEBAR --- */}
       <div className="lg:col-span-2 lg:sticky lg:top-24">
         <Card className="border border-border shadow-sm overflow-hidden bg-card">
-          <CardHeader className="bg-foreground text-card py-5">
-            <CardTitle className="text-center text-lg">Ihre Konfiguration</CardTitle>
+          <CardHeader className="bg-accent/10 text-accent border-b border-border py-4">
+            <CardTitle className="text-center text-lg font-semibold">Ihre Konfiguration</CardTitle>
           </CardHeader>
            <CardContent className="p-6 md:p-8 space-y-6">
              <div className="space-y-4">
