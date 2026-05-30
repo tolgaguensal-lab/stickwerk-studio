@@ -93,7 +93,7 @@ export default function RootLayout({
         
         {/* DSGVO: No external tracking by default */}
         <meta name="referrer" content="strict-origin-when-cross-origin" />
-        <meta name="theme-color" content="#0066CC" />
+        <meta name="theme-color" content="#1A1A2E" />
       </head>
       <body 
         className={`${inter.variable} ${playfairDisplay.variable} ${jetBrainsMono.variable} antialiased`}

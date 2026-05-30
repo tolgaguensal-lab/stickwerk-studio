@@ -393,7 +393,7 @@ export default function PatchCalculator() {
                   <ChevronLeft className="w-4 h-4 mr-2" /> Zurück
                 </Button>
                 <Button 
-                  variant="gold" 
+                  variant="default" 
                   onClick={() => setStep(5)} 
                   className="flex-1"
                 >
@@ -590,7 +590,7 @@ export default function PatchCalculator() {
                     <ChevronLeft className="w-4 h-4 mr-2" /> Zurück
                   </Button>
                   <Button 
-                    variant="gold" 
+                    variant="default" 
                     onClick={() => setStep(9)} 
                     className="flex-1"
                   >
@@ -709,7 +709,7 @@ export default function PatchCalculator() {
                     <ChevronLeft className="w-4 h-4 mr-2" /> Zurück
                   </Button>
                   <Button 
-                    variant="gold" 
+                    variant="default" 
                     onClick={() => setStep(11)} 
                     className="flex-1"
                   >
@@ -802,7 +802,7 @@ export default function PatchCalculator() {
                       <ChevronLeft className="w-4 h-4 mr-2" /> Zurück
                     </Button>
                     <Button 
-                      variant="gold" 
+variant="default" 
                       type="submit" 
                       disabled={loading || !consentPrivacy} 
                       className="flex-1"

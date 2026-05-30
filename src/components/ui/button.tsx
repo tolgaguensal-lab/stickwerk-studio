@@ -1,52 +1,53 @@
 import * as React from "react";
-import { Slot } from "@radix-ui/react-slot";
+import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
-export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link" | "primary" | "gold";
-  size?: "default" | "sm" | "lg" | "icon";
-  asChild?: boolean;
-}
+const buttonVariants = cva(
+  "inline-flex items-center justify-center whitespace-nowrap text-body-lg tracking-wide font-regular transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-deep-charcoal/20 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+  {
+    variants: {
+      variant: {
+        default:
+          "bg-deep-charcoal text-pure-white hover:bg-deep-charcoal/90",
+        outline:
+          "bg-transparent text-deep-charcoal border border-deep-charcoal hover:bg-deep-charcoal/5",
+        ghost:
+          "bg-transparent text-deep-charcoal hover:bg-deep-charcoal/5",
+        green:
+          "bg-signal-green text-midnight-ink hover:bg-signal-green/90",
+        link:
+          "bg-transparent text-deep-charcoal underline-offset-4 hover:underline",
+      },
+      size: {
+        default: "h-10 px-6",
+        sm: "h-8 px-4 text-body",
+        lg: "h-12 px-8 text-body-lg",
+        xl: "h-14 px-10 text-heading-sm",
+        icon: "h-10 w-10",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+      size: "default",
+    },
+  }
+);
 
-/* NEUES DESIGNSYSTEM - Stickwerk-Studio */
-const buttonVariants = {
-  /* Standard: Precision Blue */
-  default: "bg-precision-blue text-soft-white hover:bg-precision-blue/90 shadow-sm",
-  /* Primary: Precision Blue */
-  primary: "bg-precision-blue text-soft-white hover:bg-precision-blue/90 shadow-sm",
-  /* Gold: Craft Gold */
-  gold: "bg-craft-gold text-industry-gray hover:bg-craft-gold/90 shadow-md",
-  /* Destructive: Signal Red */
-  destructive: "bg-signal-red text-soft-white hover:bg-signal-red/90",
-  /* Outline with Precision Blue */
-  outline: "border-2 border-precision-blue bg-transparent hover:bg-precision-blue/5 text-precision-blue",
-  /* Secondary: Muted background */
-  secondary: "bg-soft-white text-industry-gray hover:bg-machinery-silver border border-border-gray",
-  /* Ghost: Subtle hover */
-  ghost: "hover:bg-soft-white text-industry-gray",
-  /* Link styling */
-  link: "text-precision-blue underline-offset-4 hover:underline",
-  /* Accent: Craft Gold (legacy compatibility) */
-  accent: "bg-craft-gold text-industry-gray hover:bg-craft-gold/90 shadow-md",
-} as const;
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+    VariantProps<typeof buttonVariants> {}
 
-export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant = "default", size = "default", asChild = false, ...props }, ref) => {
-    const Comp = asChild ? Slot : "button";
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ className, variant, size, ...props }, ref) => {
     return (
-      <Comp
+      <button
+        className={cn(buttonVariants({ variant, size }), "btn-pill", className)}
         ref={ref}
-        className={cn(
-          "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-all active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-precision-blue disabled:pointer-events-none disabled:opacity-50",
-          buttonVariants[variant],
-          size === "default" && "h-10 px-4 py-2",
-          size === "sm" && "h-9 px-3",
-          size === "lg" && "h-12 px-8 text-lg",
-          className
-        )}
         {...props}
       />
     );
   }
 );
 Button.displayName = "Button";
+
+export { Button, buttonVariants };

@@ -3,32 +3,32 @@ import Link from "next/link";
 
 export default function AGB() {
   return (
-    <div className="min-h-screen bg-machinery-silver py-12 px-6">
+    <div className="min-h-screen bg-canvas-white py-12 px-6">
       <div className="max-w-4xl mx-auto space-y-8">
         <div className="text-center">
-          <h1 className="text-4xl md:text-5xl font-serif font-bold text-industry-gray mb-4">
+          <h1 className="text-4xl md:text-5xl font-serif font-bold text-midnight-ink mb-4">
             Allgemeine Gesch&auml;ftsbedingungen (AGB)
           </h1>
-          <p className="text-industry-gray/70">
+          <p className="text-midnight-ink/70">
             Stand: Mai 2026
           </p>
         </div>
 
         <div className="flex justify-start">
-          <Link href="/" className="text-industry-gray hover:text-craft-gold transition-colors flex items-center gap-2">
+          <Link href="/" className="text-midnight-ink hover:text-signal-green transition-colors flex items-center gap-2">
             &larr; Zur&uuml;ck zur Startseite
           </Link>
         </div>
 
-        <Card className="bg-soft-white backdrop-blur-sm border-industry-gray/10">
+        <Card className="bg-canvas-white backdrop-blur-sm border-deep-charcoal/10">
           <CardHeader>
-            <CardTitle className="text-2xl text-industry-gray">
+            <CardTitle className="text-2xl text-midnight-ink">
               Allgemeine Gesch&auml;ftsbedingungen
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-8 text-industry-gray/80">
+          <CardContent className="space-y-8 text-midnight-ink/80">
             <section className="space-y-4">
-              <h2 className="text-xl font-bold text-industry-gray">
+              <h2 className="text-xl font-bold text-midnight-ink">
                 &sect; 1 Gegenstand und Geltungsbereich
               </h2>
               <p>
@@ -48,7 +48,7 @@ export default function AGB() {
             </section>
 
             <section className="space-y-4">
-              <h2 className="text-xl font-bold text-industry-gray">
+              <h2 className="text-xl font-bold text-midnight-ink">
                 &sect; 2 Angebot und Vertragsschluss
               </h2>
               <p>
@@ -73,7 +73,7 @@ export default function AGB() {
             </section>
 
             <section className="space-y-4">
-              <h2 className="text-xl font-bold text-industry-gray">
+              <h2 className="text-xl font-bold text-midnight-ink">
                 &sect; 3 Preise und Zahlungsbedingungen
               </h2>
               <p>
@@ -93,7 +93,7 @@ export default function AGB() {
             </section>
 
             <section className="space-y-4">
-              <h2 className="text-xl font-bold text-industry-gray">
+              <h2 className="text-xl font-bold text-midnight-ink">
                 &sect; 4 Lieferung
               </h2>
               <p>
@@ -112,7 +112,7 @@ export default function AGB() {
             </section>
 
             <section className="space-y-4">
-              <h2 className="text-xl font-bold text-industry-gray">
+              <h2 className="text-xl font-bold text-midnight-ink">
                 &sect; 5 Eigenbeschaftung des Kunden
               </h2>
               <p>
@@ -127,7 +127,7 @@ export default function AGB() {
             </section>
 
             <section className="space-y-4">
-              <h2 className="text-xl font-bold text-industry-gray">
+              <h2 className="text-xl font-bold text-midnight-ink">
                 &sect; 6 R&uuml;cktritt und Stornierung
               </h2>
               <p>
@@ -146,7 +146,7 @@ export default function AGB() {
             </section>
 
             <section className="space-y-4">
-              <h2 className="text-xl font-bold text-industry-gray">
+              <h2 className="text-xl font-bold text-midnight-ink">
                 &sect; 7 Gew&auml;hrleistung
               </h2>
               <p>
@@ -164,7 +164,7 @@ export default function AGB() {
             </section>
 
             <section className="space-y-4">
-              <h2 className="text-xl font-bold text-industry-gray">
+              <h2 className="text-xl font-bold text-midnight-ink">
                 &sect; 8 Anwendbares Recht und Gerichtsstand
               </h2>
               <p>

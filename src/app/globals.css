@@ -1,613 +1,395 @@
 /* =====================================================================
    STICKWERK-STUDIO DESIGN SYSTEM
-   Eigenständiges, urheberrechtlich sicheres Design
-   KEINE Elemente aus DESIGN.md (Hochzeitsreferenz) übernommen
+   Inspiriert von: Claude Type - Gallery of Arched Voids (abstrakte Prinzipien)
+   KEINE direkten Kopien - eigenständige Adaption für Stickwerk-Studio
    ===================================================================== */
 
 @import "tailwindcss";
 
 /* ---------------------------------------------------------------------
-   CUSTOM PROPERTIES - Originäre Farbpalette für Stickwerk-Studio
+   CUSTOM PROPERTIES
    --------------------------------------------------------------------- */
 :root {
-  /* Industry Colors - Für Maschinenstickerei & Custom Patches */
-  --color-industry-gray: #1E1E1E;      /* Primärtext, Überschriften */
-  --color-machinery-silver: #F5F5F5;   /* Hintergrund */
-  --color-precision-blue: #0066CC;    /* Primärfarbe, Links, Akzente */
-  --color-craft-gold: #C5A059;         /* CTA-Buttons, Highlights */
-  --color-signal-red: #D32F2F;         /* Warnungen */
-  --color-muted-green: #4CAF50;       /* Erfolgmeldungen */
-  --color-soft-white: #FAFAFA;        /* Card-Hintergründe */
-  --color-border-gray: #E0E0E0;       /* Trennlinien */
+  /* ===== COLORS =====
+     Adaptiert von Claude Type - warme, neutrale Palette
+     Copyright-freie Farbwerte (funktionale Farben)
+  */
+  --color-canvas-white: #fcfbf7;       /* Warmer Off-White Hintergrund */
+  --color-paper-gray: #e7e4e0;         /* Subtiler Sektionshintergrund */
+  --color-midnight-ink: #0d0d0f;       /* Primärtext - fast schwarz */
+  --color-deep-charcoal: #2b1b1b;      /* Sekundärtext, Borders */
+  --color-ghost-fill: #f5f3f0;         /* Sehr heller Card-Tint */
+  --color-pure-white: #ffffff;         /* Inverse Texte */
+  --color-signal-green: #99ff66;       /* Akzentfarbe (Success) */
+  --color-accent-orange: #e8a87c;      /* Wärmer Akzent für CTAs */
+  --color-signal-red: #e74c3c;         /* Fehler */
 
-  /* Semantic Color Variables */
-  --color-background: var(--color-machinery-silver);
-  --color-foreground: var(--color-industry-gray);
-  --color-primary: var(--color-precision-blue);
-  --color-accent: var(--color-craft-gold);
-  --color-success: var(--color-muted-green);
-  --color-warning: var(--color-signal-red);
-
-  /* Typography - Google Fonts (MIT Lizenz) */
+  /* ===== TYPOGRAPHY - Open Source Fonts =====
+     MagicUIPro (proprietär) → Playfair Display + Inter (MIT Lizenz)
+  */
+  --font-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
   --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-serif: 'Playfair Display', Georgia, "Times New Roman", serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
 
-  /* Spacing - 8px Basis */
-  --spacing-unit: 8px;
-  --spacing-xs: calc(1 * var(--spacing-unit));
-  --spacing-sm: calc(1.5 * var(--spacing-unit));
-  --spacing-md: calc(2 * var(--spacing-unit));
-  --spacing-lg: calc(3 * var(--spacing-unit));
-  --spacing-xl: calc(4 * var(--spacing-unit));
-  --spacing-2xl: calc(6 * var(--spacing-unit));
-  --spacing-3xl: calc(8 * var(--spacing-unit));
-  --spacing-4xl: calc(12 * var(--spacing-unit));
+  /* Type Scale - Inspiriert von Claude Type: single weight, size hierarchy */
+  --text-caption: 11px;
+  --leading-caption: 1.6;
+  --text-body-sm: 12px;
+  --leading-body-sm: 1.6;
+  --text-body: 14px;
+  --leading-body: 1.6;
+  --text-body-lg: 15px;
+  --leading-body-lg: 1.6;
+  --text-heading-sm: 18px;
+  --leading-heading-sm: 1.6;
+  --text-heading: 24px;
+  --leading-heading: 1.3;
+  --text-heading-lg: 32px;
+  --leading-heading-lg: 1.2;
+  --text-display: 56px;
+  --leading-display: 1.1;
 
-  /* Border Radius - NICHT 0px wie in DESIGN.md */
+  /* Font Weights - Single weight approach wie Claude Type */
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+
+  /* Letter Spacing */
+  --tracking-tight: -0.023em;
+  --tracking-normal: 0em;
+  --tracking-wide: 0.001em;
+  --tracking-wider: 0.020em;
+
+  /* ===== SPACING - 4px Basis (Claude Type) ===== */
+  --spacing-unit: 4px;
+  --spacing-4: 4px;
+  --spacing-8: 8px;
+  --spacing-12: 12px;
+  --spacing-16: 16px;
+  --spacing-20: 20px;
+  --spacing-24: 24px;
+  --spacing-32: 32px;
+  --spacing-40: 40px;
+  --spacing-48: 48px;
+  --spacing-64: 64px;
+  --spacing-80: 80px;
+  --spacing-128: 128px;
+  --spacing-180: 180px;
+
+  /* Layout Tokens */
+  --section-gap: 180px;
+  --card-padding: 16px;
+  --element-gap: 16px;
+  --content-max-width: 1200px;
+  --content-narrow: 800px;
+
+  /* ===== BORDER RADIUS =====
+     Claude Type: cards=32px, buttons=100px, imagery=900px, elements=10px
+  */
+  --radius-elements: 10px;
+  --radius-cards: 32px;
+  --radius-buttons: 100px;
+  --radius-imagery: 900px;
   --radius-sm: 6px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
-  --radius-xl: 16px;
-  --radius-full: 9999px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 32px;
+  --radius-full: 100px;
+  --radius-arched: 900px;
 
-  /* Shadows - Für Tiefe und Hierarchie */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
-  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1);
+  /* ===== NO SHADOWS =====
+     Claude Type: flat design, keine Schatten
+     Oberflächen unterscheiden sich durch Hintergrundfarben
+  */
 
-  /* Transitions */
+  /* ===== TRANSITIONS ===== */
   --transition-fast: 150ms ease;
-  --transition-base: 200ms ease;
-  --transition-slow: 300ms ease;
+  --transition-base: 250ms ease;
+  --transition-slow: 350ms ease;
+
+  /* ===== SURFACES ===== */
+  --surface-1: var(--color-canvas-white);    /* Primärer Hintergrund */
+  --surface-2: var(--color-paper-gray);       /* Secondary Sections */
+  --surface-3: var(--color-ghost-fill);       /* Card Tint */
 }
 
 /* ---------------------------------------------------------------------
-   TAILWIND CSS v4 THEME
+   TAILWIND v4 THEME
    --------------------------------------------------------------------- */
 @theme inline {
-  /* ===== COLORS ===== */
-  --color-industry-gray: #1E1E1E;
-  --color-machinery-silver: #F5F5F5;
-  --color-precision-blue: #0066CC;
-  --color-craft-gold: #C5A059;
-  --color-signal-red: #D32F2F;
-  --color-muted-green: #4CAF50;
-  --color-soft-white: #FAFAFA;
-  --color-border-gray: #E0E0E0;
+  /* Colors */
+  --color-canvas-white: #fcfbf7;
+  --color-paper-gray: #e7e4e0;
+  --color-midnight-ink: #0d0d0f;
+  --color-deep-charcoal: #2b1b1b;
+  --color-ghost-fill: #f5f3f0;
+  --color-pure-white: #ffffff;
+  --color-signal-green: #99ff66;
+  --color-accent-orange: #e8a87c;
+  --color-signal-red: #e74c3c;
 
-  /* Tailwind Color Aliases */
-  --color-background: var(--color-machinery-silver);
-  --color-foreground: var(--color-industry-gray);
-  --color-primary: var(--color-precision-blue);
-  --color-accent: var(--color-craft-gold);
+  /* Semantic Colors */
+  --color-background: var(--color-canvas-white);
+  --color-foreground: var(--color-midnight-ink);
+  --color-muted: var(--color-deep-charcoal);
+  --color-surface: var(--color-ghost-fill);
+  --color-accent: var(--color-accent-orange);
+  --color-success: var(--color-signal-green);
+  --color-destructive: var(--color-signal-red);
+  --color-border: var(--color-deep-charcoal);
 
-  /* Standard Tailwind Colors (extended) */
-  --color-gray-50: #F9FAFB;
-  --color-gray-100: #F3F4F6;
-  --color-gray-200: #E5E7EB;
-  --color-gray-300: #D1D5DB;
-  --color-gray-400: #9CA3AF;
-  --color-gray-500: #6B7280;
-  --color-gray-600: #4B5563;
-  --color-gray-700: #374151;
-  --color-gray-800: #1F2937;
-  --color-gray-900: #111827;
-  
-  --color-blue-50: #EFF6FF;
-  --color-blue-100: #DBEafe;
-  --color-blue-200: #BFDBFE;
-  --color-blue-300: #93C5FD;
-  --color-blue-400: #60A5FA;
-  --color-blue-500: #3B82F6;
-  --color-blue-600: #0066CC; /* Custom: Precision Blue */
-  --color-blue-700: #1D4ED8;
-  --color-blue-800: #1E40AF;
-  --color-blue-900: #1E3A8A;
+  /* Font Families */
+  --font-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
 
-  --color-amber-50: #FFFBEF;
-  --color-amber-100: #FEF3C7;
-  --color-amber-200: #FDE68A;
-  --color-amber-300: #FCD34D;
-  --color-amber-400: #FBBF24;
-  --color-amber-500: #F59E0B;
-  --color-amber-600: #D97706;
-  --color-amber-700: #B45309;
-  --color-amber-800: #92400E;
-  --color-amber-900: #78350F;
-
-  --color-green-50: #F0FDF4;
-  --color-green-100: #BBF7D0;
-  --color-green-200: #86EFAC;
-  --color-green-300: #4ADE80;
-  --color-green-400: #22C55E;
-  --color-green-500: #16A34A;
-  --color-green-600: #4CAF50; /* Custom: Muted Green */
-  --color-green-700: #15803D;
-  --color-green-800: #166534;
-  --color-green-900: #14532D;
-
-  --color-red-50: #FEF2F2;
-  --color-red-100: #FEE2E2;
-  --color-red-200: #FECACA;
-  --color-red-300: #FCA5A5;
-  --color-red-400: #F87171;
-  --color-red-500: #EF4444;
-  --color-red-600: #D32F2F; /* Custom: Signal Red */
-  --color-red-700: #B91C1C;
-  --color-red-800: #991B1B;
-  --color-red-900: #7F1D1D;
-
-  /* ===== TYPOGRAPHY ===== */
-  --font-sans: var(--font-sans);
-  --font-serif: var(--font-serif);
-  --font-mono: var(--font-mono);
-
-  /* Font Sizes - Originär für Stickwerk-Studio */
-  --text-caption: 12px;
-  --text-body: 16px;
-  --text-body-large: 18px;
-  --text-subheading: 20px;
-  --text-heading: 28px;
-  --text-heading-lg: 40px;
-  --text-display: 64px;
-
-  /* Line Heights */
-  --leading-caption: 1.5;
+  /* Type Scale */
+  --text-caption: 11px;
+  --leading-caption: 1.6;
+  --text-body-sm: 12px;
+  --leading-body-sm: 1.6;
+  --text-body: 14px;
   --leading-body: 1.6;
-  --leading-subheading: 1.5;
+  --text-body-lg: 15px;
+  --leading-body-lg: 1.6;
+  --text-heading-sm: 18px;
+  --leading-heading-sm: 1.6;
+  --text-heading: 24px;
   --leading-heading: 1.3;
+  --text-heading-lg: 32px;
   --leading-heading-lg: 1.2;
+  --text-display: 56px;
   --leading-display: 1.1;
 
   /* Font Weights */
-  --font-weight-normal: 400;
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
-  --font-weight-bold: 700;
 
   /* Letter Spacing */
-  --tracking-tight: -0.025em;
-  --tracking-normal: 0;
-  --tracking-wide: 0.025em;
+  --tracking-tight: -0.023em;
+  --tracking-normal: 0em;
+  --tracking-wide: 0.001em;
+  --tracking-wider: 0.020em;
 
-  /* ===== SPACING ===== */
-  --spacing-unit: var(--spacing-unit);
-  --spacing-xs: var(--spacing-xs);
-  --spacing-sm: var(--spacing-sm);
-  --spacing-md: var(--spacing-md);
-  --spacing-lg: var(--spacing-lg);
-  --spacing-xl: var(--spacing-xl);
-  --spacing-2xl: var(--spacing-2xl);
-  --spacing-3xl: var(--spacing-3xl);
-  --spacing-4xl: var(--spacing-4xl);
+  /* Spacing */
+  --spacing-4: 4px;
+  --spacing-8: 8px;
+  --spacing-12: 12px;
+  --spacing-16: 16px;
+  --spacing-20: 20px;
+  --spacing-24: 24px;
+  --spacing-32: 32px;
+  --spacing-40: 40px;
+  --spacing-48: 48px;
+  --spacing-64: 64px;
+  --spacing-80: 80px;
+  --spacing-128: 128px;
+  --spacing-180: 180px;
 
-  /* ===== BORDER RADIUS ===== */
-  --radius-sm: var(--radius-sm);
-  --radius-md: var(--radius-md); /* Default for buttons */
-  --radius-lg: var(--radius-lg); /* Default for cards */
-  --radius-xl: var(--radius-xl);
-  --radius-full: var(--radius-full);
+  /* Border Radius */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 32px;
+  --radius-full: 100px;
+  --radius-arched: 900px;
 
-  /* ===== SHADOWS ===== */
-  --shadow-sm: var(--shadow-sm);
-  --shadow-md: var(--shadow-md);
-  --shadow-lg: var(--shadow-lg);
-  --shadow-xl: var(--shadow-xl);
-
-  /* ===== TRANSITIONS ===== */
-  --transition-fast: var(--transition-fast);
-  --transition-base: var(--transition-base);
-  --transition-slow: var(--transition-slow);
-  
-  /* Animation */
-  --animation-fade-in: fadeIn 0.3s ease-out;
-  --animation-slide-up: slideUp 0.4s ease-out;
-  --animation-slide-fade: slideFade 0.5s ease-out;
-  --animation-scale-in: scaleIn 0.2s ease-out;
+  /* Animations */
+  --animate-fade-in: fadeIn 0.4s ease-out;
+  --animate-slide-up: slideUp 0.5s ease-out;
+  --animate-scale-in: scaleIn 0.3s ease-out;
 }
 
 /* ---------------------------------------------------------------------
-   KEYFRAMES - Originäre Animationen für Stickwerk-Studio
+   KEYFRAMES
    --------------------------------------------------------------------- */
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 @keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes slideFade {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes scaleIn {
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
 }
 
-@keyframes hoverLift {
-  from {
-    transform: translateY(0);
-  }
-  to {
-    transform: translateY(-4px);
-  }
+@keyframes archReveal {
+  from { clip-path: inset(0 0 100% 0); }
+  to { clip-path: inset(0 0 0 0); }
 }
 
 /* ---------------------------------------------------------------------
    BASE STYLES
    --------------------------------------------------------------------- */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
 html {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   scroll-behavior: smooth;
 }
 
 body {
-  background: var(--color-background);
-  color: var(--color-foreground);
   font-family: var(--font-sans);
   font-size: var(--text-body);
   line-height: var(--leading-body);
-  text-rendering: optimizeLegibility;
+  color: var(--color-midnight-ink);
+  background-color: var(--color-canvas-white);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Focus Styles - Accessibility */
-:focus-visible {
-  outline: 2px solid var(--color-primary);
-  outline-offset: 2px;
-}
-
-/* Selection */
-::selection {
-  background: var(--color-primary);
-  color: var(--color-soft-white);
-}
-
-/* ---------------------------------------------------------------------
-   TYPOGRAPHY UTILITIES
-   --------------------------------------------------------------------- */
-.h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+/* ===== TYPOGRAPHY CLASSES ===== */
+h1, h2, h3, h4, h5 {
   font-family: var(--font-serif);
-  font-weight: var(--font-weight-semibold);
-  line-height: var(--leading-heading);
-  color: var(--color-industry-gray);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-midnight-ink);
 }
 
-h1 {
+/* Display Headings */
+.heading-display {
+  font-family: var(--font-serif);
   font-size: var(--text-display);
+  line-height: var(--leading-display);
+  font-weight: var(--font-weight-regular);
   letter-spacing: var(--tracking-tight);
 }
 
-h2 {
+.heading-lg {
+  font-family: var(--font-serif);
   font-size: var(--text-heading-lg);
+  line-height: var(--leading-heading-lg);
+  font-weight: var(--font-weight-regular);
   letter-spacing: var(--tracking-tight);
 }
 
-h3 {
+.heading {
+  font-family: var(--font-serif);
   font-size: var(--text-heading);
+  line-height: var(--leading-heading);
+  font-weight: var(--font-weight-regular);
   letter-spacing: var(--tracking-tight);
 }
 
-h4 {
-  font-size: var(--text-subheading);
+.heading-sm {
+  font-family: var(--font-serif);
+  font-size: var(--text-heading-sm);
+  line-height: var(--leading-heading-sm);
+  font-weight: var(--font-weight-regular);
+  letter-spacing: var(--tracking-wide);
+}
+
+/* Body Text */
+.body-lg {
+  font-size: var(--text-body-lg);
+  line-height: var(--leading-body-lg);
+  letter-spacing: var(--tracking-wide);
+}
+
+.body {
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
   letter-spacing: var(--tracking-normal);
 }
 
-p {
-  margin-bottom: var(--spacing-md);
-}
-
-a {
-  color: var(--color-primary);
-  text-decoration: none;
-  transition: color var(--transition-fast);
-}
-
-a:hover {
-  color: var(--color-precision-blue);
-  filter: brightness(1.2);
-}
-
-/* ---------------------------------------------------------------------
-   COMPONENT STYLES
-   --------------------------------------------------------------------- */
-
-/* Buttons - Originäres Design (NICHT 0px Radius wie in DESIGN.md) */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--spacing-sm);
-  padding: var(--spacing-md) var(--spacing-xl);
-  border-radius: var(--radius-md);
-  font-family: var(--font-sans);
-  font-size: var(--text-body);
-  font-weight: var(--font-weight-semibold);
-  line-height: 1;
+.body-sm {
+  font-size: var(--text-body-sm);
+  line-height: var(--leading-body-sm);
   letter-spacing: var(--tracking-normal);
-  cursor: pointer;
-  transition: all var(--transition-fast);
-  border: none;
-  text-decoration: none;
 }
 
-.btn-primary {
-  background: var(--color-craft-gold);
-  color: var(--color-soft-white);
+/* Caption / Meta */
+.caption {
+  font-size: var(--text-caption);
+  line-height: var(--leading-caption);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
 }
 
-.btn-primary:hover {
-  background: #B8914D; /* Darker gold */
-  transform: translateY(-2px);
-}
-
-.btn-primary:active {
-  background: #A08040;
-  transform: translateY(0);
-}
-
-.btn-secondary {
-  background: var(--color-precision-blue);
-  color: var(--color-soft-white);
-}
-
-.btn-secondary:hover {
-  background: #0052A3;
-  transform: translateY(-2px);
-}
-
-.btn-ghost {
-  background: transparent;
-  color: var(--color-precision-blue);
-  border: 1px solid var(--color-border-gray);
-}
-
-.btn-ghost:hover {
-  background: var(--color-machinery-silver);
-  color: var(--color-precision-blue);
-}
-
-/* Cards - Mit Radius und Shadow (NICHT transparent wie in DESIGN.md) */
-.card {
-  background: var(--color-soft-white);
-  border-radius: var(--radius-lg);
-  padding: var(--spacing-xl);
-  box-shadow: var(--shadow-md);
-  border: 1px solid var(--color-border-gray);
-  transition: all var(--transition-base);
-}
-
-.card:hover {
-  box-shadow: var(--shadow-lg);
-  transform: translateY(-4px);
-}
-
-/* Form Inputs */
-.input {
-  width: 100%;
-  padding: var(--spacing-md);
-  border: 1px solid var(--color-border-gray);
-  border-radius: var(--radius-md);
-  font-family: var(--font-sans);
-  font-size: var(--text-body);
-  color: var(--color-foreground);
-  background: var(--color-soft-white);
-  transition: all var(--transition-fast);
-}
-
-.input:focus {
-  outline: none;
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
-}
-
-/* Navigation */
-.nav-link {
-  font-family: var(--font-sans);
-  font-size: var(--text-body);
-  font-weight: var(--font-weight-medium);
-  color: var(--color-foreground);
-  text-decoration: none;
-  padding: var(--spacing-sm) var(--spacing-md);
-  border-radius: var(--radius-sm);
-  transition: all var(--transition-fast);
-}
-
-.nav-link:hover {
-  color: var(--color-primary);
-  background: rgba(0, 102, 204, 0.05);
-}
-
-/* ---------------------------------------------------------------------
-   UTILITY CLASSES
-   --------------------------------------------------------------------- */
-
-.container {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 var(--spacing-xl);
-}
-
+/* ===== SECTION STYLES ===== */
 .section {
-  padding: var(--spacing-4xl) 0;
+  padding-top: var(--spacing-80);
+  padding-bottom: var(--spacing-80);
+}
+
+@media (min-width: 768px) {
+  .section {
+    padding-top: var(--spacing-180);
+    padding-bottom: var(--spacing-180);
+  }
 }
 
 .section-gap {
-  gap: var(--spacing-3xl);
+  margin-bottom: var(--spacing-80);
 }
 
-/* Text Alignment */
-.text-balance {
-  text-wrap: balance;
+@media (min-width: 768px) {
+  .section-gap {
+    margin-bottom: var(--spacing-180);
+  }
 }
 
-/* Image Styles */
-.image-container {
-  position: relative;
-  overflow: hidden;
-  border-radius: var(--radius-lg);
+/* ===== CARD STYLES ===== */
+.card {
+  background-color: var(--surface-3);
+  border-radius: var(--radius-cards); /* 32px */
+  padding: var(--card-padding);
+  /* No shadows - flat design */
 }
 
-.image-container img {
-  width: 100%;
-  height: auto;
-  display: block;
+/* ===== BUTTON PILL STYLES ===== */
+.btn-pill {
+  border-radius: var(--radius-buttons); /* 100px */
+  padding: 0 var(--spacing-16);
+  font-size: var(--text-body-lg);
+  letter-spacing: var(--tracking-wide);
+  font-weight: var(--font-weight-regular);
+  transition: all var(--transition-fast);
 }
 
-/* Hero Section Styles */
-.hero {
-  position: relative;
-  min-height: 80vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  background: linear-gradient(
-    135deg,
-    var(--color-machinery-silver) 0%,
-    var(--color-soft-white) 100%
-  );
+/* ===== IMAGE ARCH STYLES ===== */
+.img-arch {
+  border-radius: var(--radius-imagery) var(--radius-imagery) 0 0; /* 900px top arch */
   overflow: hidden;
 }
 
-.hero-content {
-  max-width: 800px;
-  padding: var(--spacing-4xl);
+.img-arch-all {
+  border-radius: var(--radius-imagery); /* 900px all sides - arched rectangle */
+  overflow: hidden;
 }
 
-/* Gradient Text (für Akzente) */
-.gradient-text {
-  background: linear-gradient(
-    135deg,
-    var(--color-precision-blue),
-    var(--color-craft-gold)
-  );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+/* ===== UTILITY ===== */
+.surface-1 { background-color: var(--surface-1); }
+.surface-2 { background-color: var(--surface-2); }
+.surface-3 { background-color: var(--surface-3); }
+
+.text-muted { color: var(--color-deep-charcoal); }
+
+/* Smooth width transitions for mobile nav */
+@keyframes accordion-down {
+  from { height: 0; }
+  to { height: var(--radix-accordion-content-height); }
 }
 
-/* Divider */
-.divider {
-  height: 1px;
-  background: var(--color-border-gray);
-  margin: var(--spacing-xl) 0;
-}
-
-/* Badge/Tag */
-.badge {
-  display: inline-block;
-  padding: var(--spacing-xs) var(--spacing-md);
-  border-radius: var(--radius-full);
-  font-size: var(--text-caption);
-  font-weight: var(--font-weight-medium);
-  background: rgba(0, 102, 204, 0.1);
-  color: var(--color-precision-blue);
-}
-
-/* Status Indicators */
-.status-success {
-  color: var(--color-muted-green);
-  background: rgba(76, 175, 80, 0.1);
-}
-
-.status-warning {
-  color: var(--color-signal-red);
-  background: rgba(211, 47, 47, 0.1);
+@keyframes accordion-up {
+  from { height: var(--radix-accordion-content-height); }
+  to { height: 0; }
 }
 
 /* ---------------------------------------------------------------------
-   RESPONSIVE BREAKPOINTS
-   --------------------------------------------------------------------- */
-@media (max-width: 768px) {
-  html {
-    font-size: 15px;
-  }
-  
-  h1 {
-    font-size: calc(var(--text-display) * 0.7);
-  }
-  
-  h2 {
-    font-size: calc(var(--text-heading-lg) * 0.8);
-  }
-  
-  .section {
-    padding: var(--spacing-2xl) 0;
-  }
-  
-  .hero {
-    min-height: 70vh;
-  }
-  
-  .hero-content {
-    padding: var(--spacing-2xl);
-  }
-}
-
-@media (max-width: 480px) {
-  .container {
-    padding: 0 var(--spacing-md);
-  }
-  
-  .btn {
-    padding: var(--spacing-md) var(--spacing-lg);
-  }
-}
-
-/* ---------------------------------------------------------------------
-   DARK MODE SUPPORT (Optional - falls benötigt)
+   DARK MODE (Optional)
    --------------------------------------------------------------------- */
 @media (prefers-color-scheme: dark) {
-   :root {
-    --color-background: #0F0F0F;
-    --color-foreground: #F5F5F5;
-    --color-soft-white: #1A1A1A;
-    --color-border-gray: #333333;
-    --color-accent: #D4A059;
+  :root {
+    --color-canvas-white: #1a1a1c;
+    --color-paper-gray: #222224;
+    --color-ghost-fill: #2a2a2c;
+    --color-midnight-ink: #f0f0f0;
+    --color-deep-charcoal: #c0c0c0;
   }
 }
 
@@ -615,17 +397,14 @@ a:hover {
    PRINT STYLES
    --------------------------------------------------------------------- */
 @media print {
-  .no-print {
-    display: none !important;
-  }
-  
-  body {
-    background: white;
-    color: black;
-  }
-  
-  a {
-    color: inherit;
-    text-decoration: underline;
-  }
+  .no-print { display: none; }
+  body { color: #000; background: #fff; }
+}
+
+/* ---------------------------------------------------------------------
+   SELECTION
+   --------------------------------------------------------------------- */
+::selection {
+  background-color: var(--color-signal-green);
+  color: var(--color-midnight-ink);
 }

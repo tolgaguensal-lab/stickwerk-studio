@@ -61,7 +61,7 @@ export default function Navbar() {
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-        className="fixed top-0 left-0 right-0 z-50 bg-machinery-silver/80 backdrop-blur-md border-b border-border-gray"
+        className="fixed top-0 left-0 right-0 z-50 bg-canvas-white/80 backdrop-blur-md border-b border-deep-charcoal/10"
     >
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex items-center justify-between h-16">
@@ -72,9 +72,9 @@ export default function Navbar() {
               alt="Stickwerk-Studio Logo"
               width={40}
               height={40}
-              className="rounded-xl border-2 border-precision-blue/20"
+              className="rounded-xl border-2 border-deep-charcoal/10"
             />
-            <span className="text-xl font-serif font-bold text-industry-gray">Stickwerk-Studio</span>
+            <span className="text-xl font-serif font-regular text-midnight-ink">Stickwerk-Studio</span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -82,29 +82,29 @@ export default function Navbar() {
             <a 
               href="#features" 
               onClick={(e) => handleHashNav(e, "#features")}
-              className="text-industry-gray/70 hover:text-craft-gold transition-colors cursor-pointer nav-link"
+              className="text-deep-charcoal/70 hover:text-signal-green transition-colors cursor-pointer nav-link"
             >
-              Leistungen
+               Leistungen
             </a>
             <a 
               href="#calculator" 
               onClick={(e) => handleHashNav(e, "#calculator")}
-              className="text-industry-gray/70 hover:text-craft-gold transition-colors cursor-pointer nav-link"
+              className="text-deep-charcoal/70 hover:text-signal-green transition-colors cursor-pointer nav-link"
             >
-              Konfigurator
+               Konfigurator
             </a>
             <a 
               href="#faq" 
               onClick={(e) => handleHashNav(e, "#faq")}
-              className="text-industry-gray/70 hover:text-craft-gold transition-colors cursor-pointer nav-link"
+              className="text-deep-charcoal/70 hover:text-signal-green transition-colors cursor-pointer nav-link"
             >
-              FAQ
+               FAQ
             </a>
-            <Link href="/kontakt" className="text-industry-gray/70 hover:text-craft-gold transition-colors nav-link">
-              Kontakt
+            <Link href="/kontakt" className="text-deep-charcoal/70 hover:text-signal-green transition-colors nav-link">
+               Kontakt
             </Link>
             <Button 
-              variant="gold" 
+              variant="default" 
               size="sm" 
               onClick={(e) => handleHashNav(e, "#calculator")}
             >
@@ -116,19 +116,19 @@ export default function Navbar() {
           <div className="md:hidden">
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="text-industry-gray" aria-label="Menü">
+                <Button variant="ghost" size="icon" className="text-deep-charcoal" aria-label="Menü">
                   <Menu className="w-6 h-6" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="w-[300px] sm:w-[400px] bg-soft-white">
+              <SheetContent side="right" className="w-[300px] sm:w-[400px] bg-canvas-white">
                 <div className="flex flex-col h-full">
                   <div className="flex items-center justify-between mb-8">
-                    <span className="text-xl font-serif font-bold text-industry-gray">Menü</span>
+                    <span className="text-xl font-serif font-regular text-midnight-ink">Menü</span>
                     <Button
                       variant="ghost"
                       size="icon"
                       onClick={() => setIsOpen(false)}
-                      className="text-industry-gray"
+                      className="text-deep-charcoal"
                     >
                       <X className="w-6 h-6" />
                     </Button>
@@ -139,33 +139,33 @@ export default function Navbar() {
                        <a
                          href="#features"
                          onClick={(e) => handleHashNav(e, "#features")}
-                         className="text-lg text-industry-gray/70 hover:text-craft-gold transition-colors cursor-pointer block"
-                       >
-                         Leistungen
-                       </a>
-                     </SheetClose>
-                     <SheetClose asChild>
-                       <a
-                         href="#calculator"
-                         onClick={(e) => handleHashNav(e, "#calculator")}
-                         className="text-lg text-industry-gray/70 hover:text-craft-gold transition-colors cursor-pointer block"
-                       >
-                         Konfigurator
-                       </a>
-                     </SheetClose>
-                     <SheetClose asChild>
-                       <a
-                         href="#faq"
-                         onClick={(e) => handleHashNav(e, "#faq")}
-                         className="text-lg text-industry-gray/70 hover:text-craft-gold transition-colors cursor-pointer block"
-                       >
-                         FAQ
-                       </a>
-                     </SheetClose>
-                     <SheetClose asChild>
-                       <Link
-                         href="/kontakt"
-                         className="text-lg text-industry-gray/70 hover:text-craft-gold transition-colors"
+                          className="text-lg text-deep-charcoal/70 hover:text-signal-green transition-colors cursor-pointer block"
+                        >
+                          Leistungen
+                        </a>
+                      </SheetClose>
+                      <SheetClose asChild>
+                        <a
+                          href="#calculator"
+                          onClick={(e) => handleHashNav(e, "#calculator")}
+                          className="text-lg text-deep-charcoal/70 hover:text-signal-green transition-colors cursor-pointer block"
+                        >
+                          Konfigurator
+                        </a>
+                      </SheetClose>
+                      <SheetClose asChild>
+                        <a
+                          href="#faq"
+                          onClick={(e) => handleHashNav(e, "#faq")}
+                          className="text-lg text-deep-charcoal/70 hover:text-signal-green transition-colors cursor-pointer block"
+                        >
+                          FAQ
+                        </a>
+                      </SheetClose>
+                      <SheetClose asChild>
+                        <Link
+                          href="/kontakt"
+                          className="text-lg text-deep-charcoal/70 hover:text-signal-green transition-colors"
                        >
                          Kontakt
                        </Link>
@@ -174,9 +174,9 @@ export default function Navbar() {
  
                 <div className="mt-auto pt-8">
                      <SheetClose asChild>
-                       <Button 
-                         variant="gold" 
-                         className="w-full"
+                        <Button 
+                          variant="default" 
+                          className="w-full"
               onClick={(e) => handleHashNav(e, "#calculator")}
                        >
                          Jetzt konfigurieren

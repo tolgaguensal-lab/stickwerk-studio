@@ -130,7 +130,7 @@ export default function LandingPage() {
   return (
     <main className="relative z-10">
        {/* Hero Section - NEUES DESIGNSYSTEM */}
-       <section className="min-h-screen flex flex-col items-center justify-center text-center px-6 py-20 bg-gradient-to-br from-machinery-silver to-soft-white">
+       <section className="min-h-screen flex flex-col items-center justify-center text-center px-6 py-20 bg-gradient-to-br from-canvas-white to-paper-gray">
          <motion.div 
            style={{ opacity, scale }}
            className="max-w-4xl space-y-8"
@@ -141,8 +141,8 @@ export default function LandingPage() {
              transition={{ duration: 0.8, ease: "easeOut" }}
              className="relative inline-block mb-6"
            >
-             <div className="absolute inset-0 bg-gradient-to-r from-craft-gold/20 to-precision-blue/20 rounded-full blur-3xl animate-pulse" />
-             <div className="relative z-10 p-3 bg-soft-white rounded-xl shadow-lg border-2 border-soft-white">
+             <div className="absolute inset-0 bg-gradient-to-r from-signal-green/20 to-deep-charcoal/20 rounded-full blur-3xl animate-pulse" />
+             <div className="relative z-10 p-3 bg-canvas-white rounded-xl border-2 border-canvas-white">
                <Image 
                  src="/logo.jpg" 
                  alt="Stickwerk-Studio Logo" 
@@ -157,17 +157,17 @@ export default function LandingPage() {
              initial={{ opacity: 0, y: 20 }}
              animate={{ opacity: 1, y: 0 }}
              transition={{ duration: 0.8, delay: 0.2 }}
-             className="text-5xl md:text-7xl font-serif font-bold text-industry-gray leading-tight"
+             className="text-5xl md:text-7xl font-serif font-bold text-midnight-ink leading-tight"
            >
              Präzision, die <br /> 
-             <span className="text-craft-gold">sichtbar bleibt</span>
+             <span className="text-signal-green">sichtbar bleibt</span>
            </motion.h1>
            
            <motion.p 
              initial={{ opacity: 0, y: 20 }}
              animate={{ opacity: 1, y: 0 }}
              transition={{ duration: 0.8, delay: 0.4 }}
-             className="text-xl md:text-2xl text-industry-gray/70 max-w-2xl mx-auto leading-relaxed font-medium"
+             className="text-xl md:text-2xl text-deep-charcoal/70 max-w-2xl mx-auto leading-relaxed font-medium"
            >
              Maschinenstickerei & Custom Patches für Marken, die Wert auf Details legen.
            </motion.p>
@@ -180,7 +180,7 @@ export default function LandingPage() {
            >
              <Button 
                size="lg" 
-               variant="gold"
+               variant="default"
                className="px-8 py-4 text-lg group"
                onClick={() => scrollToSection("calculator")}
              >
@@ -205,11 +205,11 @@ export default function LandingPage() {
            transition={{ duration: 0.8, delay: 1 }}
            className="absolute bottom-10 animate-bounce"
          >
-           <div className="w-6 h-10 border-2 border-precision-blue/30 rounded-full flex justify-center">
+           <div className="w-6 h-10 border-2 border-deep-charcoal/30 rounded-full flex justify-center">
              <motion.div
                animate={{ y: [0, 10, 0] }}
                transition={{ duration: 1.5, repeat: Infinity }}
-               className="w-1 h-3 bg-precision-blue rounded-full mt-2"
+               className="w-1 h-3 bg-midnight-ink rounded-full mt-2"
              />
            </div>
          </motion.div>
@@ -225,11 +225,11 @@ export default function LandingPage() {
              transition={{ duration: 0.8 }}
              className="text-center mb-20 space-y-4"
            >
-             <h2 className="text-4xl md:text-5xl font-serif font-bold text-industry-gray">Das Stickwerk-Versprechen</h2>
-             <p className="text-xl text-industry-gray/70 max-w-2xl mx-auto">
+             <h2 className="text-4xl md:text-5xl font-serif font-bold text-midnight-ink">Das Stickwerk-Versprechen</h2>
+             <p className="text-xl text-deep-charcoal/70 max-w-2xl mx-auto">
                Warum Kunden uns vertrauen – seit über 5 Jahren.
              </p>
-             <div className="w-24 h-1 bg-craft-gold mx-auto rounded-full" />
+             <div className="w-24 h-1 bg-signal-green mx-auto rounded-full" />
            </motion.div>
  
            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -243,11 +243,11 @@ export default function LandingPage() {
                  whileHover={{ y: -5, scale: 1.02 }}
                  className="card p-6 group"
                >
-                 <div className="w-14 h-14 rounded-lg bg-precision-blue/10 text-precision-blue flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                 <div className="w-14 h-14 rounded-lg bg-ghost-fill text-midnight-ink flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                    {service.icon}
                  </div>
-                 <h3 className="text-xl font-serif font-bold text-industry-gray mb-3">{service.title}</h3>
-                 <p className="text-industry-gray/70 leading-relaxed">{service.description}</p>
+                 <h3 className="text-xl font-serif font-bold text-midnight-ink mb-3">{service.title}</h3>
+                 <p className="text-deep-charcoal/70 leading-relaxed">{service.description}</p>
                </motion.div>
              ))}
            </div>
@@ -255,7 +255,7 @@ export default function LandingPage() {
        </section>
 
        {/* Target Audiences Section - NEUES DESIGNSYSTEM */}
-       <section id="zielgruppen" className="py-20 px-6 bg-soft-white">
+       <section id="zielgruppen" className="py-20 px-6 bg-canvas-white">
          <div className="max-w-6xl mx-auto">
            <motion.div 
              initial={{ opacity: 0, y: 40 }}
@@ -264,11 +264,11 @@ export default function LandingPage() {
              transition={{ duration: 0.8 }}
              className="text-center mb-20 space-y-4"
            >
-             <h2 className="text-4xl md:text-5xl font-serif font-bold text-industry-gray">Für wen wir sticken</h2>
-             <p className="text-xl text-industry-gray/70 max-w-2xl mx-auto">
+             <h2 className="text-4xl md:text-5xl font-serif font-bold text-midnight-ink">Für wen wir sticken</h2>
+             <p className="text-xl text-deep-charcoal/70 max-w-2xl mx-auto">
                Egal ob Einzelstück oder Serienproduktion – wir finden die perfekte Lösung.
              </p>
-             <div className="w-24 h-1 bg-craft-gold mx-auto rounded-full" />
+             <div className="w-24 h-1 bg-signal-green mx-auto rounded-full" />
            </motion.div>
  
            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -282,13 +282,13 @@ export default function LandingPage() {
                  whileHover={{ y: -5 }}
                  className="card p-6 group overflow-hidden"
                >
-                 <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-craft-gold to-precision-blue opacity-20" />
-                 <div className="w-14 h-14 rounded-lg bg-craft-gold/10 text-craft-gold flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                 <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-signal-green to-deep-charcoal opacity-20" />
+                 <div className="w-14 h-14 rounded-lg bg-signal-green/10 text-signal-green flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                    {audience.icon}
                  </div>
-                 <h3 className="text-xl font-serif font-bold text-industry-gray mb-2">{audience.title}</h3>
-                 <p className="text-sm font-medium text-craft-gold mb-3">{audience.tagline}</p>
-                 <p className="text-industry-gray/70 leading-relaxed text-sm">{audience.description}</p>
+                 <h3 className="text-xl font-serif font-bold text-midnight-ink mb-2">{audience.title}</h3>
+                 <p className="text-sm font-medium text-signal-green mb-3">{audience.tagline}</p>
+                 <p className="text-deep-charcoal/70 leading-relaxed text-sm">{audience.description}</p>
                </motion.div>
              ))}
            </div>
@@ -305,16 +305,16 @@ export default function LandingPage() {
              transition={{ duration: 0.8 }}
              className="text-center mb-20 space-y-4"
            >
-             <h2 className="text-4xl md:text-5xl font-serif font-bold text-industry-gray">Unser Prozess</h2>
-             <p className="text-xl text-industry-gray/70 max-w-2xl mx-auto">
+             <h2 className="text-4xl md:text-5xl font-serif font-bold text-midnight-ink">Unser Prozess</h2>
+             <p className="text-xl text-deep-charcoal/70 max-w-2xl mx-auto">
                Von der ersten Idee bis zum fertigen Patch – transparent und unkompliziert.
              </p>
-             <div className="w-24 h-1 bg-craft-gold mx-auto rounded-full" />
+             <div className="w-24 h-1 bg-signal-green mx-auto rounded-full" />
            </motion.div>
  
            <div className="relative">
              {/* Timeline line */}
-             <div className="absolute left-8 top-0 bottom-0 w-1 bg-gradient-to-b from-precision-blue/20 via-craft-gold/20 to-precision-blue/20 hidden lg:block" />
+             <div className="absolute left-8 top-0 bottom-0 w-1 bg-gradient-to-b from-midnight-ink/20 via-signal-green/20 to-deep-charcoal/20 hidden lg:block" />
              
              <div className="space-y-12">
                {processSteps.map((step, i) => (
@@ -328,33 +328,33 @@ export default function LandingPage() {
                  >
                    {/* Step number */}
                    <div className="lg:col-span-1 flex justify-center lg:justify-start">
-                     <div className="w-16 h-16 rounded-xl bg-precision-blue text-soft-white flex items-center justify-center font-bold font-serif text-xl shadow-lg relative z-10">
+                     <div className="w-16 h-16 rounded-xl bg-midnight-ink text-pure-white flex items-center justify-center font-bold font-serif text-xl relative z-10">
                        {step.step}
                      </div>
                    </div>
                    
                    {/* Icon */}
                    <div className="lg:col-span-1 flex justify-center">
-                     <div className="w-14 h-14 rounded-xl bg-craft-gold/10 text-precision-blue flex items-center justify-center">
+                     <div className="w-14 h-14 rounded-xl bg-signal-green/10 text-midnight-ink flex items-center justify-center">
                        {step.icon}
                      </div>
                    </div>
                    
                    {/* Content */}
                    <div className="lg:col-span-8">
-                     <Card className="border-0 shadow-md">
+                     <Card className="border-0">
                        <CardHeader className="pb-4">
-                         <CardTitle className="text-2xl font-serif font-bold text-industry-gray">{step.title}</CardTitle>
+                         <CardTitle className="text-2xl font-serif font-bold text-midnight-ink">{step.title}</CardTitle>
                        </CardHeader>
                        <CardContent>
-                         <p className="text-industry-gray/70 leading-relaxed">{step.description}</p>
+                         <p className="text-deep-charcoal/70 leading-relaxed">{step.description}</p>
                        </CardContent>
                      </Card>
                    </div>
                    
                    {/* Connector */}
                    {i < processSteps.length - 1 && (
-                     <div className="absolute left-8 top-20 lg:top-8 w-1 h-16 bg-gradient-to-b from-precision-blue/20 to-craft-gold/20 hidden lg:block" />
+                     <div className="absolute left-8 top-20 lg:top-8 w-1 h-16 bg-gradient-to-b from-midnight-ink/20 to-signal-green/20 hidden lg:block" />
                    )}
                  </motion.div>
                ))}
@@ -364,7 +364,7 @@ export default function LandingPage() {
        </section>
  
        {/* Calculator Section - NEUES DESIGNSYSTEM */}
-       <section id="calculator" className="section bg-soft-white">
+       <section id="calculator" className="section bg-canvas-white">
          <div className="max-w-6xl mx-auto">
            <motion.div 
              initial={{ opacity: 0, y: 40 }}
@@ -373,11 +373,11 @@ export default function LandingPage() {
              transition={{ duration: 0.8 }}
              className="text-center mb-20 space-y-4"
            >
-             <h2 className="text-4xl md:text-5xl font-serif font-bold text-industry-gray">Ihr Patch-Konfigurator</h2>
-             <p className="text-xl text-industry-gray/70 max-w-2xl mx-auto">
+             <h2 className="text-4xl md:text-5xl font-serif font-bold text-midnight-ink">Ihr Patch-Konfigurator</h2>
+             <p className="text-xl text-deep-charcoal/70 max-w-2xl mx-auto">
                Gestalten Sie Ihren Patch in Echtzeit und erhalten Sie eine sofortige Kostenschätzung.
              </p>
-             <div className="w-24 h-1 bg-craft-gold mx-auto rounded-full" />
+             <div className="w-24 h-1 bg-signal-green mx-auto rounded-full" />
            </motion.div>
            
            <motion.div 
@@ -402,11 +402,11 @@ export default function LandingPage() {
              transition={{ duration: 0.8 }}
              className="text-center mb-20 space-y-4"
            >
-             <h2 className="text-4xl md:text-5xl font-serif font-bold text-industry-gray">Warum uns vertrauen?</h2>
-             <p className="text-xl text-industry-gray/70 max-w-2xl mx-auto">
+             <h2 className="text-4xl md:text-5xl font-serif font-bold text-midnight-ink">Warum uns vertrauen?</h2>
+             <p className="text-xl text-deep-charcoal/70 max-w-2xl mx-auto">
                Qualität, die überzeugt. Service, der begeistert.
              </p>
-             <div className="w-24 h-1 bg-craft-gold mx-auto rounded-full" />
+             <div className="w-24 h-1 bg-signal-green mx-auto rounded-full" />
            </motion.div>
  
            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -420,11 +420,11 @@ export default function LandingPage() {
                  whileHover={{ y: -5, scale: 1.02 }}
                  className="card text-center"
                >
-                 <div className="w-16 h-16 rounded-xl bg-craft-gold/10 text-craft-gold flex items-center justify-center mx-auto mb-6">
+                 <div className="w-16 h-16 rounded-xl bg-signal-green/10 text-signal-green flex items-center justify-center mx-auto mb-6">
                    {element.icon}
                  </div>
-                 <h3 className="text-xl font-serif font-bold text-industry-gray mb-3">{element.title}</h3>
-                 <p className="text-industry-gray/70 leading-relaxed text-sm">{element.description}</p>
+                 <h3 className="text-xl font-serif font-bold text-midnight-ink mb-3">{element.title}</h3>
+                 <p className="text-deep-charcoal/70 leading-relaxed text-sm">{element.description}</p>
                </motion.div>
              ))}
            </div>
@@ -461,22 +461,22 @@ export default function LandingPage() {
                  <CardContent className="p-6">
                    <div className="flex items-center mb-4">
                      {[...Array(testimonial.stars)].map((_, j) => (
-                       <Star key={j} className="w-5 h-5 text-craft-gold fill-craft-gold" />
+                       <Star key={j} className="w-5 h-5 text-signal-green fill-signal-green" />
                      ))}
                      {[...Array(5 - testimonial.stars)].map((_, j) => (
-                       <Star key={j + testimonial.stars} className="w-5 h-5 text-industry-gray/30" />
+                       <Star key={j + testimonial.stars} className="w-5 h-5 text-deep-charcoal/30" />
                      ))}
                    </div>
-                    <p className="text-industry-gray/70 italic mb-6 leading-relaxed">
+                    <p className="text-deep-charcoal/70 italic mb-6 leading-relaxed">
                       &quot;{testimonial.quote}&quot;
                     </p>
                    <div className="flex items-center gap-3">
-                     <div className="w-10 h-10 rounded-full bg-precision-blue/10 flex items-center justify-center">
-                       <span className="text-precision-blue font-bold">{testimonial.name.charAt(0)}</span>
+                     <div className="w-10 h-10 rounded-full bg-ghost-fill flex items-center justify-center">
+                       <span className="text-midnight-ink font-bold">{testimonial.name.charAt(0)}</span>
                      </div>
                      <div>
-                       <div className="font-semibold text-industry-gray">{testimonial.name}</div>
-                       <div className="text-sm text-industry-gray/60">{testimonial.company}</div>
+                       <div className="font-regular text-midnight-ink">{testimonial.name}</div>
+                       <div className="text-sm text-deep-charcoal/60">{testimonial.company}</div>
                      </div>
                    </div>
                  </CardContent>
@@ -487,7 +487,7 @@ export default function LandingPage() {
        </section>
  
        {/* FAQ Section - NEUES DESIGNSYSTEM */}
-       <section id="faq" className="section bg-soft-white">
+       <section id="faq" className="section bg-canvas-white">
          <div className="max-w-4xl mx-auto">
            <motion.div 
              initial={{ opacity: 0, y: 40 }}
@@ -496,11 +496,11 @@ export default function LandingPage() {
              transition={{ duration: 0.8 }}
              className="text-center mb-20 space-y-4"
            >
-             <h2 className="text-4xl md:text-5xl font-serif font-bold text-industry-gray">Häufige Fragen</h2>
-             <p className="text-xl text-industry-gray/70 max-w-2xl mx-auto">
+             <h2 className="text-4xl md:text-5xl font-serif font-bold text-midnight-ink">Häufige Fragen</h2>
+             <p className="text-xl text-deep-charcoal/70 max-w-2xl mx-auto">
                Alles, was Sie über unsere Patches wissen müssen.
              </p>
-             <div className="w-24 h-1 bg-craft-gold mx-auto rounded-full" />
+             <div className="w-24 h-1 bg-signal-green mx-auto rounded-full" />
            </motion.div>
  
            <motion.div
@@ -520,11 +520,11 @@ export default function LandingPage() {
                  { id: "samples", question: "Kann ich vor der Bestellung ein Muster erhalten?", answer: "Ja, wir bieten Muster-Patches an. Die Kosten betragen 15€ pro Stück (anrechenbar auf spätere Bestellungen). Die Musterproduktion dauert 5-7 Werktage." },
                  { id: "payment", question: "Welche Zahlungsmethoden akzeptiert ihr?", answer: "Wir akzeptieren Vorkasse (Banküberweisung), PayPal und Rechnung für Geschäftskunden. Bei Erstbestellungen bitten wir um Vorkasse. Ab der zweiten Bestellung können wir auch Rechnung anbieten." }
                ].map((item, i) => (
-                 <AccordionItem key={item.id} value={`item-${i}`} className="rounded-xl border-0 bg-soft-white shadow-sm">
-                   <AccordionTrigger className="text-lg font-semibold text-industry-gray hover:text-craft-gold transition-colors px-6 py-4">
+                 <AccordionItem key={item.id} value={`item-${i}`} className="rounded-xl border-0 bg-canvas-white">
+                   <AccordionTrigger className="text-lg font-regular text-midnight-ink hover:text-signal-green transition-colors px-6 py-4">
                      {item.question}
                    </AccordionTrigger>
-                   <AccordionContent className="text-industry-gray/70 leading-relaxed px-6 pb-4">
+                   <AccordionContent className="text-deep-charcoal/70 leading-relaxed px-6 pb-4">
                      {item.answer}
                    </AccordionContent>
                  </AccordionItem>
@@ -542,14 +542,14 @@ export default function LandingPage() {
              whileInView={{ opacity: 1, y: 0 }}
              viewport={{ once: true }}
              transition={{ duration: 0.8 }}
-             className="relative rounded-xl bg-gradient-to-r from-precision-blue to-precision-blue/80 p-12 md:p-20 text-center text-soft-white overflow-hidden"
+             className="relative rounded-xl bg-gradient-to-r from-midnight-ink to-deep-charcoal/80 p-12 md:p-20 text-center text-pure-white overflow-hidden"
            >
              <div className="relative z-10 space-y-8">
                <motion.h2 
                  initial={{ opacity: 0, y: 20 }}
                  animate={{ opacity: 1, y: 0 }}
                  transition={{ duration: 0.6, delay: 0.2 }}
-                 className="text-4xl md:text-5xl font-serif font-bold text-craft-gold"
+                 className="text-4xl md:text-5xl font-serif font-bold text-signal-green"
                >
                  Bereit für Ihre 
                  <span className="block">perfekten Patches?</span>
@@ -558,7 +558,7 @@ export default function LandingPage() {
                  initial={{ opacity: 0, y: 20 }}
                  animate={{ opacity: 1, y: 0 }}
                  transition={{ duration: 0.6, delay: 0.4 }}
-                 className="text-xl md:text-2xl text-soft-white/90 max-w-2xl mx-auto"
+                 className="text-xl md:text-2xl text-pure-white/90 max-w-2xl mx-auto"
                >
                  Starten Sie noch heute! Wir beraten Sie gerne persönlich oder Sie nutzen unseren Konfigurator.
                </motion.p>
@@ -570,7 +570,7 @@ export default function LandingPage() {
                >
                  <Button 
                    size="lg" 
-                   variant="gold"
+                   variant="default"
                    className="px-8 py-4 text-lg group"
                    onClick={() => scrollToSection("calculator")}
                  >
@@ -593,51 +593,51 @@ export default function LandingPage() {
        </section>
  
        {/* Footer - NEUES DESIGNSYSTEM */}
-       <footer className="py-16 px-6 border-t border-border-gray">
+       <footer className="py-16 px-6 border-t border-deep-charcoal/10">
          <div className="max-w-6xl mx-auto">
            <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
              <div className="space-y-4">
                <div className="flex items-center gap-3">
-                 <Image src="/logo.jpg" alt="Stickwerk-Studio Logo" width={50} height={50} className="rounded-xl border-2 border-precision-blue/20" />
-                 <span className="text-xl font-serif font-bold text-industry-gray">Stickwerk-Studio</span>
+                 <Image src="/logo.jpg" alt="Stickwerk-Studio Logo" width={50} height={50} className="rounded-xl border-2 border-deep-charcoal/10" />
+                 <span className="text-xl font-serif font-bold text-midnight-ink">Stickwerk-Studio</span>
                </div>
-               <p className="text-industry-gray/70 text-sm leading-relaxed">
+               <p className="text-deep-charcoal/70 text-sm leading-relaxed">
                  Professionelle Maschinenstickerei für Patches, Logos und Textilbranding in Premium-Handwerksqualität.
                </p>
              </div>
              <div className="space-y-4">
-               <h4 className="font-bold text-industry-gray text-lg">Navigation</h4>
+               <h4 className="font-bold text-midnight-ink text-lg">Navigation</h4>
                <div className="space-y-2">
-                 <a href="#features" className="block text-industry-gray/70 hover:text-craft-gold transition-colors text-sm nav-link">Leistungen</a>
-                 <a href="#zielgruppen" className="block text-industry-gray/70 hover:text-craft-gold transition-colors text-sm nav-link">Zielgruppen</a>
-                 <a href="#prozess" className="block text-industry-gray/70 hover:text-craft-gold transition-colors text-sm nav-link">Prozess</a>
-                 <a href="#calculator" className="block text-industry-gray/70 hover:text-craft-gold transition-colors text-sm nav-link">Konfigurator</a>
-                 <a href="#faq" className="block text-industry-gray/70 hover:text-craft-gold transition-colors text-sm nav-link">FAQ</a>
+                 <a href="#features" className="block text-deep-charcoal/70 hover:text-signal-green transition-colors text-sm nav-link">Leistungen</a>
+                 <a href="#zielgruppen" className="block text-deep-charcoal/70 hover:text-signal-green transition-colors text-sm nav-link">Zielgruppen</a>
+                 <a href="#prozess" className="block text-deep-charcoal/70 hover:text-signal-green transition-colors text-sm nav-link">Prozess</a>
+                 <a href="#calculator" className="block text-deep-charcoal/70 hover:text-signal-green transition-colors text-sm nav-link">Konfigurator</a>
+                 <a href="#faq" className="block text-deep-charcoal/70 hover:text-signal-green transition-colors text-sm nav-link">FAQ</a>
                </div>
              </div>
              <div className="space-y-4">
-               <h4 className="font-bold text-industry-gray text-lg">Kontakt</h4>
-               <div className="space-y-2 text-sm text-industry-gray/70">
+               <h4 className="font-bold text-midnight-ink text-lg">Kontakt</h4>
+               <div className="space-y-2 text-sm text-deep-charcoal/70">
                  <p>E-Mail: info@stickwerk-studio.de</p>
                  <p>Telefon: +49 (0) 123 456789</p>
                  <p>Mo-Fr: 9:00 - 18:00 Uhr</p>
                </div>
              </div>
              <div className="space-y-4">
-               <h4 className="font-bold text-industry-gray text-lg">Rechtliches</h4>
-               <div className="space-y-2 text-sm text-industry-gray/70">
-                 <a href="/impressum" className="block hover:text-craft-gold transition-colors nav-link">Impressum</a>
-                 <a href="/datenschutz" className="block hover:text-craft-gold transition-colors nav-link">Datenschutz</a>
-                 <a href="/agb" className="block hover:text-craft-gold transition-colors nav-link">AGB</a>
+               <h4 className="font-bold text-midnight-ink text-lg">Rechtliches</h4>
+               <div className="space-y-2 text-sm text-deep-charcoal/70">
+                 <a href="/impressum" className="block hover:text-signal-green transition-colors nav-link">Impressum</a>
+                 <a href="/datenschutz" className="block hover:text-signal-green transition-colors nav-link">Datenschutz</a>
+                 <a href="/agb" className="block hover:text-signal-green transition-colors nav-link">AGB</a>
                </div>
                <div className="flex gap-3 pt-4">
-                 <div className="w-8 h-8 rounded-full bg-precision-blue/10 flex items-center justify-center text-precision-blue text-sm font-bold">IG</div>
-                 <div className="w-8 h-8 rounded-full bg-precision-blue/10 flex items-center justify-center text-precision-blue text-sm font-bold">FB</div>
-                 <div className="w-8 h-8 rounded-full bg-precision-blue/10 flex items-center justify-center text-precision-blue text-sm font-bold">X</div>
+                 <div className="w-8 h-8 rounded-full bg-ghost-fill flex items-center justify-center text-midnight-ink text-sm font-bold">IG</div>
+                 <div className="w-8 h-8 rounded-full bg-ghost-fill flex items-center justify-center text-midnight-ink text-sm font-bold">FB</div>
+                 <div className="w-8 h-8 rounded-full bg-ghost-fill flex items-center justify-center text-midnight-ink text-sm font-bold">X</div>
                </div>
              </div>
            </div>
-           <div className="pt-8 border-t border-border-gray text-center text-sm text-industry-gray/60">
+           <div className="pt-8 border-t border-deep-charcoal/10 text-center text-sm text-deep-charcoal/60">
              <p>© 2026 Stickwerk-Studio. Alle Rechte vorbehalten. | DSGVO konform | Made in Germany</p>
            </div>
          </div>

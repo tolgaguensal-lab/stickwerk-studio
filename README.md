@@ -14,7 +14,7 @@ Professionelle Website für Maschinenstickerei und Custom Patches im DACH-Raum. 
 - **Patch-Konfigurator** mit 11-Schritte-Konfigurator und Echtzeit-Preisberechnung
 - **Kontaktformular** mit DSGVO-konformer Datenschutz-Checkbox
 - **Rechtliche Seiten** (Impressum, Datenschutz, AGB)
-- **Originäres Design-System** mit Industry Gray, Craft Gold und Precision Blue
+- **Claude Type-inspiriertes Design-System** mit Midnight Ink, Canvas White und Signal Green
 
 ### Für Administration
 - **Admin-Dashboard** zur Lead-Verwaltung
@@ -44,13 +44,13 @@ Eigenständiges, originäres Design (keine Elemente aus externen Referenzen kopi
 
 | Token | Wert | Verwendung |
 |-------|------|------------|
-| **Industry Gray** | `#1E1E1E` | Primärtext, Überschriften |
-| **Machinery Silver** | `#F5F5F5` | Seitenhintergrund |
-| **Soft White** | `#FAFAFA` | Karten, Container |
-| **Precision Blue** | `#0066CC` | Links, technische Akzente |
-| **Craft Gold** | `#C5A059` | CTA-Buttons, Highlights |
-| **Signal Red** | `#D32F2F` | Fehler, Warnungen |
-| **Muted Green** | `#4CAF50` | Erfolge, Bestätigungen |
+| **Canvas White** | `#FAF8F5` | Seitenhintergrund, Karten |
+| **Midnight Ink** | `#1A1A2E` | Primärtext, Überschriften |
+| **Deep Charcoal** | `#2D2D2D` | Sekundärtext, Icons, Akzente |
+| **Paper Gray** | `#F0EDE8` | Kontrasthintergrund |
+| **Ghost Fill** | `#F5F3F0` | Leichte Füllungen, Hover |
+| **Signal Green** | `#2E8B57` | CTA-Buttons, Highlights |
+| **Pure White** | `#FFFFFF` | Text auf dunklen Flächen |
 
 Siehe [DESIGN-COMPLIANCE.md](./docs/DESIGN-COMPLIANCE.md) für vollständige Compliance-Dokumentation.
 

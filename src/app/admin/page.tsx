@@ -155,11 +155,11 @@ export default function AdminDashboard() {
   const getStatusBadge = (status: string) => {
     const variants: Record<
       string,
-      { label: string; variant: "default" | "gold" | "secondary" | "outline" }
+      { label: string; variant: "default" | "outline" | "ghost" | "green" }
     > = {
       NEW: { label: "Neu", variant: "default" },
-      IN_PROGRESS: { label: "In Bearbeitung", variant: "gold" },
-      COMPLETED: { label: "Abgeschlossen", variant: "secondary" },
+      IN_PROGRESS: { label: "In Bearbeitung", variant: "green" },
+      COMPLETED: { label: "Abgeschlossen", variant: "default" },
       CANCELLED: { label: "Abgebrochen", variant: "outline" },
     };
     return variants[status] || { label: status, variant: "outline" };
@@ -200,7 +200,7 @@ export default function AdminDashboard() {
                 <RefreshCw className="w-5 h-5" />
               )}
             </Button>
-             <Button variant="gold" size="lg">
+             <Button variant="default" size="lg">
                + Neuer Lead
              </Button>
           </div>
