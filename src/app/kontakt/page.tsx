@@ -138,13 +138,13 @@ export default function Kontakt() {
             animate={{ opacity: 1, scale: 1 }}
             className="max-w-2xl mx-auto"
           >
-            <Card className="bg-canvas-white backdrop-blur-sm border-2 border-signal-green/30">
+            <Card className="bg-canvas-white backdrop-blur-sm border-2 border-accent/30">
               <CardContent className="p-12 text-center">
-                <div className="w-20 h-20 bg-signal-green/20 text-signal-green rounded-full flex items-center justify-center mx-auto mb-6">
+                <div className="w-20 h-20 bg-accent/20 text-accent rounded-full flex items-center justify-center mx-auto mb-6">
                   <CheckCircle2 className="w-10 h-10" />
                 </div>
                 <h2 className="text-3xl font-serif font-bold text-midnight-ink mb-4">
-                  Nachricht gesendet! <span className="text-signal-green">&rarr;</span>
+                  Nachricht gesendet! <span className="text-accent">&rarr;</span>
                 </h2>
                 <p className="text-midnight-ink/70 mb-8">
                   Vielen Dank für Ihre Nachricht. Wir werden uns innerhalb von
@@ -186,7 +186,7 @@ export default function Kontakt() {
 
         {/* Back Link */}
         <div className="flex justify-start">
-          <Link href="/" className="text-midnight-ink hover:text-signal-green transition-colors flex items-center gap-2">
+          <Link href="/" className="text-midnight-ink hover:text-accent transition-colors flex items-center gap-2">
             &larr; Zur&uuml;ck zur Startseite
           </Link>
         </div>
@@ -227,7 +227,7 @@ export default function Kontakt() {
                         onChange={handleChange}
                         placeholder="Ihr voller Name"
                         required
-                        className="w-full p-3 rounded-xl border-2 border-deep-charcoal/10 focus:border-signal-green outline-none transition-all"
+                        className="w-full p-3 rounded-xl border-2 border-deep-charcoal/10 focus:border-ring outline-none transition-all"
                       />
                     </div>
                     <div className="space-y-2">
@@ -241,7 +241,7 @@ export default function Kontakt() {
                         onChange={handleChange}
                         placeholder="email@beispiel.de"
                         required
-                        className="w-full p-3 rounded-xl border-2 border-deep-charcoal/10 focus:border-signal-green outline-none transition-all"
+                        className="w-full p-3 rounded-xl border-2 border-deep-charcoal/10 focus:border-ring outline-none transition-all"
                       />
                     </div>
                   </div>
@@ -257,7 +257,7 @@ export default function Kontakt() {
                         value={formData.phone}
                         onChange={handleChange}
                         placeholder="+49 ..."
-                        className="w-full p-3 rounded-xl border-2 border-deep-charcoal/10 focus:border-signal-green outline-none transition-all"
+                        className="w-full p-3 rounded-xl border-2 border-deep-charcoal/10 focus:border-ring outline-none transition-all"
                       />
                     </div>
                     <div className="space-y-2">
@@ -268,7 +268,7 @@ export default function Kontakt() {
                         name="subject"
                         value={formData.subject}
                         onChange={handleChange}
-                        className="w-full p-3 rounded-xl border-2 border-deep-charcoal/10 focus:border-signal-green outline-none transition-all bg-canvas-white"
+                        className="w-full p-3 rounded-xl border-2 border-deep-charcoal/10 focus:border-ring outline-none transition-all bg-canvas-white"
                       >
                         <option value="Allgemeine Anfrage">Allgemeine Anfrage</option>
                         <option value="Patch-Konfigurator">Patch-Konfigurator</option>
@@ -290,7 +290,7 @@ export default function Kontakt() {
                       rows={5}
                       placeholder="Wie k&ouml;nnen wir Ihnen helfen?"
                       required
-                      className="w-full p-3 rounded-xl border-2 border-deep-charcoal/10 focus:border-signal-green outline-none transition-all"
+                      className="w-full p-3 rounded-xl border-2 border-deep-charcoal/10 focus:border-ring outline-none transition-all"
                     />
                   </div>
 
@@ -299,10 +299,10 @@ export default function Kontakt() {
                       type="checkbox"
                       id="consent-privacy"
                       onChange={(e) => setConsentPrivacy(e.target.checked)}
-                      className="mt-1 h-4 w-4 rounded border-deep-charcoal/30 text-signal-green focus:ring-signal-green"
+                      className="mt-1 h-4 w-4 rounded border-deep-charcoal/30 text-accent focus:ring-ring"
                     />
                     <label htmlFor="consent-privacy" className="text-sm text-midnight-ink/70">
-                      Ich stimme der <Link href="/datenschutz" className="text-signal-green hover:underline">Datenschutzerklärung</Link> zu. 
+                      Ich stimme der <Link href="/datenschutz" className="text-accent hover:underline">Datenschutzerklärung</Link> zu. 
                       Meine Daten werden ausschließlich zur Bearbeitung meiner Anfrage verwendet.
                     </label>
                   </div>
@@ -355,16 +355,16 @@ export default function Kontakt() {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3 + index * 0.1 }}
-                    className="p-4 rounded-xl bg-ghost-fill border border-deep-charcoal/10 hover:border-signal-green/30 transition-colors"
+                    className="p-4 rounded-xl bg-ghost-fill border border-deep-charcoal/10 hover:border-accent/30 transition-colors"
                   >
                     <div className="flex items-start gap-4">
-                      <div className="text-signal-green mt-0.5">{item.icon}</div>
+                      <div className="text-accent mt-0.5">{item.icon}</div>
                       <div>
                         <h3 className="font-semibold text-midnight-ink">{item.title}</h3>
                         {item.link ? (
                           <a
                             href={item.link}
-                            className="text-midnight-ink/80 hover:text-signal-green transition-colors text-sm whitespace-nowrap"
+                            className="text-midnight-ink/80 hover:text-accent transition-colors text-sm whitespace-nowrap"
                           >
                             {item.content}
                           </a>

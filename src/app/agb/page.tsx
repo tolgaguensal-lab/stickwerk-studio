@@ -15,7 +15,7 @@ export default function AGB() {
         </div>
 
         <div className="flex justify-start">
-          <Link href="/" className="text-midnight-ink hover:text-signal-green transition-colors flex items-center gap-2">
+          <Link href="/" className="text-foreground hover:text-accent transition-colors flex items-center gap-2">
             &larr; Zur&uuml;ck zur Startseite
           </Link>
         </div>
