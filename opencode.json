@@ -33,7 +33,9 @@
       ".next/**",
       "dist/**",
       "build/**",
-      ".git/**"
+      ".git/**",
+      "playwright-report/**",
+      "test-results/**"
     ]
   }
 }
