@@ -112,28 +112,29 @@ export default function Navbar() {
       className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md"
     >
       <div className="px-6 lg:px-10">
-        <div className="flex items-center justify-between h-20 lg:h-24">
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-4 group shrink-0">
-            <div className="relative w-14 h-14 lg:w-16 lg:h-16 rounded-xl overflow-hidden shadow-sm ring-1 ring-border/30 group-hover:ring-accent/30 transition-all duration-300">
-              <Image
-                src="/logo.jpg"
-                alt="Stickwerk-Studio Logo"
-                fill
-                className="object-cover"
-                sizes="(max-width: 1024px) 56px, 64px"
-                priority
-              />
-            </div>
-            <div className="flex flex-col">
-              <span className="text-xl lg:text-2xl font-serif font-bold text-foreground tracking-tight leading-none">
-                Stickwerk-Studio
-              </span>
-              <span className="text-[10px] lg:text-xs text-accent/60 font-sans tracking-[0.25em] uppercase mt-1">
-                Maschinenstickerei &amp; Custom Patches
-              </span>
-            </div>
-          </Link>
+            <div className="flex items-center justify-between h-[72px] lg:h-[72px]">
+              {/* Logo */}
+              <Link href="/" className="flex items-center gap-4 group shrink-0">
+                <div className="relative w-8 h-8 lg:w-8 lg:h-8 rounded-xl overflow-hidden shadow-sm ring-1 ring-border/30 group-hover:ring-accent/30 transition-all duration-300">
+                  <Image
+                    src="/logo.jpg"
+                    alt="Stickwerk-Studio Logo"
+                    fill
+                    className="object-cover"
+                    sizes="32px"
+                    priority
+                  />
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-[18px] lg:text-[22px] font-serif font-bold text-foreground tracking-tight leading-none">
+                    Stickwerk-Studio
+                  </span>
+                  <span className="text-[12px] lg:text-[12px] text-accent/60 font-sans tracking-[0.25em] uppercase mt-1">
+                    Maschinenstickerei &amp; Custom Patches
+                  </span>
+                </div>
+              </Link>
+
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-2">
@@ -196,18 +197,19 @@ export default function Navbar() {
               <SheetContent side="right" className="w-full sm:w-[400px] bg-card border-l border-border p-0">
                 <div className="flex flex-col h-full px-6 py-6">
                   <div className="flex items-center justify-between mb-10">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-lg overflow-hidden ring-1 ring-border/30">
-                        <Image
-                          src="/logo.jpg"
-                          alt="Stickwerk-Studio Logo"
-                          width={40}
-                          height={40}
-                          className="object-cover w-full h-full"
-                        />
-                      </div>
-                      <span className="font-serif font-semibold text-foreground text-lg tracking-tight">Stickwerk-Studio</span>
+                  <div className="flex items-center gap-3">
+                    <div className="w-7 h-7 rounded-lg overflow-hidden ring-1 ring-border/30">
+                      <Image
+                        src="/logo.jpg"
+                        alt="Stickwerk-Studio Logo"
+                        width={28}
+                        height={28}
+                        className="object-cover w-full h-full"
+                      />
                     </div>
+                    <span className="font-serif font-semibold text-foreground text-[18px] tracking-tight">Stickwerk-Studio</span>
+                  </div>
+
                     <Button
                       variant="ghost"
                       size="icon"

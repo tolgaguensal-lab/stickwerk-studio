@@ -104,7 +104,7 @@ export default function RootLayout({
         <SmoothScroll>
           <Scene />
           <Navbar />
-          <div className="pt-20 lg:pt-24">
+          <div className="pt-[72px] lg:pt-[72px]">
             {children}
           </div>
         </SmoothScroll>

@@ -10,31 +10,31 @@
    --------------------------------------------------------------------- */
 :root {
   /* ===== WARM CREAM/Eggshell Palette ===== */
-  --color-background: #F7F1E6;         /* Warmer Creme - Seitenhintergrund */
-  --color-foreground: #111111;          /* Fast Schwarz - Primärtext */
-  --color-card: #FFF8EC;               /* Warmes Eierschale - Karten */
+  --color-background: #F7F1E6;         /* Background */
+  --color-foreground: #111111;          /* Text */
+  --color-card: #FFF8EC;               /* Surface */
   --color-card-foreground: #111111;
   --color-popover: #FFF8EC;
   --color-popover-foreground: #111111;
-  --color-primary: #8A6A3F;             /* Warmes Braun/Gold - Primäre Buttons */
-  --color-primary-foreground: #FFF8EC;  /* Warmweiß - Text auf primären Buttons */
-  --color-secondary: #D8C7AE;           /* Warmer Sand/Tan - Sekundäre Buttons */
+  --color-primary: #111111;             /* Primary */
+  --color-primary-foreground: #FFF8EC;  /* Primary Foreground */
+  --color-secondary: #EFE3D0;           /* Surface Muted */
   --color-secondary-foreground: #111111;
-  --color-muted: #EFE3D0;              /* Gedämpftes Creme - Alternativ-Sections */
-  --color-muted-foreground: #3A332C;   /* Warmes Dunkelbraun - sekundärer Text */
-  --color-accent: #8A6A3F;             /* Warmes Braun/Gold - Akzente */
-  --color-accent-foreground: #FFF8EC;
-  --color-destructive: #8B1E1E;        /* Tiefes Rot - Fehler */
+  --color-muted: #EFE3D0;               /* Surface Muted */
+  --color-muted-foreground: #3A332C;   /* Muted Text */
+  --color-accent: #8A6A3F;             /* Accent */
+  --color-accent-foreground: #FFF8EC;  /* Accent Foreground */
+  --color-destructive: #8B1E1E;        /* Danger */
   --color-destructive-foreground: #FFF8EC;
-  --color-success: #1F6B3A;            /* Tiefes Grün - Erfolg */
+  --color-success: #1F6B3A;            /* Success */
   --color-success-foreground: #FFF8EC;
-  --color-border: #D8C7AE;             /* Warmer Sand - Rahmen */
-  --color-input: #D8C7AE;              /* Input-Rahmen */
-  --color-ring: #8A6A3F;               /* Fokus-Ring Akzent */
+  --color-border: #D8C7AE;             /* Border */
+  --color-input: #D8C7AE;              /* Border */
+  --color-ring: #8A6A3F;               /* Accent */
 
-  /* Surface Aliase */
-  --color-surface: var(--color-card);
-  --color-surface-muted: var(--color-muted);
+  /* Surface Aliases */
+  --color-surface: #FFF8EC;
+  --color-surface-muted: #EFE3D0;
 
   /* ===== Abwärtskompatible Aliase (alte Token-Namen) ===== */
   --color-canvas-white: #F7F1E6;
@@ -135,9 +135,9 @@
   --color-card-foreground: #111111;
   --color-popover: #FFF8EC;
   --color-popover-foreground: #111111;
-  --color-primary: #8A6A3F;
+  --color-primary: #111111;
   --color-primary-foreground: #FFF8EC;
-  --color-secondary: #D8C7AE;
+  --color-secondary: #EFE3D0;
   --color-secondary-foreground: #111111;
   --color-muted: #EFE3D0;
   --color-muted-foreground: #3A332C;

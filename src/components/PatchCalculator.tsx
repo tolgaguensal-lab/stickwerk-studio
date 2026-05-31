@@ -225,7 +225,7 @@ export default function PatchCalculator() {
   }
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
+    <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start px-6 lg:px-10">
       
       {/* --- MAIN STEPS --- */}
       <div className="lg:col-span-3 space-y-8">
@@ -348,7 +348,7 @@ export default function PatchCalculator() {
                 <h3 className="text-2xl font-serif font-bold text-foreground">Farbanzahl</h3>
               </div>
               <p className="text-muted-foreground mb-6">Jede zusätzliche Farbe erhöht die Stickzeit und damit den Preis.</p>
-              <div className="p-8 bg-white rounded-3xl border-2 border-primary/10 shadow-sm">
+              <div className="p-8 bg-card rounded-3xl border-2 border-primary/10 shadow-sm">
                 <div className="flex items-center justify-between mb-6">
                   <div className="flex items-center gap-3">
                     <Palette className="w-6 h-6 text-accent" />
@@ -669,7 +669,7 @@ export default function PatchCalculator() {
                   <h3 className="text-2xl font-serif font-bold text-foreground">Design hochladen (Optional)</h3>
                 </div>
                 <p className="text-muted-foreground mb-6">Laden Sie Ihr Design hoch, um eine genauere Preiskalkulation zu erhalten.</p>
-                <div className="p-8 bg-white rounded-3xl border-2 border-primary/10 border-dashed shadow-sm">
+                <div className="p-8 bg-card rounded-3xl border-2 border-primary/10 border-dashed shadow-sm">
                   <div className="text-center">
                     <Upload className="w-12 h-12 text-primary/40 mx-auto mb-4" />
                     <h4 className="text-lg font-semibold text-primary mb-2">Ihr Design hier ablegen</h4>
