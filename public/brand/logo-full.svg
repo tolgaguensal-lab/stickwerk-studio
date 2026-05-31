@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 64" width="280" height="64">
+  <defs>
+    <clipPath id="hoop">
+      <circle cx="32" cy="34" r="26"/>
+    </clipPath>
+  </defs>
+  
+  <!-- Embroidery hoop - outer ring -->
+  <circle cx="32" cy="34" r="28" fill="none" stroke="#111111" stroke-width="2.5"/>
+  <circle cx="32" cy="34" r="25" fill="none" stroke="#111111" stroke-width="1"/>
+  
+  <!-- Hoop clamp at top -->
+  <rect x="26" y="3" width="12" height="6" rx="1.5" fill="#8A6A3F"/>
+  <rect x="24" y="1" width="16" height="4" rx="1.5" fill="#8A6A3F"/>
+  <rect x="29" y="0" width="6" height="3" rx="1" fill="#7A5A2F"/>
+  
+  <!-- Letter S - serif style -->
+  <text x="32" y="42" font-family="Georgia, 'Times New Roman', serif" font-size="32" font-weight="bold" fill="#111111" text-anchor="middle" font-style="italic">S</text>
+  
+  <!-- Needle - diagonal -->
+  <line x1="18" y1="46" x2="48" y2="12" stroke="#8A6A3F" stroke-width="2" stroke-linecap="round"/>
+  
+  <!-- Needle eye -->
+  <ellipse cx="48" cy="12" rx="3" ry="4" fill="none" stroke="#8A6A3F" stroke-width="1.5" transform="rotate(-50 48 12)"/>
+  
+  <!-- Thread from needle - dashed curve -->
+  <path d="M48 12 Q54 20, 52 30 Q50 38, 46 44" fill="none" stroke="#8A6A3F" stroke-width="1" stroke-dasharray="3,2"/>
+  
+  <!-- Text: Stickwerk-Studio -->
+  <text x="76" y="38" font-family="Georgia, 'Times New Roman', serif" font-size="22" font-weight="bold" fill="#111111" letter-spacing="-0.5">Stickwerk</text>
+  <text x="190" y="38" font-family="Georgia, 'Times New Roman', serif" font-size="22" fill="#111111" letter-spacing="-0.5">-Studio</text>
+  
+  <!-- Subtle tagline -->
+  <text x="76" y="52" font-family="system-ui, -apple-system, sans-serif" font-size="8" fill="#8A6A3F" letter-spacing="2" text-transform="uppercase">MASCHINENSTICKEREI &amp; CUSTOM PATCHES</text>
+</svg>

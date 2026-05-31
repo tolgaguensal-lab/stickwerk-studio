@@ -135,23 +135,23 @@ export default function LandingPage() {
            style={{ opacity, scale }}
            className="max-w-4xl space-y-8"
          >
-           <motion.div
-             initial={{ opacity: 0, y: 30 }}
-             animate={{ opacity: 1, y: 0 }}
-             transition={{ duration: 0.8, ease: "easeOut" }}
-             className="relative inline-block mb-6"
-           >
-             <div className="relative z-10 p-4 bg-card rounded-2xl border border-border shadow-sm">
-               <Image 
-                 src="/logo.jpg" 
-                 alt="Stickwerk-Studio Logo" 
-                 width={140} 
-                 height={140} 
-                 className="rounded-xl object-cover"
-                 priority
-               />
-             </div>
-           </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              className="relative inline-block mb-6"
+            >
+              <div className="relative z-10 p-4 bg-card rounded-2xl border border-border shadow-sm">
+                <Image 
+                  src="/brand/logo-mark.svg" 
+                  alt="Stickwerk-Studio Logo" 
+                  width={120} 
+                  height={120} 
+                  className="rounded-xl"
+                  priority
+                />
+              </div>
+            </motion.div>
            
            <motion.h1 
              initial={{ opacity: 0, y: 20 }}
@@ -399,60 +399,46 @@ export default function LandingPage() {
              ))}
            </div>
  
-           {/* Testimonials */}
-           <motion.div 
-             initial={{ opacity: 0, y: 30 }}
-             whileInView={{ opacity: 1, y: 0 }}
-             viewport={{ once: true }}
-             transition={{ duration: 0.6, delay: 0.3 }}
-             className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8"
-           >
-             {[
-               {
-                 name: "Max Mustermann",
-                 company: "Startup Berlin",
-                 quote: "Unglaubliche Qualität und super Service! Unsere Team-Patches sind genau so geworden, wie wir es uns vorgestellt haben.",
-                 stars: 5
-               },
-               {
-                 name: "Anna Schmidt",
-                 company: "FC Böhörde",
-                 quote: "Schnelle Lieferung und die Patches halten was sie versprechen. Die Spieler lieben sie!",
-                 stars: 5
-               },
-               {
-                 name: "Thomas Bauer",
-                 company: "Bauer GmbH",
-                 quote: "Professionelle Beratung und beste Verarbeitung. Sehr zu empfehlen für Firmenkleidung.",
-                 stars: 4
-               }
-             ].map((testimonial, i) => (
-               <Card key={i} className="card border border-border">
-                 <CardContent className="p-8">
-                   <div className="flex items-center gap-1 mb-4">
-                     {[...Array(testimonial.stars)].map((_, j) => (
-                       <Star key={j} className="w-5 h-5 text-accent fill-accent" />
-                     ))}
-                     {[...Array(5 - testimonial.stars)].map((_, j) => (
-                       <Star key={j + testimonial.stars} className="w-5 h-5 text-border" />
-                     ))}
-                   </div>
-                    <p className="text-muted-foreground italic mb-6 leading-relaxed">
-                      &quot;{testimonial.quote}&quot;
-                    </p>
-                   <div className="flex items-center gap-3">
-                     <div className="w-10 h-10 rounded-full bg-surface-muted flex items-center justify-center">
-                       <span className="text-foreground font-bold">{testimonial.name.charAt(0)}</span>
-                     </div>
-                     <div>
-                       <div className="font-medium text-foreground">{testimonial.name}</div>
-                       <div className="text-sm text-muted-foreground">{testimonial.company}</div>
-                     </div>
-                   </div>
-                 </CardContent>
-               </Card>
-             ))}
-           </motion.div>
+            {/* Trust Facts */}
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8"
+            >
+              {[
+                {
+                  icon: <CheckCircle2 className="w-6 h-6" />,
+                  metric: "500+",
+                  label: "Kunden seit 2020",
+                  description: "Von Einzelstücken bis Serienproduktion — unsere Kunden vertrauen auf unsere Qualität."
+                },
+                {
+                  icon: <Clock className="w-6 h-6" />,
+                  metric: "7-10",
+                  label: "Werktage Standard",
+                  description: "Express in 3-5 Tagen möglich. Transparente Lieferzeiten von Anfang an."
+                },
+                {
+                  icon: <Award className="w-6 h-6" />,
+                  metric: "15€",
+                  label: "Musterpreis",
+                  description: "Anrechenbar auf erste Bestellung. Testen Sie unsere Qualität vor dem großen Auftrag."
+                }
+              ].map((fact, i) => (
+                <Card key={i} className="card border border-border">
+                  <CardContent className="p-8 text-center">
+                    <div className="w-12 h-12 rounded-xl bg-accent/10 text-accent flex items-center justify-center mx-auto mb-4">
+                      {fact.icon}
+                    </div>
+                    <div className="text-3xl font-serif font-bold text-foreground mb-1">{fact.metric}</div>
+                    <div className="text-sm font-medium text-accent mb-3">{fact.label}</div>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{fact.description}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </motion.div>
          </div>
        </section>
  
@@ -566,11 +552,11 @@ export default function LandingPage() {
        <footer className="bg-foreground text-card py-16 md:py-20 px-6">
          <div className="max-w-7xl mx-auto">
            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
-             <div className="space-y-5">
-               <div className="flex items-center gap-3">
-                 <Image src="/logo.jpg" alt="Stickwerk-Studio Logo" width={44} height={44} className="rounded-xl border-2 border-card/20" />
-                 <span className="text-xl font-serif font-bold">Stickwerk-Studio</span>
-               </div>
+              <div className="space-y-5">
+                <div className="flex items-center gap-3">
+                  <Image src="/brand/logo-mark.svg" alt="Stickwerk-Studio Logo" width={40} height={40} />
+                  <span className="text-xl font-serif font-bold">Stickwerk-Studio</span>
+                </div>
                <p className="text-card/70 leading-relaxed">
                  Professionelle Maschinenstickerei für Patches, Logos und Textilbranding in Premium-Handwerksqualität. Hergestellt in Deutschland.
                </p>
@@ -600,11 +586,17 @@ export default function LandingPage() {
                  <a href="/datenschutz" className="block hover:text-accent transition-colors nav-link">Datenschutz</a>
                  <a href="/agb" className="block hover:text-accent transition-colors nav-link">AGB</a>
                </div>
-               <div className="flex gap-3 pt-2">
-                 <span className="w-10 h-10 rounded-full bg-card/10 flex items-center justify-center text-card/70 text-sm font-bold hover:bg-card/20 transition-colors cursor-pointer">IG</span>
-                 <span className="w-10 h-10 rounded-full bg-card/10 flex items-center justify-center text-card/70 text-sm font-bold hover:bg-card/20 transition-colors cursor-pointer">FB</span>
-                 <span className="w-10 h-10 rounded-full bg-card/10 flex items-center justify-center text-card/70 text-sm font-bold hover:bg-card/20 transition-colors cursor-pointer">X</span>
-               </div>
+                <div className="flex gap-3 pt-2">
+                  <a href="#" aria-label="Instagram" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-card/10 flex items-center justify-center text-card/70 hover:bg-card/20 hover:text-card transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-foreground">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+                  </a>
+                  <a href="#" aria-label="Facebook" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-card/10 flex items-center justify-center text-card/70 hover:bg-card/20 hover:text-card transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-foreground">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                  </a>
+                  <a href="#" aria-label="X (Twitter)" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-card/10 flex items-center justify-center text-card/70 hover:bg-card/20 hover:text-card transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-foreground">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4l11.733 16h4.267l-11.733 -16h-4.267z"/><path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"/></svg>
+                  </a>
+                </div>
              </div>
            </div>
            <div className="pt-8 border-t border-card/20 text-center text-sm text-card/60">

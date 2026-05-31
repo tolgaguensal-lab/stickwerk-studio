@@ -1,6 +1,10 @@
 import { NextResponse } from "next/server";
 import { getAdminPocketBase } from "@/lib/pocketbase/server";
+import { createRateLimiter, getRateLimitKey } from "@/lib/rate-limit";
 import { z } from "zod";
+
+// Rate limit: 10 requests per minute per IP
+const limiter = createRateLimiter({ windowMs: 60_000, max: 10 });
 
 const contactSchema = z.object({
   name: z.string().min(1, "Name ist erforderlich"),
@@ -14,6 +18,14 @@ const contactSchema = z.object({
 });
 
 export async function POST(req: Request) {
+  const key = getRateLimitKey(req, "contact");
+  if (!limiter.check(key)) {
+    return NextResponse.json(
+      { error: "Zu viele Anfragen. Bitte versuchen Sie es in einer Minute erneut." },
+      { status: 429 }
+    );
+  }
+
   try {
     const body = await req.json();
     const result = contactSchema.safeParse(body);

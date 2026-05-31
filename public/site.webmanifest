@@ -1,0 +1,16 @@
+{
+  "name": "Stickwerk-Studio",
+  "short_name": "Stickwerk",
+  "description": "Professionelle Maschinenstickerei & Custom Patches",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F7F1E6",
+  "theme_color": "#111111",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

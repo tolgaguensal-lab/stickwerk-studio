@@ -58,9 +58,9 @@ export const metadata: Metadata = {
     description: "Professionelle Maschinenstickerei, Custom Patches und Textilbranding für die DACH-Region.",
     images: [
       {
-        url: "https://sws.guenlab.de/logo.jpg",
-        width: 500,
-        height: 500,
+        url: "https://sws.guenlab.de/brand/logo-full.svg",
+        width: 280,
+        height: 64,
         alt: "Stickwerk-Studio Logo",
       },
     ],
@@ -69,11 +69,11 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Stickwerk-Studio | Maschinenstickerei & Custom Patches",
     description: "Professionelle Maschinenstickerei, Custom Patches und Textilbranding für die DACH-Region.",
-    images: ["https://sws.guenlab.de/logo.jpg"],
+    images: ["https://sws.guenlab.de/brand/logo-full.svg"],
   },
   icons: {
     icon: "/favicon.svg",
-    apple: "/logo.jpg",
+    apple: "/brand/logo-mark.svg",
     shortcut: "/favicon.svg",
   },
   manifest: "/site.webmanifest",

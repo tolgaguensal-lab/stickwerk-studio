@@ -114,22 +114,20 @@ export default function Navbar() {
       <div className="px-6 lg:px-10">
             <div className="flex items-center justify-between h-[72px] lg:h-[72px]">
               {/* Logo */}
-              <Link href="/" className="flex items-center gap-4 group shrink-0">
-                <div className="relative w-8 h-8 lg:w-8 lg:h-8 rounded-xl overflow-hidden shadow-sm ring-1 ring-border/30 group-hover:ring-accent/30 transition-all duration-300">
-                  <Image
-                    src="/logo.jpg"
-                    alt="Stickwerk-Studio Logo"
-                    fill
-                    className="object-cover"
-                    sizes="32px"
-                    priority
-                  />
-                </div>
-                <div className="flex flex-col">
-                  <span className="text-[18px] lg:text-[22px] font-serif font-bold text-foreground tracking-tight leading-none">
+              <Link href="/" className="flex items-center gap-3 group shrink-0">
+                <Image
+                  src="/brand/logo-mark.svg"
+                  alt="Stickwerk-Studio"
+                  width={36}
+                  height={36}
+                  className="group-hover:opacity-80 transition-opacity"
+                  priority
+                />
+                <div className="hidden sm:flex flex-col">
+                  <span className="text-[18px] lg:text-[20px] font-serif font-bold text-foreground tracking-tight leading-none">
                     Stickwerk-Studio
                   </span>
-                  <span className="text-[12px] lg:text-[12px] text-accent/60 font-sans tracking-[0.25em] uppercase mt-1">
+                  <span className="text-[10px] lg:text-[11px] text-accent/60 font-sans tracking-[0.2em] uppercase mt-0.5">
                     Maschinenstickerei &amp; Custom Patches
                   </span>
                 </div>
@@ -198,15 +196,12 @@ export default function Navbar() {
                 <div className="flex flex-col h-full px-6 py-6">
                   <div className="flex items-center justify-between mb-10">
                   <div className="flex items-center gap-3">
-                    <div className="w-7 h-7 rounded-lg overflow-hidden ring-1 ring-border/30">
-                      <Image
-                        src="/logo.jpg"
-                        alt="Stickwerk-Studio Logo"
-                        width={28}
-                        height={28}
-                        className="object-cover w-full h-full"
-                      />
-                    </div>
+                    <Image
+                      src="/brand/logo-mark.svg"
+                      alt="Stickwerk-Studio"
+                      width={28}
+                      height={28}
+                    />
                     <span className="font-serif font-semibold text-foreground text-[18px] tracking-tight">Stickwerk-Studio</span>
                   </div>
 

@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
 import { getAdminPocketBase } from "@/lib/pocketbase/server";
+import { createRateLimiter, getRateLimitKey } from "@/lib/rate-limit";
 import { z } from "zod";
+
+const limiter = createRateLimiter({ windowMs: 60_000, max: 10 });
 
 const leadSchema = z.object({
   name: z.string().min(1, "Name ist erforderlich"),
@@ -17,6 +20,14 @@ const leadSchema = z.object({
 });
 
 export async function POST(req: Request) {
+  const key = getRateLimitKey(req, "leads");
+  if (!limiter.check(key)) {
+    return NextResponse.json(
+      { error: "Zu viele Anfragen. Bitte versuchen Sie es in einer Minute erneut." },
+      { status: 429 }
+    );
+  }
+
   try {
     const body = await req.json();
     const result = leadSchema.safeParse(body);

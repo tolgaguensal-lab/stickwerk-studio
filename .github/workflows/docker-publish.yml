@@ -45,8 +45,6 @@ jobs:
 
       - name: Run Build check
         run: npm run build
-        env:
-          DATABASE_URL: "postgresql://user:pass@localhost:5432/db"
 
       - name: Get version from package.json
         id: version

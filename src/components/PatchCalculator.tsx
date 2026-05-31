@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Check, ChevronRight, ChevronLeft, Info, Send, Loader2, User, Mail, Phone, MessageSquare, Upload, Palette, Layers, ShieldCheck } from "lucide-react";
+import { Check, ChevronRight, ChevronLeft, Info, Send, Loader2, User, Mail, Phone, MessageSquare, Upload, Palette, Layers, ShieldCheck, Circle, Square, Shield, Diamond, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -9,12 +9,12 @@ import { Input } from "@/components/ui/input";
 // --- Config & Logic ---
 const CONFIG = {
   shapes: [
-    { id: "circle", name: "Rund", icon: "◯", basePrice: 15 },
-    { id: "rectangle", name: "Rechteckig", icon: "▭", basePrice: 15 },
-    { id: "shield", name: "Schildform", icon: "🛡️", basePrice: 20 },
-    { id: "oval", name: "Oval", icon: "🟢", basePrice: 16 },
-    { id: "diamond", name: "Raute", icon: "♦", basePrice: 18 },
-    { id: "custom", name: "Individuell", icon: "🎨", basePrice: 25 },
+    { id: "circle", name: "Rund", icon: Circle, basePrice: 15 },
+    { id: "rectangle", name: "Rechteckig", icon: Square, basePrice: 15 },
+    { id: "shield", name: "Schildform", icon: Shield, basePrice: 20 },
+    { id: "oval", name: "Oval", icon: Circle, basePrice: 16 },
+    { id: "diamond", name: "Raute", icon: Diamond, basePrice: 18 },
+    { id: "custom", name: "Individuell", icon: Sparkles, basePrice: 25 },
   ],
   sizes: [
     { id: "small", name: "Klein (bis 5cm)", multiplier: 1.0 },
@@ -253,7 +253,7 @@ export default function PatchCalculator() {
                       selections.shape === shape.id ? "border-accent bg-accent/5 shadow-sm" : "border-border hover:border-foreground/30"
                     )}
                   >
-                    <div className="text-3xl mb-2 group-hover:scale-110 transition-transform">{shape.icon}</div>
+                    <div className="mb-2 group-hover:scale-110 transition-transform"><shape.icon className="w-8 h-8 mx-auto text-foreground" /></div>
                     <div className="font-medium text-foreground">{shape.name}</div>
                     <div className="text-sm text-muted-foreground mt-1">{shape.basePrice}€ Basis</div>
                   </button>
