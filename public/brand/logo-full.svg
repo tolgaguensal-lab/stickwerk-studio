@@ -6,8 +6,8 @@
   </defs>
   
   <!-- Embroidery hoop - outer ring -->
-  <circle cx="32" cy="34" r="28" fill="none" stroke="#111111" stroke-width="2.5"/>
-  <circle cx="32" cy="34" r="25" fill="none" stroke="#111111" stroke-width="1"/>
+  <circle cx="32" cy="34" r="28" fill="none" stroke="currentColor" stroke-width="2.5"/>
+  <circle cx="32" cy="34" r="25" fill="none" stroke="currentColor" stroke-width="1"/>
   
   <!-- Hoop clamp at top -->
   <rect x="26" y="3" width="12" height="6" rx="1.5" fill="#8A6A3F"/>
@@ -27,8 +27,8 @@
   <path d="M48 12 Q54 20, 52 30 Q50 38, 46 44" fill="none" stroke="#8A6A3F" stroke-width="1" stroke-dasharray="3,2"/>
   
   <!-- Text: Stickwerk-Studio -->
-  <text x="76" y="38" font-family="Georgia, 'Times New Roman', serif" font-size="22" font-weight="bold" fill="#111111" letter-spacing="-0.5">Stickwerk</text>
-  <text x="190" y="38" font-family="Georgia, 'Times New Roman', serif" font-size="22" fill="#111111" letter-spacing="-0.5">-Studio</text>
+  <text x="76" y="38" font-family="Georgia, 'Times New Roman', serif" font-size="22" font-weight="bold" fill="currentColor" letter-spacing="-0.5">Stickwerk</text>
+  <text x="190" y="38" font-family="Georgia, 'Times New Roman', serif" font-size="22" fill="currentColor" letter-spacing="-0.5">-Studio</text>
   
   <!-- Subtle tagline -->
   <text x="76" y="52" font-family="system-ui, -apple-system, sans-serif" font-size="8" fill="#8A6A3F" letter-spacing="2" text-transform="uppercase">MASCHINENSTICKEREI &amp; CUSTOM PATCHES</text>
