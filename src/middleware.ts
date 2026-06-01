@@ -1,29 +1,39 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { verifySession, getSessionCookieName } from "@/lib/auth/session";
 
 /**
- * Middleware to protect /admin routes with HTTP Basic Authentication.
+ * Middleware to protect /admin routes with session-based authentication.
+ *
+ * Uses a signed JWT stored in an httpOnly cookie.
+ * - /admin/login is public (for the login page)
+ * - All other /admin/* routes require a valid session
  *
  * Required ENV vars:
- *   ADMIN_USER     – Username for Basic Auth
- *   ADMIN_PASSWORD – Password for Basic Auth
+ *   SESSION_SECRET  – At least 32 chars for signing session cookies
+ *   ADMIN_USER      – Email for login
+ *   ADMIN_PASSWORD  – Password for login
  *
- * If either variable is missing the middleware lets the request through
- * (fail-open) so the site does not break in development.
+ * If ADMIN_USER/ADMIN_PASSWORD are missing, the middleware fail-opens.
  */
 
-function basicAuthRequired(): boolean {
-  return !!(process.env.ADMIN_USER && process.env.ADMIN_PASSWORD);
+function isAuthConfigured(): boolean {
+  return !!(
+    process.env.SESSION_SECRET &&
+    process.env.ADMIN_USER &&
+    process.env.ADMIN_PASSWORD
+  );
 }
 
-function unauthorizedResponse(): NextResponse {
-  return new NextResponse("Authentication required", {
-    status: 401,
-    headers: { "WWW-Authenticate": 'Basic realm="Admin Area"' },
-  });
+function redirectToLogin(request: NextRequest): NextResponse {
+  const loginUrl = new URL("/admin/login", request.url);
+  loginUrl.searchParams.set("redirect", request.nextUrl.pathname);
+  return NextResponse.redirect(loginUrl);
 }
 
-export function middleware(request: NextRequest): NextResponse | undefined {
+export async function middleware(
+  request: NextRequest
+): Promise<NextResponse | undefined> {
   const { pathname } = request.nextUrl;
 
   // Only protect /admin routes
@@ -31,30 +41,56 @@ export function middleware(request: NextRequest): NextResponse | undefined {
     return NextResponse.next();
   }
 
-  // If env vars are not set, fail-open (no auth required)
-  if (!basicAuthRequired()) {
-    return NextResponse.next();
-  }
-
-  const authHeader = request.headers.get("authorization");
-
-  if (!authHeader || !authHeader.startsWith("Basic ")) {
-    return unauthorizedResponse();
-  }
-
-  // Decode and verify credentials
-  const base64Credentials = authHeader.split(" ")[1];
-  const decoded = atob(base64Credentials);
-  const [username, password] = decoded.split(":");
-
+  // Allow login page (static assets + page itself)
   if (
-    username === process.env.ADMIN_USER &&
-    password === process.env.ADMIN_PASSWORD
+    pathname === "/admin/login" ||
+    pathname.startsWith("/admin/login/") ||
+    pathname.startsWith("/_next/") ||
+    pathname.startsWith("/brand/")
   ) {
     return NextResponse.next();
   }
 
-  return unauthorizedResponse();
+  // Allow API auth routes
+  if (pathname.startsWith("/api/auth/")) {
+    return NextResponse.next();
+  }
+
+  // If auth is not configured, fail-open (dev mode)
+  if (!isAuthConfigured()) {
+    return NextResponse.next();
+  }
+
+  // Check session cookie
+  const cookieName = getSessionCookieName();
+  const token = request.cookies.get(cookieName)?.value;
+
+  if (!token) {
+    return redirectToLogin(request);
+  }
+
+  const session = await verifySession(token);
+
+  if (!session) {
+    return redirectToLogin(request);
+  }
+
+  // Viewer role restriction: can only access leads pages, not dashboard
+  if (
+    session.role === "viewer" &&
+    !pathname.startsWith("/admin/leads")
+  ) {
+    return redirectToLogin(request);
+  }
+
+  // Forward user info to the app via header (for server components)
+  const requestHeaders = new Headers(request.headers);
+  requestHeaders.set("x-user-role", session.role);
+  requestHeaders.set("x-user-email", session.sub);
+
+  return NextResponse.next({
+    request: { headers: requestHeaders },
+  });
 }
 
 export const config = {
