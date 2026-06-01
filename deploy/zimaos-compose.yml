@@ -9,8 +9,8 @@ services:
       NODE_ENV: production
       HOSTNAME: 0.0.0.0
       PORT: 3000
-      NEXT_PUBLIC_POCKETBASE_URL: http://<ZIMAOS-IP>:8090
-      POCKETBASE_URL: http://127.0.0.1:8090
+      NEXT_PUBLIC_POCKETBASE_URL: http://192.168.179.91:8090
+      POCKETBASE_URL: http://host.docker.internal:8090
       POCKETBASE_ADMIN_EMAIL: ${POCKETBASE_ADMIN_EMAIL}
       POCKETBASE_ADMIN_PASSWORD: ${POCKETBASE_ADMIN_PASSWORD}
       NEXTAUTH_URL: https://sws.guenlab.de
