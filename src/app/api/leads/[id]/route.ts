@@ -3,7 +3,7 @@ import { getAdminPocketBase } from "@/lib/pocketbase/server";
 import { z } from "zod";
 
 const updateLeadSchema = z.object({
-  status: z.enum(["new", "contacted", "quoted", "won", "lost", "archived"]),
+  status: z.enum(["new", "in_progress", "quoted", "won", "lost", "archived"]),
   adminNotes: z.string().optional(),
 });
 
