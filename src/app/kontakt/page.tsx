@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Mail, Phone, MapPin, Clock, Send, CheckCircle2, AlertCircle } from "lucide-react";
+import { Mail, Phone, MapPin, Clock, Send, CheckCircle2, AlertCircle, ArrowLeft, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -128,7 +128,7 @@ export default function Kontakt() {
             <h1 className="text-4xl md:text-5xl font-serif text-foreground mb-4">
               Kontakt
             </h1>
-            <p className="text-foreground/70">
+            <p className="text-muted-foreground">
               Wir freuen uns auf Ihre Nachricht!
             </p>
           </motion.div>
@@ -138,24 +138,22 @@ export default function Kontakt() {
             animate={{ opacity: 1, scale: 1 }}
             className="max-w-2xl mx-auto"
           >
-            <Card className="bg-background backdrop-blur-sm border-2 border-accent/30">
+            <Card className="bg-card border-2 border-accent/30 shadow-elevated">
               <CardContent className="p-12 text-center">
-                <div className="w-20 h-20 bg-accent/20 text-accent rounded-full flex items-center justify-center mx-auto mb-6">
+                <div className="w-20 h-20 bg-accent/10 text-accent rounded-full flex items-center justify-center mx-auto mb-6">
                   <CheckCircle2 className="w-10 h-10" />
                 </div>
                 <h2 className="text-3xl font-serif text-foreground mb-4">
-                  Nachricht gesendet! <span className="text-accent">&rarr;</span>
+                  Nachricht gesendet!
                 </h2>
-                <p className="text-foreground/70 mb-8">
+                <p className="text-muted-foreground mb-8">
                   Vielen Dank für Ihre Nachricht. Wir werden uns innerhalb von
                   24-48 Stunden bei Ihnen melden.
                 </p>
                 <Link href="/">
-                  <Button variant="default" size="lg" className="group">
-                    Zur&uuml;ck zur Startseite
-                    <span className="ml-2 group-hover:translate-x-1 transition-transform">
-                      &rarr;
-                    </span>
+                  <Button variant="default" size="lg" className="group rounded-full">
+                    Zurück zur Startseite
+                    <ArrowLeft className="ml-2 w-4 h-4 group-hover:-translate-x-1 transition-transform" />
                   </Button>
                 </Link>
               </CardContent>
@@ -200,7 +198,7 @@ export default function Kontakt() {
             transition={{ delay: 0.2 }}
             className="lg:col-span-2"
           >
-            <Card className="bg-background backdrop-blur-sm border-border/10 ">
+            <Card className="bg-card border-border">
               <CardHeader>
                 <CardTitle className="text-2xl text-foreground">
                   Schreiben Sie uns
@@ -208,7 +206,7 @@ export default function Kontakt() {
               </CardHeader>
               <CardContent>
                 {error && (
-                  <div className="p-4 bg-destructive/10 border border-destructive/20 rounded-xl mb-6 flex items-center gap-3 text-signal-red text-sm">
+                  <div className="p-4 bg-destructive/10 border border-destructive/20 rounded-xl mb-6 flex items-center gap-3 text-destructive text-sm">
                     <AlertCircle className="w-5 h-5 shrink-0" />
                     <span>{error}</span>
                   </div>
@@ -217,7 +215,7 @@ export default function Kontakt() {
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <label className="text-sm font-medium text-foreground/70">
+                      <label className="text-sm font-medium text-muted-foreground">
                         Name*
                       </label>
                       <Input
@@ -227,11 +225,10 @@ export default function Kontakt() {
                         onChange={handleChange}
                         placeholder="Ihr voller Name"
                         required
-                        className="w-full p-3 rounded-xl border-2 border-border/10 focus:border-ring outline-none transition-all"
                       />
                     </div>
                     <div className="space-y-2">
-                      <label className="text-sm font-medium text-foreground/70">
+                      <label className="text-sm font-medium text-muted-foreground">
                         E-Mail*
                       </label>
                       <Input
@@ -241,14 +238,13 @@ export default function Kontakt() {
                         onChange={handleChange}
                         placeholder="email@beispiel.de"
                         required
-                        className="w-full p-3 rounded-xl border-2 border-border/10 focus:border-ring outline-none transition-all"
                       />
                     </div>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <label className="text-sm font-medium text-foreground/70">
+                      <label className="text-sm font-medium text-muted-foreground">
                         Telefon
                       </label>
                       <Input
@@ -257,18 +253,17 @@ export default function Kontakt() {
                         value={formData.phone}
                         onChange={handleChange}
                         placeholder="+49 ..."
-                        className="w-full p-3 rounded-xl border-2 border-border/10 focus:border-ring outline-none transition-all"
                       />
                     </div>
                     <div className="space-y-2">
-                      <label className="text-sm font-medium text-foreground/70">
+                      <label className="text-sm font-medium text-muted-foreground">
                         Betreff
                       </label>
                       <select
                         name="subject"
                         value={formData.subject}
                         onChange={handleChange}
-                        className="w-full p-3 rounded-xl border-2 border-border/10 focus:border-ring outline-none transition-all bg-background"
+                        className="w-full h-12 rounded-xl border border-border bg-card px-4 text-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-all"
                       >
                         <option value="Allgemeine Anfrage">Allgemeine Anfrage</option>
                         <option value="Patch-Konfigurator">Patch-Konfigurator</option>
@@ -280,7 +275,7 @@ export default function Kontakt() {
                   </div>
 
                   <div className="space-y-2">
-                    <label className="text-sm font-medium text-foreground/70">
+                    <label className="text-sm font-medium text-muted-foreground">
                       Ihre Nachricht*
                     </label>
                     <textarea
@@ -288,20 +283,20 @@ export default function Kontakt() {
                       value={formData.message}
                       onChange={handleChange}
                       rows={5}
-                      placeholder="Wie k&ouml;nnen wir Ihnen helfen?"
+                      placeholder="Wie können wir Ihnen helfen?"
                       required
-                      className="w-full p-3 rounded-xl border-2 border-border/10 focus:border-ring outline-none transition-all"
+                      className="w-full rounded-xl border border-border bg-card px-4 py-3 text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 focus:ring-ring transition-all resize-none"
                     />
                   </div>
 
-                  <div className="flex items-start gap-3 p-4 bg-card rounded-xl border border-border/10">
+                  <div className="flex items-start gap-3 p-4 bg-accent/5 rounded-xl border border-accent/20">
                     <input
                       type="checkbox"
                       id="consent-privacy"
                       onChange={(e) => setConsentPrivacy(e.target.checked)}
-                      className="mt-1 h-4 w-4 rounded border-border/30 text-accent focus:ring-ring"
+                      className="mt-1 h-4 w-4 rounded border-accent/30 text-accent focus:ring-ring"
                     />
-                    <label htmlFor="consent-privacy" className="text-sm text-foreground/70">
+                    <label htmlFor="consent-privacy" className="text-sm text-muted-foreground">
                       Ich stimme der <Link href="/datenschutz" className="text-accent hover:underline">Datenschutzerklärung</Link> zu. 
                       Meine Daten werden ausschließlich zur Bearbeitung meiner Anfrage verwendet.
                     </label>
@@ -316,7 +311,8 @@ export default function Kontakt() {
                   >
                     {loading ? (
                       <>
-                        <span className="animate-pulse">Senden...</span>
+                        <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                        Senden...
                       </>
                     ) : (
                       <>
@@ -342,7 +338,7 @@ export default function Kontakt() {
             transition={{ delay: 0.2 }}
             className="space-y-6"
           >
-            <Card className="bg-background backdrop-blur-sm border-border/10 ">
+            <Card className="bg-card border-border">
               <CardHeader>
                 <CardTitle className="text-2xl text-foreground">
                   Kontaktinformationen
@@ -355,7 +351,7 @@ export default function Kontakt() {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3 + index * 0.1 }}
-                    className="p-4 rounded-xl bg-card border border-border/10 hover:border-accent/30 transition-colors"
+                    className="p-4 rounded-xl bg-accent/5 border border-accent/20 hover:border-accent/40 transition-colors"
                   >
                     <div className="flex items-start gap-4">
                       <div className="text-accent mt-0.5">{item.icon}</div>
@@ -364,12 +360,12 @@ export default function Kontakt() {
                         {item.link ? (
                           <a
                             href={item.link}
-                            className="text-foreground/80 hover:text-accent transition-colors text-sm whitespace-nowrap"
+                            className="text-muted-foreground hover:text-accent transition-colors text-sm"
                           >
                             {item.content}
                           </a>
                         ) : (
-                          <p className="text-foreground/80 text-sm">{item.content}</p>
+                          <p className="text-muted-foreground text-sm">{item.content}</p>
                         )}
                       </div>
                     </div>
@@ -379,7 +375,7 @@ export default function Kontakt() {
             </Card>
 
             {/* Quick Links */}
-            <Card className="bg-background backdrop-blur-sm border-border/10 ">
+            <Card className="bg-card border-border">
               <CardHeader>
                 <CardTitle className="text-xl text-foreground">
                   Schnellzugriff
@@ -388,25 +384,25 @@ export default function Kontakt() {
               <CardContent className="space-y-3">
                 <Link
                   href="/#calculator"
-                  className="block p-3 rounded-xl bg-card border border-border/10 text-foreground hover:bg-card/80 transition-colors text-center font-medium"
+                  className="block p-3 rounded-xl bg-accent/5 border border-accent/20 text-foreground hover:bg-accent/10 transition-colors text-center font-medium"
                 >
                   Zum Patch-Konfigurator
                 </Link>
                 <Link
                   href="/#faq"
-                  className="block p-3 rounded-xl bg-card border border-border/10 text-foreground hover:bg-card/80 transition-colors text-center font-medium"
+                  className="block p-3 rounded-xl bg-secondary border border-border text-foreground hover:bg-secondary/80 transition-colors text-center font-medium"
                 >
                   Häufige Fragen
                 </Link>
                 <Link
                   href="/impressum"
-                  className="block p-3 rounded-xl bg-card border border-border/10 text-foreground hover:bg-card/80 transition-colors text-center font-medium"
+                  className="block p-3 rounded-xl bg-secondary border border-border text-foreground hover:bg-secondary/80 transition-colors text-center font-medium"
                 >
                   Impressum
                 </Link>
                 <Link
                   href="/datenschutz"
-                  className="block p-3 rounded-xl bg-card border border-border/10 text-foreground hover:bg-card/80 transition-colors text-center font-medium"
+                  className="block p-3 rounded-xl bg-secondary border border-border text-foreground hover:bg-secondary/80 transition-colors text-center font-medium"
                 >
                   Datenschutz
                 </Link>
