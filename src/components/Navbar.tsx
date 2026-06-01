@@ -140,7 +140,7 @@ export default function Navbar() {
               const Comp = link.hash ? "a" : Link;
               const props = link.hash
                 ? { href: link.href, onClick: (e: React.MouseEvent) => handleHashNav(e, link.href) }
-                : { href: link.href };
+                : { href: link.href, transitionTypes: ["nav-forward"] };
 
               return (
                 <Comp
@@ -235,6 +235,7 @@ export default function Navbar() {
                         <SheetClose asChild key={link.id}>
                           <Link
                             href={link.href}
+                            transitionTypes={["nav-forward"]}
                             className={`flex items-center px-4 py-3.5 rounded-xl transition-colors text-base ${
                               active
                                 ? "text-accent bg-accent/10 font-semibold"

@@ -5,6 +5,7 @@ import SmoothScroll from "@/components/SmoothScroll";
 import Scene from "@/components/Scene";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { DirectionalPage } from "@/components/DirectionalPage";
 import "./globals.css";
 
 /* Fonts - Google Fonts (MIT License) */
@@ -105,9 +106,11 @@ export default function RootLayout({
         <SmoothScroll>
           <Scene />
           <Navbar />
-          <div className="pt-[72px] lg:pt-[72px]">
-            {children}
-          </div>
+          <DirectionalPage>
+            <div className="pt-[72px] lg:pt-[72px]">
+              {children}
+            </div>
+          </DirectionalPage>
           <Footer />
         </SmoothScroll>
       </body>
