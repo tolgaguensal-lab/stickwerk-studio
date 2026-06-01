@@ -22,10 +22,10 @@ export default function Navbar() {
   const { scrollY } = useScroll();
 
   // Scroll tracking
-  const bgOpacity = useTransform(scrollY, [0, 200], [0.6, 0.95]);
-  const navBg = useTransform(bgOpacity, (o) => `rgba(247, 241, 230, ${o})`);
+  const bgOpacity = useTransform(scrollY, [0, 200], [0.5, 0.95]);
+  const navBg = useTransform(bgOpacity, (o) => `rgba(245, 237, 224, ${o})`);
   const shadowOpacity = useTransform(scrollY, [0, 200], [0, 1]);
-  const navShadow = useTransform(shadowOpacity, (o) => `0 1px 3px rgba(0,0,0,${o * 0.06}), 0 1px 2px rgba(0,0,0,${o * 0.04})`);
+  const navShadow = useTransform(shadowOpacity, (o) => `0 1px 3px rgba(28,24,20,${o * 0.06}), 0 1px 2px rgba(28,24,20,${o * 0.04})`);
 
   useEffect(() => {
     (window as unknown as { __setMobileMenuOpen: (value: boolean) => void }).__setMobileMenuOpen = setIsOpen;
@@ -109,33 +109,32 @@ export default function Navbar() {
         backgroundColor: navBg,
         boxShadow: navShadow,
       }}
-      className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md"
+      className="fixed top-0 left-0 right-0 z-50 backdrop-blur-lg"
     >
-      <div className="px-6 lg:px-10">
-            <div className="flex items-center justify-between h-[72px] lg:h-[72px]">
-              {/* Logo */}
-              <Link href="/" className="flex items-center gap-3 group shrink-0">
-                <Image
-                  src="/brand/logo-mark.svg"
-                  alt="Stickwerk-Studio"
-                  width={36}
-                  height={36}
-                  className="group-hover:opacity-80 transition-opacity"
-                  priority
-                />
-                <div className="hidden sm:flex flex-col">
-                  <span className="text-[18px] lg:text-[20px] font-serif font-bold text-foreground tracking-tight leading-none">
-                    Stickwerk-Studio
-                  </span>
-                  <span className="text-[10px] lg:text-[11px] text-accent/60 font-sans tracking-[0.2em] uppercase mt-0.5">
-                    Maschinenstickerei &amp; Custom Patches
-                  </span>
-                </div>
-              </Link>
-
+      <div className="px-4 sm:px-6 lg:px-10">
+        <div className="flex items-center justify-between h-16 lg:h-[72px]">
+          {/* Logo */}
+          <Link href="/" className="flex items-center gap-3 group shrink-0">
+            <Image
+              src="/brand/logo-mark.svg"
+              alt="Stickwerk-Studio"
+              width={34}
+              height={34}
+              className="group-hover:opacity-80 transition-opacity duration-300"
+              priority
+            />
+            <div className="hidden sm:flex flex-col">
+              <span className="text-base lg:text-lg font-serif font-bold text-foreground tracking-tight leading-none">
+                Stickwerk-Studio
+              </span>
+              <span className="text-[10px] lg:text-[10px] text-accent/70 font-sans tracking-[0.25em] uppercase mt-0.5">
+                Maschinenstickerei &amp; Custom Patches
+              </span>
+            </div>
+          </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-2">
+          <div className="hidden lg:flex items-center gap-1">
             {navLinks.map((link) => {
               const active = isActive(link.id);
               const Comp = link.hash ? "a" : Link;
@@ -147,10 +146,10 @@ export default function Navbar() {
                 <Comp
                   key={link.id}
                   {...props}
-                  className={`relative px-5 py-2.5 text-[15px] font-medium tracking-wide transition-all duration-200 rounded-xl ${
+                  className={`relative px-4 py-2 text-sm font-medium tracking-wide transition-all duration-200 rounded-xl ${
                     active
-                      ? "text-accent bg-accent/8"
-                      : "text-muted-foreground/90 hover:text-foreground hover:bg-foreground/5"
+                      ? "text-accent bg-accent/10"
+                      : "text-muted-foreground/80 hover:text-foreground hover:bg-black/5"
                   }`}
                 >
                   {link.label}
@@ -164,12 +163,12 @@ export default function Navbar() {
                 </Comp>
               );
             })}
-            <div className="ml-6 pl-6 border-l border-border/60">
+            <div className="ml-4 pl-4 border-l border-border/60">
               <Button
                 variant="default"
                 size="default"
                 onClick={(e) => handleHashNav(e, "#calculator")}
-                className="bg-accent text-accent-foreground hover:bg-accent/90 shadow-sm px-6 py-2.5 h-auto text-[15px] font-medium"
+                className="bg-accent text-accent-foreground hover:bg-accent/90 shadow-sm shadow-accent/20 px-5 py-2 h-auto text-sm font-medium rounded-full"
               >
                 Jetzt konfigurieren
               </Button>
@@ -177,45 +176,45 @@ export default function Navbar() {
           </div>
 
           {/* Mobile Menu Trigger */}
-          <div className="flex lg:hidden items-center gap-3">
+          <div className="flex lg:hidden items-center gap-2">
             <Button
               variant="default"
               size="sm"
               onClick={(e) => handleHashNav(e, "#calculator")}
-              className="bg-accent text-accent-foreground hover:bg-accent/90 shadow-sm text-xs px-4 h-9"
+              className="bg-accent text-accent-foreground hover:bg-accent/90 shadow-sm shadow-accent/20 text-xs px-3.5 h-8 rounded-full"
             >
               Konfigurieren
             </Button>
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="text-foreground hover:bg-foreground/5 w-10 h-10" aria-label="Menü">
+                <Button variant="ghost" size="icon" className="text-foreground hover:bg-black/5 w-9 h-9 rounded-xl" aria-label="Menü öffnen">
                   <Menu className="w-5 h-5" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="w-full sm:w-[400px] bg-card border-l border-border p-0">
-                <div className="flex flex-col h-full px-6 py-6">
-                  <div className="flex items-center justify-between mb-10">
-                  <div className="flex items-center gap-3">
-                    <Image
-                      src="/brand/logo-mark.svg"
-                      alt="Stickwerk-Studio"
-                      width={28}
-                      height={28}
-                    />
-                    <span className="font-serif font-semibold text-foreground text-[18px] tracking-tight">Stickwerk-Studio</span>
-                  </div>
-
+              <SheetContent side="right" className="w-full sm:w-[380px] bg-card border-l border-border p-0">
+                <div className="flex flex-col h-full px-5 py-5">
+                  <div className="flex items-center justify-between mb-8">
+                    <div className="flex items-center gap-3">
+                      <Image
+                        src="/brand/logo-mark.svg"
+                        alt="Stickwerk-Studio"
+                        width={28}
+                        height={28}
+                      />
+                      <span className="font-serif font-semibold text-foreground text-base tracking-tight">Stickwerk-Studio</span>
+                    </div>
                     <Button
                       variant="ghost"
                       size="icon"
                       onClick={() => setIsOpen(false)}
-                      className="text-foreground hover:bg-foreground/5 w-10 h-10"
+                      className="text-foreground hover:bg-black/5 w-9 h-9 rounded-xl"
+                      aria-label="Menü schließen"
                     >
                       <X className="w-5 h-5" />
                     </Button>
                   </div>
 
-                  <div className="flex flex-col gap-1">
+                  <nav className="flex flex-col gap-1" aria-label="Mobile Navigation">
                     {navLinks.map((link) => {
                       const active = isActive(link.id);
                       return link.hash ? (
@@ -223,10 +222,10 @@ export default function Navbar() {
                           <a
                             href={link.href}
                             onClick={(e) => handleHashNav(e, link.href)}
-                            className={`text-lg px-4 py-3.5 rounded-xl transition-colors ${
+                            className={`flex items-center px-4 py-3.5 rounded-xl transition-colors text-base ${
                               active
-                                ? "text-accent bg-accent/8 font-semibold"
-                                : "text-muted-foreground hover:text-foreground hover:bg-foreground/5"
+                                ? "text-accent bg-accent/10 font-semibold"
+                                : "text-muted-foreground hover:text-foreground hover:bg-black/5"
                             }`}
                           >
                             {link.label}
@@ -236,10 +235,10 @@ export default function Navbar() {
                         <SheetClose asChild key={link.id}>
                           <Link
                             href={link.href}
-                            className={`text-lg px-4 py-3.5 rounded-xl transition-colors ${
+                            className={`flex items-center px-4 py-3.5 rounded-xl transition-colors text-base ${
                               active
-                                ? "text-accent bg-accent/8 font-semibold"
-                                : "text-muted-foreground hover:text-foreground hover:bg-foreground/5"
+                                ? "text-accent bg-accent/10 font-semibold"
+                                : "text-muted-foreground hover:text-foreground hover:bg-black/5"
                             }`}
                           >
                             {link.label}
@@ -247,18 +246,21 @@ export default function Navbar() {
                         </SheetClose>
                       );
                     })}
-                  </div>
+                  </nav>
 
-                  <div className="mt-auto pt-10">
+                  <div className="mt-auto pt-8">
                     <SheetClose asChild>
                       <Button
                         variant="default"
-                        className="w-full bg-accent text-accent-foreground hover:bg-accent/90 shadow-sm h-12 text-base"
+                        className="w-full bg-accent text-accent-foreground hover:bg-accent/90 shadow-sm shadow-accent/20 h-12 text-base rounded-full"
                         onClick={(e) => handleHashNav(e, "#calculator")}
                       >
                         Jetzt konfigurieren
                       </Button>
                     </SheetClose>
+                    <p className="text-xs text-muted-foreground/60 text-center mt-3">
+                      Kostenlose & unverbindliche Anfrage
+                    </p>
                   </div>
                 </div>
               </SheetContent>
@@ -267,8 +269,8 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Bottom border */}
-      <div className={`absolute bottom-0 left-0 right-0 h-px bg-border/50 transition-opacity duration-300 ${scrolled ? 'opacity-100' : 'opacity-0'}`} />
+      {/* Bottom border - visible when scrolled */}
+      <div className={`absolute bottom-0 left-0 right-0 h-px bg-border/60 transition-opacity duration-300 ${scrolled ? 'opacity-100' : 'opacity-0'}`} />
     </motion.nav>
   );
 }
