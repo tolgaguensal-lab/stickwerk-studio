@@ -99,13 +99,13 @@ export default function Kontakt() {
     {
       icon: <Phone className="w-6 h-6" />,
       title: "Telefon",
-      content: "+49 (0) 123 456789",
-      link: "tel:+49123456789",
+      content: "wird ergänzt",
+      link: null,
     },
     {
       icon: <MapPin className="w-6 h-6" />,
       title: "Adresse",
-      content: "Musterstraße 123, 10115 Berlin, Deutschland",
+      content: "Deutschland (genaue Adresse auf Anfrage)",
       link: null,
     },
     {

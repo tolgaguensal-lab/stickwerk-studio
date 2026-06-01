@@ -35,20 +35,19 @@ export default function Impressum() {
                 Verantwortlich f&uuml;r den Inhalt:
               </h2>
               <p className="font-semibold">Stickwerk-Studio</p>
-              <p>Musterstra&szlig;e 123</p>
-              <p>10115 Berlin</p>
+              <p>Adresse wird ergänzt</p>
               <p>Deutschland</p>
             </div>
 
             <div className="space-y-2">
               <h2 className="text-xl font-bold text-foreground">Kontaktdaten:</h2>
               <p>E-Mail: info@stickwerk-studio.de</p>
-              <p>Telefon: +49 (0) 123 456789</p>
+              <p>Telefon: wird ergänzt</p>
             </div>
 
             <div className="space-y-2">
               <h2 className="text-xl font-bold text-foreground">Vertreten durch:</h2>
-              <p>Max Mustermann (Inhaber)</p>
+              <p>Inhaber: wird ergänzt</p>
             </div>
 
             <div className="space-y-2">
@@ -57,7 +56,7 @@ export default function Impressum() {
               </h2>
               <p>
                 Umsatzsteuer-Identifikationsnummer gem&auml;&szlig; &sect; 27 a
-                Umsatzsteuergesetz: DE123456789
+                Umsatzsteuergesetz: wird ergänzt
               </p>
             </div>
 
@@ -66,13 +65,7 @@ export default function Impressum() {
                 Berufsbezeichnung:
               </h2>
               <p>
-                Stickerei-Meister (verliehen in Deutschland)
-              </p>
-              <p className="text-sm text-foreground/60">
-                <em>
-                  Zum F&uuml;hren der Berufsbezeichnung berechtigt durch den
-                  erfolgreichen Abschluss der Meisterpr&uuml;fung.
-                </em>
+                wird ergänzt
               </p>
             </div>
 

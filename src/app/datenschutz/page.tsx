@@ -33,9 +33,9 @@ export default function Datenschutz() {
               </h2>
               <div className="space-y-2">
                 <p className="font-semibold">Stickwerk-Studio</p>
-                <p>Musterstra&szlig;e 123, 10115 Berlin</p>
+                <p>Adresse wird ergänzt</p>
                 <p>E-Mail: datenschutz@stickwerk-studio.de</p>
-                <p>Telefon: +49 (0) 123 456789</p>
+                <p>Telefon: wird ergänzt</p>
               </div>
               <p>
                 Unser Datenschutzbeauftragter ist unter der o.g. E-Mail-Adresse

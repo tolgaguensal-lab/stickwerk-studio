@@ -85,22 +85,22 @@ export default function LandingPage() {
     {
       icon: <CheckCircle2 className="w-6 h-6" />,
       title: "Deutsche Handwerksqualität",
-      description: "Alle Patches werden in Deutschland gefertigt mit höchste Präzision."
+      description: "Alle Patches werden in Deutschland mit höchster Präzision gefertigt."
     },
     {
       icon: <Star className="w-6 h-6" />,
-      title: "98% Kundenzufriedenheit",
-      description: "Über 500 zufriedene Kunden seit 2020. Bewertet mit 4.9/5 Sternen."
+      title: "Persönliche Beratung",
+      description: "Individuelle Umsetzung nach Ihren Vorstellungen — von der Designprüfung bis zum fertigen Patch."
     },
     {
       icon: <Clock className="w-6 h-6" />,
-      title: "Schnelle Lieferzeit",
-      description: "Standardproduktion in 7-10 Werktagen. Express in nur 3-5 Tagen."
+      title: "Transparente Lieferzeit",
+      description: "Standardproduktion in 7-10 Werktagen. Express auf Anfrage in 3-5 Tagen möglich."
     },
     {
       icon: <Award className="w-6 h-6" />,
-      title: "Öko-Tex zertifiziert",
-      description: "Alle Materialien sind schadstoffgeprüft und hautfreundlich."
+      title: "Musterprüfung inklusive",
+      description: "Wir fertigen ein Muster vor Produktion an, damit Sie sicher sein können."
     }
   ];
 
@@ -210,9 +210,9 @@ export default function LandingPage() {
              className="text-center mb-16 space-y-4"
            >
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif text-foreground tracking-tight">Das Stickwerk-Versprechen</h2>
-             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-               Warum Kunden uns vertrauen – seit über 5 Jahren.
-             </p>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                Darauf legen wir Wert – bei jedem einzelnen Projekt.
+              </p>
              <div className="section-divider" />
            </motion.div>
  
@@ -412,15 +412,15 @@ export default function LandingPage() {
               {[
                 {
                   icon: <CheckCircle2 className="w-6 h-6" />,
-                  metric: "500+",
-                  label: "Kunden seit 2020",
-                  description: "Von Einzelstücken bis Serienproduktion — unsere Kunden vertrauen auf unsere Qualität."
+                  metric: "",
+                  label: "Persönliche Beratung",
+                  description: "Wir nehmen uns Zeit für Ihr Anliegen — telefonisch, per E-Mail oder mit Muster-Anfertigung."
                 },
                 {
                   icon: <Clock className="w-6 h-6" />,
                   metric: "7-10",
                   label: "Werktage Standard",
-                  description: "Express in 3-5 Tagen möglich. Transparente Lieferzeiten von Anfang an."
+                  description: "Express auf Anfrage in 3-5 Tagen möglich. Transparente Lieferzeiten von Anfang an."
                 },
                 {
                   icon: <Sparkles className="w-6 h-6" />,
@@ -434,7 +434,7 @@ export default function LandingPage() {
                     <div className="w-12 h-12 rounded-xl bg-accent/10 text-accent flex items-center justify-center mx-auto mb-4">
                       {fact.icon}
                     </div>
-                    <div className="text-3xl font-serif text-foreground mb-1">{fact.metric}</div>
+                    {fact.metric && <div className="text-3xl font-serif text-foreground mb-1">{fact.metric}</div>}
                     <div className="text-sm font-medium text-accent mb-3">{fact.label}</div>
                     <p className="text-sm text-muted-foreground leading-relaxed">{fact.description}</p>
                   </CardContent>
@@ -578,9 +578,9 @@ export default function LandingPage() {
               <div className="space-y-5">
                 <h4 className="font-semibold text-lg">Kontakt</h4>
                <div className="space-y-3 text-card/70">
-                 <p>info@stickwerk-studio.de</p>
-                 <p>+49 (0) 123 456789</p>
-                 <p>Mo-Fr: 9:00 - 18:00 Uhr</p>
+                  <p>info@stickwerk-studio.de</p>
+                  <p>Telefon wird ergänzt</p>
+                  <p>Mo-Fr: 9:00 - 18:00 Uhr</p>
                </div>
              </div>
              <div className="space-y-5">
