@@ -95,6 +95,8 @@ export default function Navbar() {
 
   const navLinks = [
     { id: "features", label: "Leistungen", href: "#features", hash: true },
+    { id: "galerie", label: "Galerie", href: "/galerie", hash: false },
+    { id: "ratgeber", label: "Ratgeber", href: "/ratgeber", hash: false },
     { id: "calculator", label: "Konfigurator", href: "#calculator", hash: true },
     { id: "faq", label: "FAQ", href: "#faq", hash: true },
     { id: "kontakt", label: "Kontakt", href: "/kontakt", hash: false },
