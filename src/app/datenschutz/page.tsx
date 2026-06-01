@@ -3,13 +3,13 @@ import Link from "next/link";
 
 export default function Datenschutz() {
   return (
-    <div className="min-h-screen bg-canvas-white py-12 px-6">
+    <div className="min-h-screen bg-background py-12 px-6">
       <div className="max-w-4xl mx-auto space-y-8">
         <div className="text-center">
-          <h1 className="text-4xl md:text-5xl font-serif font-bold text-midnight-ink mb-4">
+          <h1 className="text-4xl md:text-5xl font-serif text-foreground mb-4">
             Datenschutzerkl&auml;rung
           </h1>
-          <p className="text-midnight-ink/70">
+          <p className="text-foreground/70">
             Informationen &uuml;ber die Erhebung personenbezogener Daten
           </p>
         </div>
@@ -20,15 +20,15 @@ export default function Datenschutz() {
           </Link>
         </div>
 
-        <Card className="bg-canvas-white backdrop-blur-sm border-deep-charcoal/10">
+        <Card className="bg-background backdrop-blur-sm border-border/30">
           <CardHeader>
-            <CardTitle className="text-2xl text-midnight-ink">
+            <CardTitle className="text-2xl text-foreground">
               Datenschutzerkl&auml;rung
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-8 text-midnight-ink/80">
+          <CardContent className="space-y-8 text-foreground/80">
             <section className="space-y-4">
-              <h2 className="text-xl font-bold text-midnight-ink">
+              <h2 className="text-xl font-bold text-foreground">
                 1. Verantwortlicher und Kontaktdaten
               </h2>
               <div className="space-y-2">
@@ -44,13 +44,13 @@ export default function Datenschutz() {
             </section>
 
             <section className="space-y-4">
-              <h2 className="text-xl font-bold text-midnight-ink">
+              <h2 className="text-xl font-bold text-foreground">
                 2. Erhebung und Speicherung personenbezogener Daten sowie Art und
                 Zweck von deren Verwendung
               </h2>
 
               <div className="space-y-4">
-                <h3 className="text-lg font-semibold text-midnight-ink">
+                <h3 className="text-lg font-semibold text-foreground">
                   a) Beim Besuch der Website
                 </h3>
                 <p>
@@ -77,7 +77,7 @@ export default function Datenschutz() {
               </div>
 
               <div className="space-y-4">
-                <h3 className="text-lg font-semibold text-midnight-ink">
+                <h3 className="text-lg font-semibold text-foreground">
                   b) Bei Nutzung unseres Patch-Konfigurators
                 </h3>
                 <p>
@@ -110,7 +110,7 @@ export default function Datenschutz() {
             </section>
 
             <section className="space-y-4">
-              <h2 className="text-xl font-bold text-midnight-ink">
+              <h2 className="text-xl font-bold text-foreground">
                 3. Weitergabe von Daten
               </h2>
               <p>
@@ -146,7 +146,7 @@ export default function Datenschutz() {
             </section>
 
             <section className="space-y-4">
-              <h2 className="text-xl font-bold text-midnight-ink">
+              <h2 className="text-xl font-bold text-foreground">
                 4. Betroffenenrechte
               </h2>
               <p>Sie haben das Recht:</p>
@@ -206,7 +206,7 @@ export default function Datenschutz() {
             </section>
 
             <section className="space-y-4">
-              <h2 className="text-xl font-bold text-midnight-ink">
+              <h2 className="text-xl font-bold text-foreground">
                 5. Speicherdauer
               </h2>
               <p>
@@ -220,7 +220,7 @@ export default function Datenschutz() {
             </section>
 
             <section className="space-y-4">
-              <h2 className="text-xl font-bold text-midnight-ink">
+              <h2 className="text-xl font-bold text-foreground">
                 6. Aktualit&auml;t und &Auml;nderung dieser
                 Datenschutzerkl&auml;rung
               </h2>

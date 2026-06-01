@@ -3,10 +3,10 @@ import Link from "next/link";
 
 export default function Impressum() {
   return (
-    <div className="min-h-screen bg-canvas-white py-12 px-6">
+    <div className="min-h-screen bg-background py-12 px-6">
       <div className="max-w-4xl mx-auto space-y-8">
         <div className="text-center">
-          <h1 className="text-4xl md:text-5xl font-serif font-bold text-foreground mb-4">
+          <h1 className="text-4xl md:text-5xl font-serif text-foreground mb-4">
             Impressum
           </h1>
           <p className="text-foreground/70">
@@ -23,7 +23,7 @@ export default function Impressum() {
           </Link>
         </div>
 
-        <Card className="bg-canvas-white backdrop-blur-sm border-deep-charcoal/10">
+        <Card className="bg-background backdrop-blur-sm border-border/30">
           <CardHeader>
             <CardTitle className="text-2xl text-foreground">
               Stickwerk-Studio

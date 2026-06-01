@@ -179,7 +179,7 @@ export default function AdminDashboard() {
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-4xl font-serif font-bold text-primary">
+            <h1 className="text-4xl font-serif text-primary">
               Lead Management
             </h1>
             <p className="text-foreground/60 mt-2">

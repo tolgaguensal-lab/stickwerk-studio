@@ -118,17 +118,17 @@ export default function Kontakt() {
 
   if (success) {
     return (
-      <div className="min-h-screen bg-canvas-white py-12 px-6">
+      <div className="min-h-screen bg-background py-12 px-6">
         <div className="max-w-4xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             className="text-center mb-12"
           >
-            <h1 className="text-4xl md:text-5xl font-serif font-bold text-midnight-ink mb-4">
+            <h1 className="text-4xl md:text-5xl font-serif text-foreground mb-4">
               Kontakt
             </h1>
-            <p className="text-midnight-ink/70">
+            <p className="text-foreground/70">
               Wir freuen uns auf Ihre Nachricht!
             </p>
           </motion.div>
@@ -138,15 +138,15 @@ export default function Kontakt() {
             animate={{ opacity: 1, scale: 1 }}
             className="max-w-2xl mx-auto"
           >
-            <Card className="bg-canvas-white backdrop-blur-sm border-2 border-accent/30">
+            <Card className="bg-background backdrop-blur-sm border-2 border-accent/30">
               <CardContent className="p-12 text-center">
                 <div className="w-20 h-20 bg-accent/20 text-accent rounded-full flex items-center justify-center mx-auto mb-6">
                   <CheckCircle2 className="w-10 h-10" />
                 </div>
-                <h2 className="text-3xl font-serif font-bold text-midnight-ink mb-4">
+                <h2 className="text-3xl font-serif text-foreground mb-4">
                   Nachricht gesendet! <span className="text-accent">&rarr;</span>
                 </h2>
-                <p className="text-midnight-ink/70 mb-8">
+                <p className="text-foreground/70 mb-8">
                   Vielen Dank für Ihre Nachricht. Wir werden uns innerhalb von
                   24-48 Stunden bei Ihnen melden.
                 </p>
@@ -167,7 +167,7 @@ export default function Kontakt() {
   }
 
   return (
-    <div className="min-h-screen bg-canvas-white py-12 px-6">
+    <div className="min-h-screen bg-background py-12 px-6">
       <div className="max-w-6xl mx-auto space-y-12">
         {/* Header */}
         <motion.div
@@ -175,10 +175,10 @@ export default function Kontakt() {
           animate={{ opacity: 1, y: 0 }}
           className="text-center"
         >
-          <h1 className="text-4xl md:text-5xl font-serif font-bold text-midnight-ink mb-4">
+          <h1 className="text-4xl md:text-5xl font-serif text-foreground mb-4">
             Kontakt
           </h1>
-          <p className="text-xl text-midnight-ink/70 max-w-2xl mx-auto">
+          <p className="text-xl text-foreground/70 max-w-2xl mx-auto">
             Wir beraten Sie gerne persönlich oder beantworten Ihre Fragen zum
             Patch-Konfigurator und unseren Leistungen.
           </p>
@@ -186,7 +186,7 @@ export default function Kontakt() {
 
         {/* Back Link */}
         <div className="flex justify-start">
-          <Link href="/" className="text-midnight-ink hover:text-accent transition-colors flex items-center gap-2">
+          <Link href="/" className="text-foreground hover:text-accent transition-colors flex items-center gap-2">
             &larr; Zur&uuml;ck zur Startseite
           </Link>
         </div>
@@ -200,15 +200,15 @@ export default function Kontakt() {
             transition={{ delay: 0.2 }}
             className="lg:col-span-2"
           >
-            <Card className="bg-canvas-white backdrop-blur-sm border-deep-charcoal/10 ">
+            <Card className="bg-background backdrop-blur-sm border-border/10 ">
               <CardHeader>
-                <CardTitle className="text-2xl text-midnight-ink">
+                <CardTitle className="text-2xl text-foreground">
                   Schreiben Sie uns
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 {error && (
-                  <div className="p-4 bg-signal-red/10 border border-signal-red/20 rounded-xl mb-6 flex items-center gap-3 text-signal-red text-sm">
+                  <div className="p-4 bg-destructive/10 border border-destructive/20 rounded-xl mb-6 flex items-center gap-3 text-signal-red text-sm">
                     <AlertCircle className="w-5 h-5 shrink-0" />
                     <span>{error}</span>
                   </div>
@@ -217,7 +217,7 @@ export default function Kontakt() {
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <label className="text-sm font-medium text-midnight-ink/70">
+                      <label className="text-sm font-medium text-foreground/70">
                         Name*
                       </label>
                       <Input
@@ -227,11 +227,11 @@ export default function Kontakt() {
                         onChange={handleChange}
                         placeholder="Ihr voller Name"
                         required
-                        className="w-full p-3 rounded-xl border-2 border-deep-charcoal/10 focus:border-ring outline-none transition-all"
+                        className="w-full p-3 rounded-xl border-2 border-border/10 focus:border-ring outline-none transition-all"
                       />
                     </div>
                     <div className="space-y-2">
-                      <label className="text-sm font-medium text-midnight-ink/70">
+                      <label className="text-sm font-medium text-foreground/70">
                         E-Mail*
                       </label>
                       <Input
@@ -241,14 +241,14 @@ export default function Kontakt() {
                         onChange={handleChange}
                         placeholder="email@beispiel.de"
                         required
-                        className="w-full p-3 rounded-xl border-2 border-deep-charcoal/10 focus:border-ring outline-none transition-all"
+                        className="w-full p-3 rounded-xl border-2 border-border/10 focus:border-ring outline-none transition-all"
                       />
                     </div>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <label className="text-sm font-medium text-midnight-ink/70">
+                      <label className="text-sm font-medium text-foreground/70">
                         Telefon
                       </label>
                       <Input
@@ -257,18 +257,18 @@ export default function Kontakt() {
                         value={formData.phone}
                         onChange={handleChange}
                         placeholder="+49 ..."
-                        className="w-full p-3 rounded-xl border-2 border-deep-charcoal/10 focus:border-ring outline-none transition-all"
+                        className="w-full p-3 rounded-xl border-2 border-border/10 focus:border-ring outline-none transition-all"
                       />
                     </div>
                     <div className="space-y-2">
-                      <label className="text-sm font-medium text-midnight-ink/70">
+                      <label className="text-sm font-medium text-foreground/70">
                         Betreff
                       </label>
                       <select
                         name="subject"
                         value={formData.subject}
                         onChange={handleChange}
-                        className="w-full p-3 rounded-xl border-2 border-deep-charcoal/10 focus:border-ring outline-none transition-all bg-canvas-white"
+                        className="w-full p-3 rounded-xl border-2 border-border/10 focus:border-ring outline-none transition-all bg-background"
                       >
                         <option value="Allgemeine Anfrage">Allgemeine Anfrage</option>
                         <option value="Patch-Konfigurator">Patch-Konfigurator</option>
@@ -280,7 +280,7 @@ export default function Kontakt() {
                   </div>
 
                   <div className="space-y-2">
-                    <label className="text-sm font-medium text-midnight-ink/70">
+                    <label className="text-sm font-medium text-foreground/70">
                       Ihre Nachricht*
                     </label>
                     <textarea
@@ -290,18 +290,18 @@ export default function Kontakt() {
                       rows={5}
                       placeholder="Wie k&ouml;nnen wir Ihnen helfen?"
                       required
-                      className="w-full p-3 rounded-xl border-2 border-deep-charcoal/10 focus:border-ring outline-none transition-all"
+                      className="w-full p-3 rounded-xl border-2 border-border/10 focus:border-ring outline-none transition-all"
                     />
                   </div>
 
-                  <div className="flex items-start gap-3 p-4 bg-ghost-fill rounded-xl border border-deep-charcoal/10">
+                  <div className="flex items-start gap-3 p-4 bg-card rounded-xl border border-border/10">
                     <input
                       type="checkbox"
                       id="consent-privacy"
                       onChange={(e) => setConsentPrivacy(e.target.checked)}
-                      className="mt-1 h-4 w-4 rounded border-deep-charcoal/30 text-accent focus:ring-ring"
+                      className="mt-1 h-4 w-4 rounded border-border/30 text-accent focus:ring-ring"
                     />
-                    <label htmlFor="consent-privacy" className="text-sm text-midnight-ink/70">
+                    <label htmlFor="consent-privacy" className="text-sm text-foreground/70">
                       Ich stimme der <Link href="/datenschutz" className="text-accent hover:underline">Datenschutzerklärung</Link> zu. 
                       Meine Daten werden ausschließlich zur Bearbeitung meiner Anfrage verwendet.
                     </label>
@@ -326,7 +326,7 @@ export default function Kontakt() {
                     )}
                   </Button>
 
-                  <p className="text-xs text-midnight-ink/60 text-center">
+                  <p className="text-xs text-foreground/60 text-center">
                     * Pflichtfelder. Ihre Daten werden nur zur Bearbeitung Ihrer
                     Anfrage verwendet und nicht an Dritte weitergegeben.
                   </p>
@@ -342,9 +342,9 @@ export default function Kontakt() {
             transition={{ delay: 0.2 }}
             className="space-y-6"
           >
-            <Card className="bg-canvas-white backdrop-blur-sm border-deep-charcoal/10 ">
+            <Card className="bg-background backdrop-blur-sm border-border/10 ">
               <CardHeader>
-                <CardTitle className="text-2xl text-midnight-ink">
+                <CardTitle className="text-2xl text-foreground">
                   Kontaktinformationen
                 </CardTitle>
               </CardHeader>
@@ -355,21 +355,21 @@ export default function Kontakt() {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3 + index * 0.1 }}
-                    className="p-4 rounded-xl bg-ghost-fill border border-deep-charcoal/10 hover:border-accent/30 transition-colors"
+                    className="p-4 rounded-xl bg-card border border-border/10 hover:border-accent/30 transition-colors"
                   >
                     <div className="flex items-start gap-4">
                       <div className="text-accent mt-0.5">{item.icon}</div>
                       <div>
-                        <h3 className="font-semibold text-midnight-ink">{item.title}</h3>
+                        <h3 className="font-semibold text-foreground">{item.title}</h3>
                         {item.link ? (
                           <a
                             href={item.link}
-                            className="text-midnight-ink/80 hover:text-accent transition-colors text-sm whitespace-nowrap"
+                            className="text-foreground/80 hover:text-accent transition-colors text-sm whitespace-nowrap"
                           >
                             {item.content}
                           </a>
                         ) : (
-                          <p className="text-midnight-ink/80 text-sm">{item.content}</p>
+                          <p className="text-foreground/80 text-sm">{item.content}</p>
                         )}
                       </div>
                     </div>
@@ -379,34 +379,34 @@ export default function Kontakt() {
             </Card>
 
             {/* Quick Links */}
-            <Card className="bg-canvas-white backdrop-blur-sm border-deep-charcoal/10 ">
+            <Card className="bg-background backdrop-blur-sm border-border/10 ">
               <CardHeader>
-                <CardTitle className="text-xl text-midnight-ink">
+                <CardTitle className="text-xl text-foreground">
                   Schnellzugriff
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
                 <Link
                   href="/#calculator"
-                  className="block p-3 rounded-xl bg-ghost-fill border border-deep-charcoal/10 text-midnight-ink hover:bg-ghost-fill/80 transition-colors text-center font-medium"
+                  className="block p-3 rounded-xl bg-card border border-border/10 text-foreground hover:bg-card/80 transition-colors text-center font-medium"
                 >
                   Zum Patch-Konfigurator
                 </Link>
                 <Link
                   href="/#faq"
-                  className="block p-3 rounded-xl bg-ghost-fill border border-deep-charcoal/10 text-midnight-ink hover:bg-ghost-fill/80 transition-colors text-center font-medium"
+                  className="block p-3 rounded-xl bg-card border border-border/10 text-foreground hover:bg-card/80 transition-colors text-center font-medium"
                 >
                   Häufige Fragen
                 </Link>
                 <Link
                   href="/impressum"
-                  className="block p-3 rounded-xl bg-ghost-fill border border-deep-charcoal/10 text-midnight-ink hover:bg-ghost-fill/80 transition-colors text-center font-medium"
+                  className="block p-3 rounded-xl bg-card border border-border/10 text-foreground hover:bg-card/80 transition-colors text-center font-medium"
                 >
                   Impressum
                 </Link>
                 <Link
                   href="/datenschutz"
-                  className="block p-3 rounded-xl bg-ghost-fill border border-deep-charcoal/10 text-midnight-ink hover:bg-ghost-fill/80 transition-colors text-center font-medium"
+                  className="block p-3 rounded-xl bg-card border border-border/10 text-foreground hover:bg-card/80 transition-colors text-center font-medium"
                 >
                   Datenschutz
                 </Link>

@@ -3,13 +3,13 @@ import Link from "next/link";
 
 export default function AGB() {
   return (
-    <div className="min-h-screen bg-canvas-white py-12 px-6">
+    <div className="min-h-screen bg-background py-12 px-6">
       <div className="max-w-4xl mx-auto space-y-8">
         <div className="text-center">
-          <h1 className="text-4xl md:text-5xl font-serif font-bold text-midnight-ink mb-4">
+          <h1 className="text-4xl md:text-5xl font-serif text-foreground mb-4">
             Allgemeine Gesch&auml;ftsbedingungen (AGB)
           </h1>
-          <p className="text-midnight-ink/70">
+          <p className="text-foreground/70">
             Stand: Mai 2026
           </p>
         </div>
@@ -20,15 +20,15 @@ export default function AGB() {
           </Link>
         </div>
 
-        <Card className="bg-canvas-white backdrop-blur-sm border-deep-charcoal/10">
+        <Card className="bg-background backdrop-blur-sm border-border/30">
           <CardHeader>
-            <CardTitle className="text-2xl text-midnight-ink">
+            <CardTitle className="text-2xl text-foreground">
               Allgemeine Gesch&auml;ftsbedingungen
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-8 text-midnight-ink/80">
+          <CardContent className="space-y-8 text-foreground/80">
             <section className="space-y-4">
-              <h2 className="text-xl font-bold text-midnight-ink">
+              <h2 className="text-xl font-bold text-foreground">
                 &sect; 1 Gegenstand und Geltungsbereich
               </h2>
               <p>
@@ -48,7 +48,7 @@ export default function AGB() {
             </section>
 
             <section className="space-y-4">
-              <h2 className="text-xl font-bold text-midnight-ink">
+              <h2 className="text-xl font-bold text-foreground">
                 &sect; 2 Angebot und Vertragsschluss
               </h2>
               <p>
@@ -73,7 +73,7 @@ export default function AGB() {
             </section>
 
             <section className="space-y-4">
-              <h2 className="text-xl font-bold text-midnight-ink">
+              <h2 className="text-xl font-bold text-foreground">
                 &sect; 3 Preise und Zahlungsbedingungen
               </h2>
               <p>
@@ -93,7 +93,7 @@ export default function AGB() {
             </section>
 
             <section className="space-y-4">
-              <h2 className="text-xl font-bold text-midnight-ink">
+              <h2 className="text-xl font-bold text-foreground">
                 &sect; 4 Lieferung
               </h2>
               <p>
@@ -112,7 +112,7 @@ export default function AGB() {
             </section>
 
             <section className="space-y-4">
-              <h2 className="text-xl font-bold text-midnight-ink">
+              <h2 className="text-xl font-bold text-foreground">
                 &sect; 5 Eigenbeschaftung des Kunden
               </h2>
               <p>
@@ -127,7 +127,7 @@ export default function AGB() {
             </section>
 
             <section className="space-y-4">
-              <h2 className="text-xl font-bold text-midnight-ink">
+              <h2 className="text-xl font-bold text-foreground">
                 &sect; 6 R&uuml;cktritt und Stornierung
               </h2>
               <p>
@@ -146,7 +146,7 @@ export default function AGB() {
             </section>
 
             <section className="space-y-4">
-              <h2 className="text-xl font-bold text-midnight-ink">
+              <h2 className="text-xl font-bold text-foreground">
                 &sect; 7 Gew&auml;hrleistung
               </h2>
               <p>
@@ -164,7 +164,7 @@ export default function AGB() {
             </section>
 
             <section className="space-y-4">
-              <h2 className="text-xl font-bold text-midnight-ink">
+              <h2 className="text-xl font-bold text-foreground">
                 &sect; 8 Anwendbares Recht und Gerichtsstand
               </h2>
               <p>
