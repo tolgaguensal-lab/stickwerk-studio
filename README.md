@@ -14,7 +14,7 @@ Professionelle Website für Maschinenstickerei und Custom Patches im DACH-Raum. 
 - **Patch-Konfigurator** mit 11-Schritte-Konfigurator und Echtzeit-Preisberechnung
 - **Kontaktformular** mit DSGVO-konformer Datenschutz-Checkbox
 - **Rechtliche Seiten** (Impressum, Datenschutz, AGB)
-- **Claude Type-inspiriertes Design-System** mit Midnight Ink, Canvas White und Signal Green
+- **Warm Cream/Eggshell Design-System** mit warmer Creme-Palette, edlem Goldbraun-Akzent und handwerklicher Ästhetik
 
 ### Für Administration
 - **Admin-Dashboard** zur Lead-Verwaltung
@@ -40,17 +40,19 @@ Professionelle Website für Maschinenstickerei und Custom Patches im DACH-Raum. 
 
 ## 🎨 Design-System
 
-Eigenständiges, originäres Design (keine Elemente aus externen Referenzen kopiert):
+Warmes, handwerkliches Farbschema inspiriert von Eierschale, Creme und edlem Braun:
 
 | Token | Wert | Verwendung |
 |-------|------|------------|
-| **Canvas White** | `#FAF8F5` | Seitenhintergrund, Karten |
-| **Midnight Ink** | `#1A1A2E` | Primärtext, Überschriften |
-| **Deep Charcoal** | `#2D2D2D` | Sekundärtext, Icons, Akzente |
-| **Paper Gray** | `#F0EDE8` | Kontrasthintergrund |
-| **Ghost Fill** | `#F5F3F0` | Leichte Füllungen, Hover |
-| **Signal Green** | `#2E8B57` | CTA-Buttons, Highlights |
-| **Pure White** | `#FFFFFF` | Text auf dunklen Flächen |
+| **Background** | `#F7F1E6` | Seitenhintergrund (warme Eierschale) |
+| **Foreground** | `#111111` | Primärtext (fast Schwarz) |
+| **Card** | `#FFF8EC` | Kartenoberflächen (warmes Off-White) |
+| **Accent** | `#8A6A3F` | Akzente, Buttons (edles Goldbraun) |
+| **Border** | `#D8C7AE` | Rahmenlinien (warmes Beige) |
+| **Surface Muted** | `#EFE3D0` | Kontrastierende Abschnitte |
+| **Muted Foreground** | `#3A332C` | Sekundärtext (dunkles Espresso) |
+| **Success** | `#1F6B3A` | Erfolgsmeldungen (gedecktes Grün) |
+| **Destructive** | `#8B1E1E` | Fehlermeldungen (gedecktes Rot) |
 
 Siehe [DESIGN-COMPLIANCE.md](./docs/DESIGN-COMPLIANCE.md) für vollständige Compliance-Dokumentation.
 

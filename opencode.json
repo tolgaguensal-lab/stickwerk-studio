@@ -29,6 +29,13 @@
             "context": 131072,
             "output": 16384
           }
+        },
+        "Gemma-4-31B-it": {
+          "name": "Gemma 4 31B Instruction Tuned",
+          "limit": {
+            "context": 262144,
+            "output": 32768
+          }
         }
       }
     }
