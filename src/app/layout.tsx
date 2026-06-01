@@ -96,6 +96,31 @@ export default function RootLayout({
         {/* DSGVO: No external tracking by default */}
         <meta name="referrer" content="strict-origin-when-cross-origin" />
         <meta name="theme-color" content="#F7F1E6" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "LocalBusiness",
+              name: "Stickwerk-Studio",
+              description:
+                "Professionelle Maschinenstickerei, Custom Patches und Textilbranding für die DACH-Region.",
+              url: "https://sws.guenlab.de",
+              email: "info@stickwerk-studio.de",
+              image: "https://sws.guenlab.de/brand/logo-full.svg",
+              priceRange: "€€",
+              areaServed: { "@type": "Country", name: "DE" },
+            }),
+          }}
+        />
+        {/* Plausible Analytics — DSGVO-konform, kein Cookie-Banner nötig */}
+        {process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN && (
+          <script
+            defer
+            data-domain={process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN}
+            src="https://plausible.io/js/script.js"
+          />
+        )}
       </head>
       <body 
         className={`${inter.variable} ${playfairDisplay.variable} ${jetBrainsMono.variable} antialiased`}
