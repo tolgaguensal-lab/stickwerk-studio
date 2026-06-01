@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Check, ChevronRight, ChevronLeft, Info, Send, Loader2, User, Mail, Phone, MessageSquare, Upload, Palette, Layers, Circle, Square, Shield, Diamond, Sparkles } from "lucide-react";
+import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -136,6 +137,9 @@ export default function PatchCalculator() {
     setLoading(true);
     try {
       // Send as JSON for compatibility with API
+      // Honeypot value (hidden field, read from DOM)
+      const hp = (document.querySelector('input[name="website"]') as HTMLInputElement)?.value || "";
+
       const payload = {
         name: formData.name.trim(),
         email: formData.email.trim(),
@@ -145,6 +149,7 @@ export default function PatchCalculator() {
         estimatedPriceMin: priceRange.min,
         estimatedPriceMax: priceRange.max,
         consentPrivacy: consentPrivacy,
+        honeypot: hp,
         designFile: designFile ? {
           name: designFile.name,
           size: designFile.size,
@@ -733,6 +738,20 @@ export default function PatchCalculator() {
                 </div>
                 <p className="text-muted-foreground mb-6">Geben Sie Ihre Kontaktdaten an, damit wir Sie für die Offerterstellung erreichen können.</p>
                 <form onSubmit={handleSubmit} className="space-y-4">
+                  <input
+                    type="text"
+                    name="website"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    style={{
+                      position: "absolute",
+                      left: "-9999px",
+                      opacity: 0,
+                      height: 0,
+                      overflow: "hidden",
+                    }}
+                    readOnly
+                  />
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <label className="text-sm font-medium flex items-center gap-2 text-foreground/70">
@@ -793,7 +812,7 @@ export default function PatchCalculator() {
                       className="mt-1 h-4 w-4 rounded border-primary/30 text-accent focus:ring-accent"
                     />
                     <label htmlFor="consent-privacy-calc" className="text-sm text-foreground/70">
-                      Ich stimme der Datenschutzerklärung zu. Meine Daten werden ausschließlich für die Angebotserstellung verwendet.
+                      Ich stimme der <Link href="/datenschutz" className="text-accent hover:underline">Datenschutzerklärung</Link> zu. Meine Daten werden ausschließlich für die Angebotserstellung verwendet.
                     </label>
                   </div>
                   

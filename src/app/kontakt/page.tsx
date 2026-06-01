@@ -56,12 +56,18 @@ export default function Kontakt() {
         return;
       }
 
+      // Honeypot: hidden field value (browser-basiert, nicht im State)
+      const honeypotValue = (
+        document.querySelector('input[name="website"]') as HTMLInputElement
+      )?.value || "";
+
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...formData,
           consentPrivacy: true,
+          honeypot: honeypotValue,
         }),
       });
 
@@ -213,6 +219,21 @@ export default function Kontakt() {
                 )}
 
                 <form onSubmit={handleSubmit} className="space-y-4">
+                  {/* Honeypot: invisible to humans, catches bots */}
+                  <input
+                    type="text"
+                    name="website"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    style={{
+                      position: "absolute",
+                      left: "-9999px",
+                      opacity: 0,
+                      height: 0,
+                      overflow: "hidden",
+                    }}
+                    readOnly
+                  />
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <label className="text-sm font-medium text-muted-foreground">

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getAdminPocketBase } from "@/lib/pocketbase/server";
 import { createRateLimiter, getRateLimitKey } from "@/lib/rate-limit";
+import { sendNotificationEmail, formatLeadNotification } from "@/lib/email";
 import { z } from "zod";
 
 // Rate limit: 10 requests per minute per IP
@@ -15,6 +16,7 @@ const contactSchema = z.object({
   consentPrivacy: z.boolean().refine((val) => val === true, {
     message: "Datenschutz-Einwilligung erforderlich",
   }),
+  honeypot: z.string().optional(),
 });
 
 export async function POST(req: Request) {
@@ -38,6 +40,18 @@ export async function POST(req: Request) {
       );
     }
 
+    // Honeypot check — silently accept if filled (bot detected)
+    if (result.data.honeypot) {
+      return NextResponse.json(
+        {
+          success: true,
+          message:
+            "Ihre Nachricht wurde erfolgreich gespeichert. Wir melden uns bei Ihnen.",
+        },
+        { status: 201 }
+      );
+    }
+
     const { name, email, phone, subject, message, consentPrivacy } = result.data;
     const pb = await getAdminPocketBase();
 
@@ -52,6 +66,12 @@ export async function POST(req: Request) {
       consent_timestamp: new Date().toISOString(),
       privacy_version: "1.0",
     });
+
+    // Send email notification (async, non-blocking)
+    sendNotificationEmail(
+      `Neue Kontaktanfrage von ${name}`,
+      formatLeadNotification({ name, email, phone: phone || undefined, message, source: subject || "Kontaktformular" })
+    );
 
     return NextResponse.json(
       {
