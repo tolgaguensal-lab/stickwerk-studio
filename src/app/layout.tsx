@@ -4,6 +4,7 @@ import { Inter, Playfair_Display, JetBrains_Mono } from "next/font/google";
 import SmoothScroll from "@/components/SmoothScroll";
 import Scene from "@/components/Scene";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import "./globals.css";
 
 /* Fonts - Google Fonts (MIT License) */
@@ -107,6 +108,7 @@ export default function RootLayout({
           <div className="pt-[72px] lg:pt-[72px]">
             {children}
           </div>
+          <Footer />
         </SmoothScroll>
       </body>
     </html>
