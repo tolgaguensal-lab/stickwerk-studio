@@ -3,7 +3,7 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useCallback } from "react";
 import Image from "next/image";
-import { ArrowRight, PenTool, Zap, Heart, ShieldCheck, Users, TrendingUp, Clock, Star, CheckCircle2, Target, Award, FileText, Truck, Sparkles, Bolt, Mail, Receipt } from "lucide-react";
+import { ArrowRight, PenTool, Zap, Heart, ShieldCheck, Users, TrendingUp, Clock, Star, CheckCircle2, Target, Award, FileText, Package, Sparkles, Bolt, Mail, MessageSquare } from "lucide-react";
 import PatchCalculator from "@/components/PatchCalculator";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
@@ -23,19 +23,19 @@ export default function LandingPage() {
 
   const processSteps = [
     {
-      icon: <FileText className="w-8 h-8" />,
+      icon: <MessageSquare className="w-8 h-8" />,
       title: "Anfrage",
       description: "Füllen Sie unseren Patch-Konfigurator aus oder senden Sie uns Ihr Design per E-Mail.",
       step: "01"
     },
     {
-      icon: <Sparkles className="w-8 h-8" />,
+      icon: <PenTool className="w-8 h-8" />,
       title: "Designprüfung",
       description: "Wir analysieren Ihr Motiv auf Stickbarkeit und optimieren es für beste Ergebnisse.",
       step: "02"
     },
     {
-      icon: <Receipt className="w-8 h-8" />,
+      icon: <FileText className="w-8 h-8" />,
       title: "Individuelles Angebot",
       description: "Sie erhalten von uns ein detailliertes Angebot mit Preis, Lieferzeit und Materialempfehlungen.",
       step: "03"
@@ -47,7 +47,7 @@ export default function LandingPage() {
       step: "04"
     },
     {
-      icon: <Truck className="w-8 h-8" />,
+      icon: <Package className="w-8 h-8" />,
       title: "Versand",
       description: "Schneller Versand mit DHL oder Express. Tracken Sie Ihre Sendung in Echtzeit.",
       step: "05"
@@ -130,7 +130,7 @@ export default function LandingPage() {
   return (
     <main className="relative z-10">
        {/* Hero Section */}
-       <section className="min-h-[80vh] flex flex-col items-center justify-center text-center px-6 pt-8 md:pt-16 pb-16 bg-gradient-to-b from-canvas-white via-canvas-white to-paper-gray">
+       <section className="min-h-[80vh] flex flex-col items-center justify-center text-center px-6 pt-8 md:pt-16 pb-16 bg-gradient-to-b from-background via-background to-surface-muted">
          <motion.div 
            style={{ opacity, scale }}
            className="max-w-4xl space-y-8"
@@ -213,7 +213,7 @@ export default function LandingPage() {
              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
                Warum Kunden uns vertrauen – seit über 5 Jahren.
              </p>
-             <div className="w-20 h-0.5 bg-accent mx-auto rounded-full" />
+             <div className="section-divider" />
            </motion.div>
  
            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -252,7 +252,7 @@ export default function LandingPage() {
              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
                Egal ob Einzelstück oder Serienproduktion – wir finden die perfekte Lösung.
              </p>
-             <div className="w-20 h-0.5 bg-accent mx-auto rounded-full" />
+             <div className="section-divider" />
            </motion.div>
  
            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -293,7 +293,7 @@ export default function LandingPage() {
              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
                Von der ersten Idee bis zum fertigen Patch – transparent und unkompliziert.
              </p>
-             <div className="w-20 h-0.5 bg-accent mx-auto rounded-full" />
+             <div className="section-divider" />
            </motion.div>
  
            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
@@ -349,7 +349,7 @@ export default function LandingPage() {
              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
                Gestalten Sie Ihren Patch in Echtzeit und erhalten Sie eine sofortige Kostenschätzung.
              </p>
-             <div className="w-20 h-0.5 bg-accent mx-auto rounded-full" />
+             <div className="section-divider" />
            </motion.div>
            
            <motion.div 
@@ -378,7 +378,7 @@ export default function LandingPage() {
              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
                Qualität, die überzeugt. Service, der begeistert.
              </p>
-             <div className="w-20 h-0.5 bg-accent mx-auto rounded-full" />
+             <div className="section-divider" />
            </motion.div>
  
            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -424,8 +424,8 @@ export default function LandingPage() {
                 },
                 {
                   icon: <Sparkles className="w-6 h-6" />,
-                  metric: "15",
-                  label: "€ Musterpreis",
+                  metric: "15€",
+                  label: "Musterpreis*",
                   description: "Anrechenbar auf erste Bestellung. Testen Sie unsere Qualität vor dem großen Auftrag."
                 }
               ].map((fact, i) => (
@@ -458,7 +458,7 @@ export default function LandingPage() {
              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
                Alles, was Sie über unsere Patches wissen müssen.
              </p>
-             <div className="w-20 h-0.5 bg-accent mx-auto rounded-full" />
+             <div className="section-divider" />
            </motion.div>
  
            <motion.div
@@ -500,7 +500,7 @@ export default function LandingPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="relative rounded-2xl bg-gradient-to-br from-foreground via-[#1c1a17] to-foreground p-12 md:p-20 text-center text-card overflow-hidden"
+              className="relative rounded-2xl bg-gradient-to-br from-[#3A332C] via-[#4A3F36] to-[#2D2823] p-12 md:p-20 text-center text-[#FCF7EF] overflow-hidden"
             >
               {/* Subtle pattern overlay */}
               <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(circle at 25% 50%, rgba(255,255,255,0.3) 1px, transparent 1px)', backgroundSize: '20px 20px' }} />
@@ -553,7 +553,7 @@ export default function LandingPage() {
         </section>
  
        {/* Footer */}
-       <footer className="bg-foreground text-card py-16 md:py-20 px-6">
+       <footer className="bg-[#2D2823] text-[#E8E0D8] py-16 md:py-20 px-6">
          <div className="max-w-7xl mx-auto">
            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
               <div className="space-y-5">
@@ -566,17 +566,17 @@ export default function LandingPage() {
                </p>
              </div>
              <div className="space-y-5">
-               <h4 className="font-bold text-lg">Navigation</h4>
-               <div className="space-y-3">
-                 <a href="#features" className="block text-card/70 hover:text-accent transition-colors nav-link">Leistungen</a>
-                 <a href="#zielgruppen" className="block text-card/70 hover:text-accent transition-colors nav-link">Zielgruppen</a>
-                 <a href="#prozess" className="block text-card/70 hover:text-accent transition-colors nav-link">Prozess</a>
-                 <a href="#calculator" className="block text-card/70 hover:text-accent transition-colors nav-link">Konfigurator</a>
-                 <a href="#faq" className="block text-card/70 hover:text-accent transition-colors nav-link">FAQ</a>
-               </div>
-             </div>
-             <div className="space-y-5">
-               <h4 className="font-bold text-lg">Kontakt</h4>
+                <h4 className="font-semibold text-lg">Navigation</h4>
+                <div className="space-y-3">
+                  <a href="#features" className="block text-card/70 hover:text-accent transition-colors nav-link">Leistungen</a>
+                  <a href="#zielgruppen" className="block text-card/70 hover:text-accent transition-colors nav-link">Zielgruppen</a>
+                  <a href="#prozess" className="block text-card/70 hover:text-accent transition-colors nav-link">Prozess</a>
+                  <a href="#calculator" className="block text-card/70 hover:text-accent transition-colors nav-link">Konfigurator</a>
+                  <a href="#faq" className="block text-card/70 hover:text-accent transition-colors nav-link">FAQ</a>
+                </div>
+              </div>
+              <div className="space-y-5">
+                <h4 className="font-semibold text-lg">Kontakt</h4>
                <div className="space-y-3 text-card/70">
                  <p>info@stickwerk-studio.de</p>
                  <p>+49 (0) 123 456789</p>
@@ -584,7 +584,7 @@ export default function LandingPage() {
                </div>
              </div>
              <div className="space-y-5">
-               <h4 className="font-bold text-lg">Rechtliches</h4>
+               <h4 className="font-semibold text-lg">Rechtliches</h4>
                <div className="space-y-3 text-card/70">
                  <a href="/impressum" className="block hover:text-accent transition-colors nav-link">Impressum</a>
                  <a href="/datenschutz" className="block hover:text-accent transition-colors nav-link">Datenschutz</a>
