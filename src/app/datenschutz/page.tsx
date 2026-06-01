@@ -7,234 +7,501 @@ export default function Datenschutz() {
       <div className="max-w-4xl mx-auto space-y-8">
         <div className="text-center">
           <h1 className="text-4xl md:text-5xl font-serif text-foreground mb-4">
-            Datenschutzerkl&auml;rung
+            Datenschutzerklärung
           </h1>
           <p className="text-foreground/70">
-            Informationen &uuml;ber die Erhebung personenbezogener Daten
+            Informationen über die Erhebung personenbezogener Daten
           </p>
         </div>
 
         <div className="flex justify-start">
           <Link href="/" className="text-foreground hover:text-accent transition-colors flex items-center gap-2">
-            &larr; Zur&uuml;ck zur Startseite
+            &larr; Zurück zur Startseite
           </Link>
         </div>
 
         <Card className="bg-background backdrop-blur-sm border-border/30">
           <CardHeader>
             <CardTitle className="text-2xl text-foreground">
-              Datenschutzerkl&auml;rung
+              Datenschutzerklärung
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-8 text-foreground/80">
+            {/* 1. Verantwortlicher */}
             <section className="space-y-4">
               <h2 className="text-xl font-bold text-foreground">
-                1. Verantwortlicher und Kontaktdaten
+                1. Verantwortlicher
               </h2>
               <div className="space-y-2">
                 <p className="font-semibold">Stickwerk-Studio</p>
                 <p>Adresse wird ergänzt</p>
+                <p>Deutschland</p>
                 <p>E-Mail: datenschutz@stickwerk-studio.de</p>
-                <p>Telefon: wird ergänzt</p>
+                <p>Telefon: [TODO: Telefonnummer ergänzen]</p>
               </div>
-              <p>
-                Unser Datenschutzbeauftragter ist unter der o.g. E-Mail-Adresse
-                erreichbar.
+              {/* TODO: Datenschutzbeauftragten ergänzen, falls gesetzlich erforderlich (nach Art. 37 DSGVO) */}
+              <p className="text-sm text-foreground/60">
+                [TODO: Datenschutzbeauftragter – Sofern gesetzlich erforderlich,
+                wird ein Datenschutzbeauftragter bestellt. Aktuell sind wir
+                der Auffassung, dass nach Art. 37 DSGVO keine Pflicht zur
+                Bestellung besteht. Bitte rechtlich prüfen.]
               </p>
             </section>
 
+            {/* 2. Begriffe und Rechtsgrundlagen */}
             <section className="space-y-4">
               <h2 className="text-xl font-bold text-foreground">
-                2. Erhebung und Speicherung personenbezogener Daten sowie Art und
-                Zweck von deren Verwendung
-              </h2>
-
-              <div className="space-y-4">
-                <h3 className="text-lg font-semibold text-foreground">
-                  a) Beim Besuch der Website
-                </h3>
-                <p>
-                  Beim Aufrufen unserer Website werden durch den auf Ihrem
-                  Endger&auml;t zum Einsatz kommenden Browser automatisch
-                  Informationen an den Server unserer Website gesendet. Diese
-                  Informationen werden tempor&auml;r in einem Logfile gespeichert.
-                  Folgende Informationen werden dabei ohne Ihr Zutun erfasst und
-                  bis zur automatisierten L&ouml;schung gespeichert:
-                </p>
-                <ul className="list-disc list-inside space-y-1 ml-4">
-                  <li>IP-Adresse des anfragenden Rechners,</li>
-                  <li>Datum und Uhrzeit des Zugangs,</li>
-                  <li>Name und URL der abgerufenen Datei,</li>
-                  <li>Website, von welcher aus der Zugriff erfolgt (Referrer-URL),</li>
-                  <li>verwendeter Browser und ggf. das Betriebssystem Ihres Rechners.</li>
-                </ul>
-                <p>
-                  Die Verarbeitung dieser Daten erfolgt gem&auml;&szlig; Art. 6 Abs.
-                  1 lit. f DSGVO auf Basis unseres berechtigten Interesses an der
-                  Darstellung und der technisch einwandfreien Bereitstellung unserer
-                  Website.
-                </p>
-              </div>
-
-              <div className="space-y-4">
-                <h3 className="text-lg font-semibold text-foreground">
-                  b) Bei Nutzung unseres Patch-Konfigurators
-                </h3>
-                <p>
-                  Wenn Sie unseren Patch-Konfigurator nutzen und eine Anfrage
-                  senden, werden folgende Daten von uns verarbeitet:
-                </p>
-                <ul className="list-disc list-inside space-y-1 ml-4">
-                  <li>Name (_Pflichtangabe_)</li>
-                  <li>E-Mail-Adresse (_Pflichtangabe_)</li>
-                  <li>Telefonnummer (_freiwillig_)</li>
-                  <li>Nachricht/W&uuml;nsche (_freiwillig_)</li>
-                  <li>
-                    Konfigurationsdaten (Form, Gr&ouml;&szlig;e, Komplexit&auml;t,
-                    Farben, Material, Randart, R&uuml;ckseite, Menge, Express-Option)
-                  </li>
-                  <li>Design-Datei (_freiwillig, falls hochgeladen_)
-                  </li>
-                </ul>
-                <p>
-                  Die Verarbeitung erfolgt gem&auml;&szlig; Art. 6 Abs. 1 lit. b
-                  DSGVO zur Abwicklung Ihrer Anfrage und zur Bereitstellung unserer
-                  Leistungen.
-                </p>
-                <p>
-                  Die von Ihnen bereitgestellten Daten werden von uns
-                  ausschließlich zur Bearbeitung Ihrer Anfrage verwendet und nicht
-                  an Dritte weitergegeben.
-                </p>
-              </div>
-            </section>
-
-            <section className="space-y-4">
-              <h2 className="text-xl font-bold text-foreground">
-                3. Weitergabe von Daten
+                2. Begriffe und Rechtsgrundlagen
               </h2>
               <p>
-                Eine &Uuml;bermittlung Ihrer personenbezogenen Daten an Dritte zu
-                anderen als den im Folgenden aufgef&uuml;hrten Zwecken findet nicht
-                statt.
-              </p>
-              <p>
-                Wir geben Ihre personenbezogenen Daten nur an Dritte weiter, wenn:
+                Diese Datenschutzerklärung orientiert sich an den Begrifflichkeiten
+                der Datenschutz-Grundverordnung (DSGVO). Wir verarbeiten
+                personenbezogene Daten auf Grundlage folgender Rechtsgrundlagen:
               </p>
               <ul className="list-disc list-inside space-y-1 ml-4">
                 <li>
-                  Sie Ihre nach Art. 6 Abs. 1 lit. a DSGVO ausdr&uuml;ckliche
-                  Einwilligung dazu erteilt haben,
+                  <strong>Art. 6 Abs. 1 lit. a DSGVO:</strong> Einwilligung der
+                  betroffenen Person
                 </li>
                 <li>
-                  die Weitergabe nach Art. 6 Abs. 1 lit. f DSGVO zur
-                  Geltendmachung, Aus&uuml;bung oder Verteidigung von
-                  Rechtsanspr&uuml;chen erforderlich ist und kein Grund zur Annahme
-                  besteht, dass Sie ein &uuml;berwiegendes schutzw&uuml;rdiges
-                  Interesse an der Nichtweitergabe Ihrer Daten haben,
+                  <strong>Art. 6 Abs. 1 lit. b DSGVO:</strong> Erfüllung eines
+                  Vertrags oder vorvertraglicher Maßnahmen
                 </li>
                 <li>
-                  f&uuml;r den Fall, dass f&uuml;r die Weitergabe nach Art. 6 Abs. 1
-                  lit. c DSGVO eine gesetzliche Verpflichtung besteht, sowie
+                  <strong>Art. 6 Abs. 1 lit. c DSGVO:</strong> Erfüllung einer
+                  rechtlichen Verpflichtung
                 </li>
                 <li>
-                  dies gesetzlich zul&auml;ssig und nach Art. 6 Abs. 1 lit. b
-                  DSGVO f&uuml;r die Abwicklung von Vertragsverh&auml;ltnissen mit
-                  Ihnen erforderlich ist.
+                  <strong>Art. 6 Abs. 1 lit. f DSGVO:</strong> Berechtigte
+                  Interessen (z. B. Sicherheit, Betrieb der Website)
                 </li>
               </ul>
             </section>
 
+            {/* 3. Hosting */}
             <section className="space-y-4">
               <h2 className="text-xl font-bold text-foreground">
-                4. Betroffenenrechte
+                3. Hosting
+              </h2>
+              <p>
+                Unsere Website wird auf eigenen Servern in Deutschland
+                (ZimaOS / Pangolin) betrieben. Der Serverstandort ist:
+              </p>
+              {/* TODO: Genaue Angabe zum Serverstandort prüfen und ergänzen */}
+              <p>[TODO: Serverstandort / Rechenzentrum präzisieren]</p>
+              <p>
+                Der Server wird im eigenen Haushalt / auf Privatgelände
+                betrieben. Alternativ könnte ein externer Hoster beauftragt
+                werden. Sollte ein externer Hoster zum Einsatz kommen, wird
+                ein Auftragsverarbeitungsvertrag (AVV) gemäß Art. 28 DSGVO
+                geschlossen.
+              </p>
+              <p>
+                <strong>Hosting-Leistungen umfassen:</strong> Bereitstellung der
+                Website, Auslieferung von Inhalten, Speicherung von Datenbanken
+                (PocketBase), Sicherheit und Wartung.
+              </p>
+            </section>
+
+            {/* 4. Server-Logfiles */}
+            <section className="space-y-4">
+              <h2 className="text-xl font-bold text-foreground">
+                4. Server-Logfiles
+              </h2>
+              <p>
+                Bei jedem Zugriff auf unsere Website erfasst unser System
+                automatisch Daten und Informationen, die Ihr Browser an uns
+                übermittelt. Folgende Daten werden temporär in Logfiles
+                gespeichert:
+              </p>
+              <ul className="list-disc list-inside space-y-1 ml-4">
+                <li>IP-Adresse des anfragenden Rechners</li>
+                <li>Datum und Uhrzeit des Zugriffs</li>
+                <li>Name und URL der abgerufenen Datei</li>
+                <li>Website, von der aus der Zugriff erfolgt (Referrer-URL)</li>
+                <li>Verwendeter Browser und Betriebssystem</li>
+              </ul>
+              <p>
+                Die Verarbeitung erfolgt gemäß Art. 6 Abs. 1 lit. f DSGVO auf
+                Basis unseres berechtigten Interesses an der technisch
+                einwandfreien Bereitstellung und Sicherheit unserer Website.
+                Die Logfiles werden nach spätestens 7 Tagen gelöscht, sofern
+                keine Aufbewahrung zu Sicherheitszwecken (z. B. bei Angriffen)
+                erforderlich ist.
+              </p>
+            </section>
+
+            {/* 5. Kontaktformular */}
+            <section className="space-y-4">
+              <h2 className="text-xl font-bold text-foreground">
+                5. Kontaktformular
+              </h2>
+              <p>
+                Auf unserer Website bieten wir ein Kontaktformular an, über das
+                Sie uns kontaktieren können. Bei der Nutzung des
+                Kontaktformulars werden folgende Daten von uns erhoben:
+              </p>
+              <ul className="list-disc list-inside space-y-1 ml-4">
+                <li>Name (Pflichtangabe)</li>
+                <li>E-Mail-Adresse (Pflichtangabe)</li>
+                <li>Telefonnummer (freiwillig)</li>
+                <li>Betreff (freiwillig)</li>
+                <li>Nachricht (Pflichtangabe)</li>
+              </ul>
+              <p>
+                Die Verarbeitung erfolgt gemäß Art. 6 Abs. 1 lit. b DSGVO zur
+                Bearbeitung Ihrer Anfrage. Die Daten werden in unserer
+                Datenbank (PocketBase) gespeichert und nach Erledigung der
+                Anfrage gelöscht, sofern keine gesetzlichen
+                Aufbewahrungspflichten bestehen.
+              </p>
+              <p>
+                Rechtsgrundlage für die Verarbeitung Ihrer Daten im Rahmen des
+                Kontaktformulars ist Ihre Einwilligung (Art. 6 Abs. 1 lit. a
+                DSGVO) sowie die Durchführung vorvertraglicher Maßnahmen
+                (Art. 6 Abs. 1 lit. b DSGVO).
+              </p>
+            </section>
+
+            {/* 6. Patch-Konfigurator / Lead-Formular */}
+            <section className="space-y-4">
+              <h2 className="text-xl font-bold text-foreground">
+                6. Patch-Konfigurator (Angebotsanfrage)
+              </h2>
+              <p>
+                Wenn Sie unseren Patch-Konfigurator nutzen und eine
+                Angebotsanfrage senden, werden folgende Daten von uns
+                verarbeitet:
+              </p>
+              <ul className="list-disc list-inside space-y-1 ml-4">
+                <li>Name (Pflichtangabe)</li>
+                <li>E-Mail-Adresse (Pflichtangabe)</li>
+                <li>Telefonnummer (freiwillig)</li>
+                <li>Nachricht / Wünsche (freiwillig)</li>
+                <li>
+                  Konfigurationsdaten: Form, Größe, Komplexität, Farben,
+                  Material, Randart, Rückseite, Menge, Express-Option
+                </li>
+                <li>Design-Datei (freiwillig, falls hochgeladen)</li>
+              </ul>
+              <p>
+                Die Verarbeitung erfolgt gemäß Art. 6 Abs. 1 lit. b DSGVO zur
+                Abwicklung Ihrer Angebotsanfrage und zur Bereitstellung unserer
+                Leistungen. Die von Ihnen bereitgestellten Daten werden
+                ausschließlich zur Bearbeitung Ihrer Anfrage verwendet.
+              </p>
+              <p className="text-sm text-foreground/60">
+                Hinweis: Hochgeladene Design-Dateien werden nur temporär zur
+                Prüfung gespeichert und nach Angebotserstellung gelöscht, sofern
+                kein Auftrag zustande kommt.
+              </p>
+            </section>
+
+            {/* 7. E-Mail-Kontakt */}
+            <section className="space-y-4">
+              <h2 className="text-xl font-bold text-foreground">
+                7. Kontaktaufnahme per E-Mail
+              </h2>
+              <p>
+                Wenn Sie uns per E-Mail kontaktieren, verarbeiten wir die von
+                Ihnen übermittelten Daten (E-Mail-Adresse, Name,
+                Nachrichteninhalt) ausschließlich zur Bearbeitung Ihrer Anfrage.
+                Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO.
+              </p>
+            </section>
+
+            {/* 8. Google Fonts */}
+            <section className="space-y-4">
+              <h2 className="text-xl font-bold text-foreground">
+                8. Google Fonts (lokale Einbindung)
+              </h2>
+              <p>
+                Auf dieser Website werden die Schriftarten Inter, Playfair
+                Display und JetBrains Mono von Google Fonts verwendet. Die
+                Einbindung erfolgt über die Next.js Font-Optimierung (next/font),
+                wodurch die Schriftarten beim Seitenaufruf von Googles Servern
+                geladen werden.
+              </p>
+              <p>
+                Beim Aufruf der Website wird eine Verbindung zu Googles Servern
+                hergestellt, um die Schriftarten zu laden. Dabei wird Ihre
+                IP-Adresse an Google übermittelt. Dies dient der einheitlichen
+                und ansprechenden Darstellung unserer Website.
+              </p>
+              <p>
+                <strong>Dienstanbieter:</strong> Google LLC (bzw. Google Ireland
+                Limited für Nutzer im EWR)
+              </p>
+              <p>
+                <strong>Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. f DSGVO
+                (berechtigtes Interesse an einer konsistenten Darstellung)
+              </p>
+              <p>
+                <strong>Drittlandtransfer:</strong> Google kann Daten in die USA
+                übermitteln. Die Übermittlung erfolgt auf Basis des
+                Angemessenheitsbeschlusses der EU (EU-US Data Privacy
+                Framework).
+              </p>
+              {/* TODO: Datenschutzerklärung von Google verlinken, sobald final */}
+              <p className="text-sm">
+                Weitere Informationen finden Sie in der
+                <a
+                  href="https://policies.google.com/privacy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-accent hover:underline ml-1"
+                >
+                  Datenschutzerklärung von Google
+                </a>.
+              </p>
+            </section>
+
+            {/* 9. Three.js / 3D-Szene */}
+            <section className="space-y-4">
+              <h2 className="text-xl font-bold text-foreground">
+                9. 3D-Darstellung (Three.js)
+              </h2>
+              <p>
+                Diese Website verwendet Three.js für die Darstellung von
+                3D-Animationen. Die 3D-Darstellung erfolgt vollständig
+                clientseitig im Browser. Es werden keine personenbezogenen
+                Daten an Dritte übermittelt. Es werden keine Cookies gesetzt
+                und keine Tracking-Funktionen von Three.js genutzt.
+              </p>
+            </section>
+
+            {/* 10. Cookies */}
+            <section className="space-y-4">
+              <h2 className="text-xl font-bold text-foreground">
+                10. Cookies und LocalStorage
+              </h2>
+              <p>
+                Diese Website verwendet <strong>keine</strong> Cookies zu
+                Analyse-, Marketing- oder Tracking-Zwecken. Es werden
+                ausschließlich technisch notwendige Session-Daten im Local
+                Storage des Browsers gespeichert, soweit dies für die Funktion
+                der Website erforderlich ist.
+              </p>
+              <p>
+                <strong>Keine Cookies von Drittanbietern:</strong> Wir setzen
+                keine Cookies von Google Analytics, Meta Pixel, oder anderen
+                Tracking-Diensten ein.
+              </p>
+              <p>
+                Da keine nicht-notwendigen Cookies verwendet werden, ist nach
+        aktueller Rechtslage kein Cookie-Consent-Banner erforderlich.
+        Sollte sich dies in Zukunft ändern, werden wir Sie
+        entsprechend informieren und Ihre Einwilligung einholen.
+              </p>
+            </section>
+
+            {/* 11. Auftragsverarbeitung */}
+            <section className="space-y-4">
+              <h2 className="text-xl font-bold text-foreground">
+                11. Auftragsverarbeitung
+              </h2>
+              <p>
+                Zur Bereitstellung unserer Dienste setzen wir folgende
+                Dienstleister ein, die im Rahmen einer
+        Auftragsverarbeitung gemäß Art. 28 DSGVO personenbezogene
+        Daten verarbeiten können:
+              </p>
+              <ul className="list-disc list-inside space-y-1 ml-4">
+                <li>
+                  <strong>PocketBase (ZimaOS App Store):</strong> Datenbank zur
+                  Speicherung von Kontaktanfragen und Leads.
+                  Selbst gehostet auf eigener Infrastruktur. Es wird ein
+                  Auftragsverarbeitungsvertrag (AVV) gestellt, soweit
+                  gesetzlich erforderlich.
+                  {/* TODO: AVV mit ZimaOS/PocketBase abschließen oder dokumentieren, dass Eigenbetrieb vorliegt */}
+                </li>
+                <li>
+                  <strong>Next.js / Node.js:</strong> Webserver und
+                  Anwendungslogik, betrieben auf eigener Infrastruktur.
+                </li>
+              </ul>
+              <p>
+                Sofern wir in Zukunft Cloud-Dienstleister (z. B. Vercel,
+                Supabase) einsetzen, werden wir vorher einen
+                Auftragsverarbeitungsvertrag mit dem jeweiligen Anbieter
+                schließen.
+              </p>
+            </section>
+
+            {/* 12. Drittlandtransfers */}
+            <section className="space-y-4">
+              <h2 className="text-xl font-bold text-foreground">
+                12. Drittlandtransfers
+              </h2>
+              <p>
+                Eine Übermittlung Ihrer Daten in Länder außerhalb der EU/des
+                EWR findet nur statt, soweit dies gesetzlich vorgesehen ist
+                oder Sie eingewilligt haben. Aktuell erfolgt die Datenverarbeitung
+                ausschließlich in Deutschland / der EU.
+              </p>
+              <p>
+                Ausnahme: Beim Laden der Google Fonts kann eine Verbindung zu
+                Servern von Google in den USA aufgebaut werden (s. Punkt 8).
+                Google ist nach dem EU-US Data Privacy Framework zertifiziert.
+              </p>
+            </section>
+
+            {/* 13. Speicherdauer */}
+            <section className="space-y-4">
+              <h2 className="text-xl font-bold text-foreground">
+                13. Speicherdauer
+              </h2>
+              <p>
+                Wir speichern Ihre personenbezogenen Daten nur so lange, wie
+                dies für die Erfüllung des jeweiligen Zwecks erforderlich ist
+                oder gesetzliche Aufbewahrungsfristen dies vorschreiben:
+              </p>
+              <ul className="list-disc list-inside space-y-1 ml-4">
+                <li>
+                  <strong>Kontaktanfragen und Leads:</strong> 3 Jahre nach
+                  letzter Kontaktaufnahme, danach Löschung
+                </li>
+                <li>
+                  <strong>Server-Logfiles:</strong> 7 Tage
+                </li>
+                <li>
+                  <strong>Einwilligungsnachweise (Consent):</strong> 3 Jahre
+                </li>
+                <li>
+                  <strong>Vertragsdaten:</strong> 6 Jahre (gesetzliche
+                  Aufbewahrungsfrist nach § 257 HGB, § 147 AO)
+                </li>
+              </ul>
+            </section>
+
+            {/* 14. SSL/TLS-Verschlüsselung */}
+            <section className="space-y-4">
+              <h2 className="text-xl font-bold text-foreground">
+                14. SSL/TLS-Verschlüsselung
+              </h2>
+              <p>
+                Diese Website nutzt aus Sicherheitsgründen und zum Schutz der
+                Übertragung vertraulicher Inhalte eine SSL-bzw.
+                TLS-Verschlüsselung. Wenn die Verschlüsselung aktiv ist, kann
+                die von Ihnen an uns übermittelte Seite nicht von Dritten
+                mitgelesen werden.
+              </p>
+              {/* TODO: SSL-Zertifikatsanbieter und Konfiguration prüfen (Pangolin stellt SSL via Let's Encrypt bereit) */}
+            </section>
+
+            {/* 15. Betroffenenrechte */}
+            <section className="space-y-4">
+              <h2 className="text-xl font-bold text-foreground">
+                15. Ihre Rechte als betroffene Person
               </h2>
               <p>Sie haben das Recht:</p>
               <ul className="list-disc list-inside space-y-1 ml-4">
                 <li>
-                  gem&auml;&szlig; Art. 15 DSGVO Auskunft &uuml;ber Ihre von uns
-                  verarbeiteten personenbezogenen Daten zu verlangen. Insbesondere
-                  k&ouml;nnen Sie Auskunft &uuml;ber die Verarbeitungszwecke, die
-                  Kategorie der personenbezogenen Daten, die Kategorien von
-                  Empf&auml;ngern, die geplante Speicherdauer sowie &uuml;ber die
-                  Herkunft Ihrer Daten verlangen.
+                  gemäß Art. 15 DSGVO Auskunft über Ihre von uns verarbeiteten
+                  personenbezogenen Daten zu verlangen
                 </li>
                 <li>
-                  gem&auml;&szlig; Art. 16 DSGVO unverz&uuml;glich die Berichtung
-                  unrichtiger oder Vervollst&auml;ndigung Ihrer bei uns
-                  gespeicherten personenbezogenen Daten zu verlangen.
+                  gemäß Art. 16 DSGVO unverzüglich die Berichtigung
+                  unrichtiger oder Vervollständigung Ihrer bei uns
+                  gespeicherten personenbezogenen Daten zu verlangen
                 </li>
                 <li>
-                  gem&auml;&szlig; Art. 17 DSGVO die L&ouml;schung Ihrer bei uns
-                  gespeicherten personenbezogenen Daten zu verlangen, soweit die
-                  Verarbeitung zur Aus&uuml;bung des Rechts auf freie
-                  Meinungs&auml;u&szlig;erung und Information, zur Erf&uuml;llung einer
-                  rechtlichen Verpflichtung, aus Gr&uuml;nden des &ouml;ffentlichen
-                  Interesses oder zur Geltendmachung, Aus&uuml;bung oder Verteidigung
-                  von Rechtsanspr&uuml;chen erforderlich ist.
+                  gemäß Art. 17 DSGVO die Löschung Ihrer bei uns gespeicherten
+                  personenbezogenen Daten zu verlangen, soweit nicht die
+                  Verarbeitung zur Ausübung des Rechts auf freie
+                  Meinungsäußerung, zur Erfüllung einer rechtlichen
+                  Verpflichtung oder zur Geltendmachung von Rechtsansprüchen
+                  erforderlich ist
                 </li>
                 <li>
-                  gem&auml;&szlig; Art. 18 DSGVO die Einschr&auml;nkung der
-                  Verarbeitung Ihrer personenbezogenen Daten zu verlangen, soweit
-                  die Richtigkeit der Daten von Ihnen bestritten wird, die
-                  Verarbeitung unrechtm&auml;&szlig;ig ist, Sie aber deren
-                  L&ouml;schung ablehnen und wir die Daten nicht mehr ben&ouml;tigen,
-                  Sie aber diese zur Geltendmachung, Aus&uuml;bung oder Verteidigung
-                  von Rechtsanspr&uuml;chen ben&ouml;tigen oder Sie gem&auml;&szlig; Art.
-                  21 DSGVO Widerspruch gegen die Verarbeitung eingelegt haben.
+                  gemäß Art. 18 DSGVO die Einschränkung der Verarbeitung zu
+                  verlangen
                 </li>
                 <li>
-                  gem&auml;&szlig; Art. 20 DSGVO Ihre personenbezogenen Daten in
-                  einem strukturierten, g&auml;ngigen und maschinell lesbaren Format
-                  zu erhalten oder die &Uuml;bermittlung an einen anderen
-                  Verantwortlichen zu verlangen.
+                  gemäß Art. 20 DSGVO Ihre Daten in einem strukturierten,
+                  gängigen und maschinell lesbaren Format zu erhalten oder die
+                  Übermittlung an einen anderen Verantwortlichen zu verlangen
                 </li>
                 <li>
-                  gem&auml;&szlig; Art. 7 Abs. 3 DSGVO Ihre einmal erteilte
-                  Einwilligung jederzeit gegen&uuml;ber uns zu widerrufen. Durch den
-                  Widerruf wird die Rechtm&auml;&szlig;igkeit der auf Grund der
-                  Einwilligung bis zum Widerruf erfolgten Verarbeitung nicht
-                  ber&uuml;hrt.
+                  gemäß Art. 7 Abs. 3 DSGVO Ihre einmal erteilte Einwilligung
+                  jederzeit zu widerrufen
                 </li>
                 <li>
-                  gem&auml;&szlig; Art. 77 DSGVO sich bei einer Aufsichtsbeh&ouml;rde
-                  zu beschweren. In der Regel k&ouml;nnen Sie sich hierzu an die
-                  Aufsichtsbeh&ouml;rde Ihres gew&ouml;hnlichen Aufenthaltsortes
-                  oder Arbeitsplatzes oder unseres Firmensitzes wenden.
+                  gemäß Art. 77 DSGVO sich bei einer Aufsichtsbehörde zu
+                  beschweren. In der Regel können Sie sich hierfür an die
+                  Aufsichtsbehörde Ihres üblichen Aufenthaltsortes oder
+                  Arbeitsplatzes wenden
                 </li>
               </ul>
             </section>
 
+            {/* 16. Widerspruchsrecht */}
             <section className="space-y-4">
               <h2 className="text-xl font-bold text-foreground">
-                5. Speicherdauer
+                16. Widerspruchsrecht
               </h2>
               <p>
-                Sofern nicht speziell angegeben, werden Ihre personenbezogenen
-                Daten nur so lange gespeichert, wie dies zur Erf&uuml;llung des
-                jeweiligen Zwecks oder aufgrund gesetzlicher Vorschriften
-                erforderlich ist. Nach Wegfall des Zwecks bzw. Ablauf der
-                gesetzlichen Fristen werden die entsprechenden Daten routinem&auml;&szlig;ig
-                und entsprechend den gesetzlichen Vorschriften gel&ouml;scht.
+                Sofern wir Ihre personenbezogenen Daten auf Basis eines
+                berechtigten Interesses (Art. 6 Abs. 1 lit. f DSGVO)
+                verarbeiten, haben Sie das Recht, gemäß Art. 21 DSGVO
+                Widerspruch gegen die Verarbeitung einzulegen. Wir werden
+                die Verarbeitung dann einstellen, es sei denn, wir können
+                zwingende schutzwürdige Gründe nachweisen, die Ihre
+                Interessen überwiegen.
               </p>
             </section>
 
+            {/* 17. Social Media */}
             <section className="space-y-4">
               <h2 className="text-xl font-bold text-foreground">
-                6. Aktualit&auml;t und &Auml;nderung dieser
-                Datenschutzerkl&auml;rung
+                17. Social Media (Verlinkungen)
               </h2>
               <p>
-                Diese Datenschutzerkl&auml;rung ist aktuell und steht mit Datum
-                Mai 2026.
+                Auf unserer Website finden Sie Verlinkungen zu unseren
+                Social-Media-Profilen (Instagram, Facebook, X/Twitter). Diese
+                sind als einfache Textlinks ohne Einbindung von Social-Media-
+                Plugins umgesetzt. Es werden keine Daten an die sozialen
+                Netzwerke übermittelt, solange Sie den Link nicht aktiv
+                anklicken.
+              </p>
+            </section>
+
+            {/* 18. Datensicherheit */}
+            <section className="space-y-4">
+              <h2 className="text-xl font-bold text-foreground">
+                18. Datensicherheit
+              </h2>
+              <p>
+                Wir treffen angemessene technische und organisatorische
+                Sicherheitsmaßnahmen, um Ihre personenbezogenen Daten gegen
+                unbeabsichtigte oder unrechtmäßige Löschung, Veränderung oder
+                gegen Verlust und unbefugte Weitergabe oder Zugriff zu
+                schützen:
+              </p>
+              <ul className="list-disc list-inside space-y-1 ml-4">
+                <li>SSL/TLS-Verschlüsselung für die gesamte Website</li>
+                <li>Basic-Auth-Schutz für den Admin-Bereich</li>
+                <li>Rate-Limiting für API-Endpunkte</li>
+                <li>Eingabevalidierung (Zod) für alle Formulardaten</li>
+                <li>Keine Speicherung von Passwörtern im Frontend-Code</li>
+              </ul>
+            </section>
+
+            {/* 19. Änderungen */}
+            <section className="space-y-4">
+              <h2 className="text-xl font-bold text-foreground">
+                19. Aktualität und Änderung dieser Datenschutzerklärung
+              </h2>
+              <p>
+                Diese Datenschutzerklärung ist aktuell und hat den Stand
+                Juni 2026.
               </p>
               <p>
-                Durch die Weiterentwicklung unserer Website und Angebote &ouml;der
-                aufgrund ge&auml;nderter gesetzlicher bebzw. beh&ouml;rdlicher
-                Vorgaben kann es notwendig werden, diese Datenschutzerkl&auml;rung zu
-                &auml;ndern. Die jeweils aktuelle Datenschutzerkl&auml;rung kann
-                jederzeit auf unserer Website unter dieser URL eingesehen und
-                ausgedruckt werden.
+                Durch die Weiterentwicklung unserer Website oder aufgrund
+                geänderter gesetzlicher Vorgaben kann es notwendig werden,
+                diese Datenschutzerklärung zu ändern. Die jeweils aktuelle
+                Datenschutzerklärung kann jederzeit auf unserer Website unter
+                dieser URL eingesehen und ausgedruckt werden.
               </p>
             </section>
           </CardContent>

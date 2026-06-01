@@ -128,11 +128,38 @@ export default function AGB() {
 
             <section className="space-y-4">
               <h2 className="text-xl font-bold text-foreground">
-                &sect; 6 R&uuml;cktritt und Stornierung
+                &sect; 6 Widerrufsbelehrung
               </h2>
               <p>
-                (1) Der Kunde kann seine Anfrage jederzeit vor Annahme durch uns
-                kostenlos stornieren.
+                (1) Bei Fernabsatzvertr&auml;gen steht Verbrauchern ein
+                gesetzliches Widerrufsrecht gem&auml;&szlig; &sect; 312g BGB zu.
+              </p>
+              <p>
+                (2) Da es sich bei unseren Produkten um individuell nach
+                Kundenwunsch angefertigte Waren handelt (Ma&szlig;anfertigung),
+                kann das Widerrufsrecht gem&auml;&szlig; &sect; 312g Abs. 2
+                Nr. 1 BGB ausgeschlossen sein. Wir weisen darauf hin, dass
+                nach Auftragsbest&auml;tigung und Produktionsbeginn kein
+                Widerrufsrecht mehr besteht.
+              </p>
+              {/* TODO: Rechtlich prüfen, ob Widerrufsrecht für individuelle
+                  Stickprodukte nach § 312g Abs. 2 Nr. 1 BGB ausgeschlossen
+                  werden kann. Bei B2C-Verträgen ist eine klare
+                  Widerrufsbelehrung notwendig, auch wenn das Widerrufsrecht
+                  ausgeschlossen wird. */}
+              <p className="text-sm text-foreground/60 mt-4">
+                [TODO: Vollständige Widerrufsbelehrung und Muster-Widerrufsformular
+                ergänzen nach rechtlicher Prüfung]
+              </p>
+            </section>
+
+            <section className="space-y-4">
+              <h2 className="text-xl font-bold text-foreground">
+                &sect; 7 R&uuml;cktritt und Stornierung
+              </h2>
+              <p>
+                (1) Vor Annahme des Angebots durch uns kann der Kunde seine
+                Anfrage jederzeit kostenlos stornieren.
               </p>
               <p>
                 (2) Nach Annahme des Angebots durch uns kann der Kunde nur noch
@@ -140,35 +167,41 @@ export default function AGB() {
                 Auftragswerts vom Vertrag zur&uuml;cktreten.
               </p>
               <p>
-                (3) Bei bereits begonnener Produktion ist ein R&uuml;cktritt nicht
-                mehr m&ouml;glich.
+                (3) Bei bereits begonnener Produktion ist ein R&uuml;cktritt aus
+                technischen Gr&uuml;nden leider nicht mehr m&ouml;glich.
               </p>
             </section>
 
             <section className="space-y-4">
               <h2 className="text-xl font-bold text-foreground">
-                &sect; 7 Gew&auml;hrleistung
+                &sect; 8 Gew&auml;hrleistung
               </h2>
               <p>
-                (1) Die Gew&auml;hrleistung betr&auml;gt 24 Monate ab Lieferung der
-                Ware.
+                (1) Die gesetzliche Gew&auml;hrleistung gilt f&uuml;r alle
+                unsere Produkte. F&uuml;r Unternehmer betr&auml;gt die
+                Verj&auml;hrungsfrist 12 Monate ab Ablieferung der Ware.
               </p>
               <p>
-                (2) Die Gew&auml;hrleistung umfasst M&auml;ngel, die bereits bei
+                (2) F&uuml;r Verbraucher gelten die gesetzlichen
+                Gew&auml;hrleistungsrechte (24 Monate).
+              </p>
+              <p>
+                (3) Die Gew&auml;hrleistung umfasst M&auml;ngel, die bereits bei
                 &Uuml;bergabe der Ware vorhanden waren.
               </p>
               <p>
-                (3) Bei berechtigter M&auml;ngelr&uuml;ge k&ouml;nnen wir
+                (4) Bei berechtigter M&auml;ngelr&uuml;ge k&ouml;nnen wir
                 Nachbesserung oder Ersatzlieferung w&auml;hlen.
               </p>
             </section>
 
             <section className="space-y-4">
               <h2 className="text-xl font-bold text-foreground">
-                &sect; 8 Anwendbares Recht und Gerichtsstand
+                &sect; 9 Anwendbares Recht, Gerichtsstand und Streitschlichtung
               </h2>
               <p>
-                (1) Es gilt ausschlie&szlig;lich deutsches Recht.
+                (1) Es gilt ausschlie&szlig;lich das Recht der Bundesrepublik
+                Deutschland unter Ausschluss des UN-Kaufrechts (CISG).
               </p>
               <p>
                 (2) Gerichtsstand f&uuml;r alle Streitigkeiten aus dem
@@ -177,9 +210,12 @@ export default function AGB() {
                 &ouml;ffentlich-rechtliches Sonderverm&ouml;gen ist.
               </p>
               <p>
-                (3) Verdebrauchern steht das Recht zu, sich an die f&uuml;r
+                (3) Verbrauchern steht das Recht zu, sich an die f&uuml;r
                 ihren Wohnsitz zust&auml;ndige Verbraucherschlichtungsstelle zu
-                wenden.
+                wenden. Wir sind nicht verpflichtet und nicht bereit, an
+                Streitbeilegungsverfahren vor einer
+                Verbraucherschlichtungsstelle teilzunehmen, es sei denn, dies
+                ist gesetzlich vorgeschrieben.
               </p>
             </section>
           </CardContent>
