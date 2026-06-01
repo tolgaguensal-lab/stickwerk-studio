@@ -295,6 +295,7 @@ h1, h2, h3, h4, h5 {
 
 .card:hover {
   box-shadow: var(--shadow-card-hover);
+  transform: translateY(-4px);
 }
 
 /* ===== BUTTON PILL ===== */
@@ -373,4 +374,67 @@ h1, h2, h3, h4, h5 {
 @media print {
   .no-print { display: none; }
   body { color: #000; background: #fff; }
+}
+
+/* =====================================================================
+   VIEW TRANSITIONS — Premium Page Transitions (native Browser API)
+   ===================================================================== */
+
+/* Directional Navigation */
+::view-transition-old(nav-forward) {
+  animation: 300ms ease-out both slide-to-left;
+}
+::view-transition-new(nav-forward) {
+  animation: 300ms ease-out both slide-from-right;
+}
+::view-transition-old(nav-back) {
+  animation: 300ms ease-out both slide-to-right;
+}
+::view-transition-new(nav-back) {
+  animation: 300ms ease-out both slide-from-left;
+}
+
+@keyframes slide-to-left {
+  to { transform: translateX(-20%); opacity: 0; }
+}
+@keyframes slide-from-right {
+  from { transform: translateX(20%); opacity: 0; }
+}
+@keyframes slide-to-right {
+  to { transform: translateX(20%); opacity: 0; }
+}
+@keyframes slide-from-left {
+  from { transform: translateX(-20%); opacity: 0; }
+}
+
+/* Fade Animation (default fallback) */
+::view-transition-old(root) {
+  animation: 200ms ease-out both fade-out;
+}
+::view-transition-new(root) {
+  animation: 200ms ease-out both fade-in;
+}
+
+@keyframes fade-out {
+  to { opacity: 0; }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+}
+
+/* ===== REDUCED MOTION ===== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
 }
