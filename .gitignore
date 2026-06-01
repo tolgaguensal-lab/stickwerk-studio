@@ -40,4 +40,27 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# opencode / session files
+.omo/
+.opencode/
+.agents/
+.claude/
+skills-lock.json
+
+# test artifacts
+test-results/
+
+# playwright mcp
+.playwright-mcp/
+
+# report & screenshot artifacts
+*.txt
+after-changes.png
+fullpage.png
+hero-buttons.png
+zielgruppen-icons.png
+
+# sitemap
+public/sitemap.xml
+
 .env
