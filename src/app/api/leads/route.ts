@@ -1,8 +1,9 @@
 import { NextResponse } from "next/server";
-import { getAdminPocketBase } from "@/lib/pocketbase/server";
+import { db, schema } from "@/lib/db";
 import { createRateLimiter, getRateLimitKey } from "@/lib/rate-limit";
 import { sendNotificationEmail, formatLeadNotification } from "@/lib/email";
 import { z } from "zod";
+import { desc, count as drizzleCount } from "drizzle-orm";
 
 const limiter = createRateLimiter({ windowMs: 60_000, max: 10 });
 
@@ -56,23 +57,25 @@ export async function POST(req: Request) {
     }
 
     const { name, email, phone, company, message, patchConfig, estimatedPriceMin, estimatedPriceMax, consentPrivacy } = result.data;
-    const pb = await getAdminPocketBase();
 
-    const record = await pb.collection("leads").create({
-      name,
-      email,
-      phone: phone || "",
-      company: company || "",
-      message: message || "",
-      patch_config: patchConfig || {},
-      estimated_price_min: estimatedPriceMin || 0,
-      estimated_price_max: estimatedPriceMax || 0,
-      status: "new",
-      source: "website",
-      consent_privacy: consentPrivacy,
-      consent_timestamp: new Date().toISOString(),
-      privacy_version: "1.0",
-    });
+    const [record] = await db
+      .insert(schema.leads)
+      .values({
+        name,
+        email,
+        phone: phone || "",
+        company: company || "",
+        message: message || "",
+        patchConfig: patchConfig || {},
+        estimatedPriceMin: estimatedPriceMin || 0,
+        estimatedPriceMax: estimatedPriceMax || 0,
+        status: "new",
+        source: "website",
+        consentPrivacy,
+        consentTimestamp: new Date().toISOString(),
+        privacyVersion: "1.0",
+      })
+      .returning({ id: schema.leads.id });
 
     // Send email notification (async, non-blocking)
     sendNotificationEmail(
@@ -103,19 +106,29 @@ export async function GET(req: Request) {
     const page = Math.max(1, parseInt(searchParams.get("page") || "1", 10));
     const perPage = Math.min(100, Math.max(1, parseInt(searchParams.get("perPage") || "20", 10)));
 
-    const pb = await getAdminPocketBase();
+    const [leadsList, totalResult] = await Promise.all([
+      db
+        .select()
+        .from(schema.leads)
+        .orderBy(desc(schema.leads.created))
+        .limit(perPage)
+        .offset((page - 1) * perPage),
+      db.select({ total: drizzleCount() }).from(schema.leads),
+    ]);
 
-    const result = await pb.collection("leads").getList(page, perPage, {
-      sort: "-created",
-    });
+    const total = totalResult[0]?.total ?? 0;
 
     return NextResponse.json(
       {
-        leads: result.items,
-        total: result.totalItems,
-        page: result.page,
-        perPage: result.perPage,
-        totalPages: result.totalPages,
+        leads: leadsList.map((l) => ({
+          ...l,
+          id: String(l.id),
+          created: l.created?.toISOString() ?? "",
+        })),
+        total,
+        page,
+        perPage,
+        totalPages: Math.ceil(total / perPage),
       },
       { status: 200 }
     );

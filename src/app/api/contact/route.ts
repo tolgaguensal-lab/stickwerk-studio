@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getAdminPocketBase } from "@/lib/pocketbase/server";
+import { db, schema } from "@/lib/db";
 import { createRateLimiter, getRateLimitKey } from "@/lib/rate-limit";
 import { sendNotificationEmail, formatLeadNotification } from "@/lib/email";
 import { z } from "zod";
@@ -53,18 +53,17 @@ export async function POST(req: Request) {
     }
 
     const { name, email, phone, subject, message, consentPrivacy } = result.data;
-    const pb = await getAdminPocketBase();
 
-    await pb.collection("contact_messages").create({
+    await db.insert(schema.contactMessages).values({
       name,
       email,
       phone: phone || "",
       subject: subject || "",
       message,
       status: "new",
-      consent_privacy: consentPrivacy,
-      consent_timestamp: new Date().toISOString(),
-      privacy_version: "1.0",
+      consentPrivacy,
+      consentTimestamp: new Date().toISOString(),
+      privacyVersion: "1.0",
     });
 
     // Send email notification (async, non-blocking)

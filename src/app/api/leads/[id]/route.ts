@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
-import { getAdminPocketBase } from "@/lib/pocketbase/server";
+import { db, schema } from "@/lib/db";
 import { z } from "zod";
+import { eq } from "drizzle-orm";
 
 const updateLeadSchema = z.object({
   status: z.enum(["new", "in_progress", "quoted", "won", "lost", "archived"]),
@@ -13,6 +14,11 @@ export async function PATCH(
 ) {
   try {
     const { id } = await params;
+    const idNum = parseInt(id, 10);
+    if (isNaN(idNum)) {
+      return NextResponse.json({ error: "Ungültige ID." }, { status: 400 });
+    }
+
     const body = await req.json();
     const result = updateLeadSchema.safeParse(body);
 
@@ -24,14 +30,27 @@ export async function PATCH(
       );
     }
 
-    const pb = await getAdminPocketBase();
+    const [record] = await db
+      .update(schema.leads)
+      .set({
+        status: result.data.status,
+        adminNotes: result.data.adminNotes || "",
+        updated: new Date(),
+      })
+      .where(eq(schema.leads.id, idNum))
+      .returning();
 
-    const record = await pb.collection("leads").update(id, {
-      status: result.data.status,
-      admin_notes: result.data.adminNotes || "",
-    });
+    if (!record) {
+      return NextResponse.json(
+        { error: "Lead nicht gefunden." },
+        { status: 404 }
+      );
+    }
 
-    return NextResponse.json({ success: true, lead: record }, { status: 200 });
+    return NextResponse.json(
+      { success: true, lead: { ...record, id: String(record.id) } },
+      { status: 200 }
+    );
   } catch (error) {
     console.error("Error updating lead:", error);
     return NextResponse.json(
@@ -47,9 +66,12 @@ export async function DELETE(
 ) {
   try {
     const { id } = await params;
-    const pb = await getAdminPocketBase();
+    const idNum = parseInt(id, 10);
+    if (isNaN(idNum)) {
+      return NextResponse.json({ error: "Ungültige ID." }, { status: 400 });
+    }
 
-    await pb.collection("leads").delete(id);
+    await db.delete(schema.leads).where(eq(schema.leads.id, idNum));
 
     return NextResponse.json(
       { success: true, message: "Lead erfolgreich gelöscht." },
@@ -70,11 +92,28 @@ export async function GET(
 ) {
   try {
     const { id } = await params;
-    const pb = await getAdminPocketBase();
+    const idNum = parseInt(id, 10);
+    if (isNaN(idNum)) {
+      return NextResponse.json({ error: "Ungültige ID." }, { status: 400 });
+    }
 
-    const record = await pb.collection("leads").getOne(id);
+    const [record] = await db
+      .select()
+      .from(schema.leads)
+      .where(eq(schema.leads.id, idNum))
+      .limit(1);
 
-    return NextResponse.json({ lead: record }, { status: 200 });
+    if (!record) {
+      return NextResponse.json(
+        { error: "Lead nicht gefunden." },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json(
+      { lead: { ...record, id: String(record.id), created: record.created?.toISOString() ?? "" } },
+      { status: 200 }
+    );
   } catch (error) {
     console.error("Error fetching lead:", error);
     return NextResponse.json(

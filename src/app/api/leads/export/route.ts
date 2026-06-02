@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
-import { getAdminPocketBase } from "@/lib/pocketbase/server";
+import { db, schema } from "@/lib/db";
+import { desc } from "drizzle-orm";
 
 const STATUS_MAP: Record<string, string> = {
   new: "Neu",
@@ -18,7 +19,8 @@ function escapeCSV(value: unknown): string {
   return str;
 }
 
-function formatDate(iso: string): string {
+function formatDate(iso: Date | null | undefined): string {
+  if (!iso) return "";
   const d = new Date(iso);
   const pad = (n: number) => String(n).padStart(2, "0");
   return `${pad(d.getDate())}.${pad(d.getMonth() + 1)}.${d.getFullYear()} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
@@ -26,19 +28,21 @@ function formatDate(iso: string): string {
 
 export async function GET() {
   try {
-    const pb = await getAdminPocketBase();
-    const records = await pb.collection("leads").getFullList({ sort: "-id" });
+    const records = await db
+      .select()
+      .from(schema.leads)
+      .orderBy(desc(schema.leads.id));
 
     const header = "ID,Datum,Name,E-Mail,Telefon,Firma,Status,Nachricht,Quelle";
-    const rows = records.map((r: Record<string, unknown>) =>
+    const rows = records.map((r) =>
       [
         escapeCSV(r.id),
-        escapeCSV(formatDate(String(r.created || ""))),
+        escapeCSV(formatDate(r.created)),
         escapeCSV(r.name),
         escapeCSV(r.email),
         escapeCSV(r.phone),
         escapeCSV(r.company),
-        escapeCSV(STATUS_MAP[String(r.status)] || r.status),
+        escapeCSV(STATUS_MAP[r.status || "new"] || r.status),
         escapeCSV(r.message),
         escapeCSV(r.source),
       ].join(",")
