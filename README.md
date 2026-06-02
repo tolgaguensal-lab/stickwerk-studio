@@ -164,7 +164,7 @@ Siehe [DEPLOYMENT.md](./DEPLOYMENT.md) für detaillierte Deployment-Anleitung.
 - [x] Admin-Dashboard
 - [x] Docker Deployment
 - [x] Pangolin Integration
-- [x] PocketBase Backend
+- [x] PostgreSQL + Drizzle ORM
 - [x] Originäres Design-System
 - [ ] E2E Tests vollständig
 - [ ] E-Mail-Benachrichtigungen

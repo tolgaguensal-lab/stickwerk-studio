@@ -3,7 +3,7 @@ import type { NextRequest } from "next/server";
 import { verifySession, getSessionCookieName } from "@/lib/auth/session";
 
 /**
- * Middleware to protect /admin routes with session-based authentication.
+ * Proxy to protect /admin routes with session-based authentication.
  *
  * Uses a signed JWT stored in an httpOnly cookie.
  * - /admin/login is public (for the login page)
@@ -14,7 +14,7 @@ import { verifySession, getSessionCookieName } from "@/lib/auth/session";
  *   ADMIN_USER      – Email for login
  *   ADMIN_PASSWORD  – Password for login
  *
- * If ADMIN_USER/ADMIN_PASSWORD are missing, the middleware fail-opens.
+ * If ADMIN_USER/ADMIN_PASSWORD are missing, the proxy fail-opens.
  */
 
 function isAuthConfigured(): boolean {
@@ -31,7 +31,7 @@ function redirectToLogin(request: NextRequest): NextResponse {
   return NextResponse.redirect(loginUrl);
 }
 
-export async function middleware(
+export async function proxy(
   request: NextRequest
 ): Promise<NextResponse | undefined> {
   const { pathname } = request.nextUrl;
