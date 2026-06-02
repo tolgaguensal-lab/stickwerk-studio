@@ -9,13 +9,10 @@ services:
       NODE_ENV: production
       HOSTNAME: 0.0.0.0
       PORT: 3000
-      NEXT_PUBLIC_POCKETBASE_URL: http://192.168.179.91:8090
-      POCKETBASE_URL: http://pocketbase:8090
-      POCKETBASE_ADMIN_EMAIL: ${POCKETBASE_ADMIN_EMAIL}
-      POCKETBASE_ADMIN_PASSWORD: ${POCKETBASE_ADMIN_PASSWORD}
-      NEXTAUTH_URL: https://sws.guenlab.de
-      NEXTAUTH_SECRET: ${NEXTAUTH_SECRET}
-      AUTH_TRUST_HOST: "true"
+      DATABASE_URL: postgresql://stickwerk:stickwerk@host.docker.internal:5432/stickwerk
+      SESSION_SECRET: ${SESSION_SECRET}
+      ADMIN_USER: ${ADMIN_USER}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
       NEXT_PUBLIC_SITE_URL: https://sws.guenlab.de
       NEXT_PUBLIC_APP_URL: https://sws.guenlab.de
     healthcheck:

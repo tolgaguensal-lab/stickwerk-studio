@@ -23,7 +23,7 @@ Docker-Container stickwerk-app (Port 3034)
 ## 1. Voraussetzungen
 
 - ZimaOS mit Docker
-- **PocketBase** installiert über ZimaOS App Store (Port 8090)
+- **PostgreSQL** installiert über ZimaOS App Store (Port 5432)
 - Pangolin auf VPS (Cloud-Anbieter)
 - Newt auf ZimaOS
 
@@ -48,13 +48,10 @@ git clone https://github.com/tolgaguensal-lab/stickwerk-studio.git .
 ```bash
 # .env im gleichen Verzeichnis wie zimaos-compose.yml anlegen
 cat > .env << 'EOF'
-NEXT_PUBLIC_POCKETBASE_URL=http://<ZIMAOS-IP>:8090
-POCKETBASE_URL=http://127.0.0.1:8090
-POCKETBASE_ADMIN_EMAIL=admin@stickwerk-studio.de
-POCKETBASE_ADMIN_PASSWORD=dein_passwort
-NEXTAUTH_SECRET=dein_random_secret
-NEXTAUTH_URL=https://sws.guenlab.de
-AUTH_TRUST_HOST=true
+DATABASE_URL=postgresql://stickwerk:stickwerk@host.docker.internal:5432/stickwerk
+SESSION_SECRET=dein_random_secret_mit_mindestens_32_zeichen
+ADMIN_USER=admin@stickwerk-studio.de
+ADMIN_PASSWORD=dein_sicheres_admin_passwort
 NEXT_PUBLIC_SITE_URL=https://sws.guenlab.de
 NEXT_PUBLIC_APP_URL=https://sws.guenlab.de
 EOF
