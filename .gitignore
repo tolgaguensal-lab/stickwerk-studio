@@ -60,6 +60,9 @@ fullpage.png
 hero-buttons.png
 zielgruppen-icons.png
 
+# generated (Docker build)
+public/version.json
+
 # sitemap
 public/sitemap.xml
 

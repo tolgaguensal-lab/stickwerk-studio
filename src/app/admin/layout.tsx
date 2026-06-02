@@ -42,6 +42,7 @@ export default function AdminLayout({
   } | null>(null);
   const [sessionLoading, setSessionLoading] = useState(true);
   const [loggingOut, setLoggingOut] = useState(false);
+  const [appVersion, setAppVersion] = useState<string | null>(null);
   const pathname = usePathname();
   const router = useRouter();
 
@@ -66,6 +67,13 @@ export default function AdminLayout({
         // Not authenticated — middleware will redirect
       })
       .finally(() => setSessionLoading(false));
+
+    fetch("/api/version")
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (data?.version) setAppVersion(data.version);
+      })
+      .catch(() => {});
   }, []);
 
   const handleLogout = async () => {
@@ -188,6 +196,15 @@ export default function AdminLayout({
               )}
               <span>Logout</span>
             </button>
+
+            {/* App Version */}
+            {appVersion && (
+              <div className="px-3 pt-2">
+                <p className="text-[10px] text-muted-foreground/50 uppercase tracking-wider text-center">
+                  v{appVersion}
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </aside>

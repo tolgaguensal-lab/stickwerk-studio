@@ -51,7 +51,8 @@ jobs:
         run: |
           VERSION=$(node -p "require('./package.json').version")
           echo "version=${VERSION}" >> $GITHUB_OUTPUT
-          echo "Version: v${VERSION}"
+          echo "full=v${VERSION}.${{ github.run_number }}" >> $GITHUB_OUTPUT
+          echo "Version: v${VERSION}.${{ github.run_number }}"
 
       - name: Create and push git tag
         run: |
@@ -75,6 +76,7 @@ jobs:
           tags: |
             type=raw,value=latest
             type=raw,value=${{ steps.version.outputs.version }}
+            type=raw,value=${{ steps.version.outputs.full }}
             type=sha,format=short,prefix=sha-
 
       - name: Build and push Docker image
@@ -84,8 +86,24 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          build-args: APP_VERSION=${{ steps.version.outputs.full }}
 
-      - name: Trigger ZimaOS Deploy
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-          echo "New image pushed to ghcr.io/${{ env.IMAGE_NAME }}:latest"
-          echo "To deploy on ZimaOS, run: docker compose -f deploy/zimaos-compose.yml pull && docker compose -f deploy/zimaos-compose.yml up -d"
+          TAG="v${{ steps.version.outputs.version }}.${{ github.run_number }}"
+          gh release create "$TAG" \
+            --repo "${{ github.repository }}" \
+            --title "Stickwerk-Studio $TAG" \
+            --generate-notes \
+            --verify-tag
+
+      - name: Deploy instructions
+        run: |
+          echo "✅ Release v${{ steps.version.outputs.version }}.${{ github.run_number }} created!"
+          echo "✅ Docker image pushed to ghcr.io/${{ env.IMAGE_NAME }}:latest"
+          echo ""
+          echo "👉 Auf ZimaOS deployen:"
+          echo "   docker compose -f deploy/zimaos-compose.yml pull"
+          echo "   docker compose -f deploy/zimaos-compose.yml up -d"
