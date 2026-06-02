@@ -48,7 +48,7 @@ git clone https://github.com/tolgaguensal-lab/stickwerk-studio.git .
 ```bash
 # .env im gleichen Verzeichnis wie zimaos-compose.yml anlegen
 cat > .env << 'EOF'
-DATABASE_URL=postgresql://stickwerk:stickwerk@host.docker.internal:5432/stickwerk
+DATABASE_URL=postgresql://dein_user:dein_passwort@192.168.178.91:5432/casaos
 SESSION_SECRET=dein_random_secret_mit_mindestens_32_zeichen
 ADMIN_USER=admin@stickwerk-studio.de
 ADMIN_PASSWORD=dein_sicheres_admin_passwort
