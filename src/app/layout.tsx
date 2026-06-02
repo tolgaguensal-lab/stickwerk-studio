@@ -6,6 +6,8 @@ import Scene from "@/components/Scene";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { DirectionalPage } from "@/components/DirectionalPage";
+import CookieConsent from "@/components/CookieConsent";
+import AnalyticsLoader from "@/components/AnalyticsLoader";
 import "./globals.css";
 
 /* Fonts - Google Fonts (MIT License) */
@@ -113,14 +115,7 @@ export default function RootLayout({
             }),
           }}
         />
-        {/* Plausible Analytics — DSGVO-konform, kein Cookie-Banner nötig */}
-        {process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN && (
-          <script
-            defer
-            data-domain={process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN}
-            src="https://plausible.io/js/script.js"
-          />
-        )}
+        {/* Analytics & Tracking werden client-seitig basierend auf Cookie-Consent geladen */}
       </head>
       <body 
         className={`${inter.variable} ${playfairDisplay.variable} ${jetBrainsMono.variable} antialiased`}
@@ -128,6 +123,8 @@ export default function RootLayout({
           fontFamily: "var(--font-sans), system-ui, sans-serif",
         }}
       >
+        <AnalyticsLoader />
+        <CookieConsent />
         <SmoothScroll>
           <Scene />
           <Navbar />

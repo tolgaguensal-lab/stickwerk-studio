@@ -99,7 +99,7 @@ export default function Datenschutz() {
               <p>
                 <strong>Hosting-Leistungen umfassen:</strong> Bereitstellung der
                 Website, Auslieferung von Inhalten, Speicherung von Datenbanken
-                (PocketBase), Sicherheit und Wartung.
+                (PostgreSQL), Sicherheit und Wartung.
               </p>
             </section>
 
@@ -151,7 +151,7 @@ export default function Datenschutz() {
               <p>
                 Die Verarbeitung erfolgt gemäß Art. 6 Abs. 1 lit. b DSGVO zur
                 Bearbeitung Ihrer Anfrage. Die Daten werden in unserer
-                Datenbank (PocketBase) gespeichert und nach Erledigung der
+                Datenbank (PostgreSQL) gespeichert und nach Erledigung der
                 Anfrage gelöscht, sofern keine gesetzlichen
                 Aufbewahrungspflichten bestehen.
               </p>
@@ -276,23 +276,87 @@ export default function Datenschutz() {
                 10. Cookies und LocalStorage
               </h2>
               <p>
-                Diese Website verwendet <strong>keine</strong> Cookies zu
-                Analyse-, Marketing- oder Tracking-Zwecken. Es werden
-                ausschließlich technisch notwendige Session-Daten im Local
-                Storage des Browsers gespeichert, soweit dies für die Funktion
-                der Website erforderlich ist.
+                Diese Website verwendet Cookies und lokale Speichertechnologien
+                (LocalStorage), um die Funktionalität der Website zu
+                gewährleisten und auf Basis Ihrer Einwilligung Analysen
+                durchzuführen.
               </p>
+
+              <h3 className="text-lg font-semibold text-foreground mt-6">
+                10.1 Technisch notwendige Cookies
+              </h3>
               <p>
-                <strong>Keine Cookies von Drittanbietern:</strong> Wir setzen
-                keine Cookies von Google Analytics, Meta Pixel, oder anderen
-                Tracking-Diensten ein.
+                Folgende Cookies sind für den Betrieb der Website technisch
+                erforderlich und werden ohne Ihre Einwilligung gesetzt (Art. 6
+                Abs. 1 lit. f DSGVO, § 25 Abs. 2 Nr. 2 TTDSG):
               </p>
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm border-collapse">
+                  <thead>
+                    <tr className="border-b border-border/30">
+                      <th className="text-left py-2 pr-4 font-semibold">Name</th>
+                      <th className="text-left py-2 pr-4 font-semibold">Zweck</th>
+                      <th className="text-left py-2 pr-4 font-semibold">Speicherdauer</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr className="border-b border-border/20">
+                      <td className="py-2 pr-4 font-mono text-xs">sws_admin_session</td>
+                      <td className="py-2 pr-4">Session-Cookie für den Admin-Login (httpOnly, auf /admin beschränkt)</td>
+                      <td className="py-2 pr-4">24 Stunden</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <h3 className="text-lg font-semibold text-foreground mt-6">
+                10.2 Einwilligungspflichtige Cookies
+              </h3>
               <p>
-                Da keine nicht-notwendigen Cookies verwendet werden, ist nach
-        aktueller Rechtslage kein Cookie-Consent-Banner erforderlich.
-        Sollte sich dies in Zukunft ändern, werden wir Sie
-        entsprechend informieren und Ihre Einwilligung einholen.
+                Für die folgenden Kategorien holen wir Ihre aktive Einwilligung
+                über unser Cookie-Consent-Banner ein (Art. 6 Abs. 1 lit. a DSGVO,
+                § 25 Abs. 1 TTDSG):
               </p>
+              <ul className="list-disc list-inside space-y-1 ml-4">
+                <li>
+                  <strong>Analytics:</strong> Wir nutzen Plausible Analytics,
+                  ein datenschutzfreundliches, cookieloses Analysetool, um zu
+                  verstehen, wie unsere Website genutzt wird. Es werden keine
+                  personenbezogenen Daten gespeichert und keine Cookies gesetzt.
+                  Die Einwilligung ist dennoch erforderlich, da eine
+                  Verbindung zu externen Servern hergestellt wird.
+                </li>
+                <li>
+                  <strong>Marketing & Tracking:</strong> Ermöglicht die
+                  Einbindung von Drittanbieter-Diensten wie Google Ads oder
+                  Meta Pixel für Conversion-Tracking und personalisierte
+                  Werbung. Aktuell sind keine Marketing-Dienste aktiv.
+                </li>
+              </ul>
+              <p>
+                Ihre einmal erteilte Einwilligung können Sie jederzeit mit
+                Wirkung für die Zukunft widerrufen, indem Sie die
+                Cookie-Einstellungen über den Link im Footer anpassen.
+              </p>
+
+              <h3 className="text-lg font-semibold text-foreground mt-6">
+                10.3 LocalStorage
+              </h3>
+              <p>
+                Zusätzlich speichern wir folgende Daten im LocalStorage Ihres
+                Browsers:
+              </p>
+              <ul className="list-disc list-inside space-y-1 ml-4">
+                <li>
+                  <strong>sws_consent:</strong> Speichert Ihre Cookie-Einwilligung
+                  (Kategorien, Zeitpunkt). Wird nicht an Dritte übermittelt.
+                </li>
+                <li>
+                  <strong>Konfigurationsdaten des Patch-Konfigurators:</strong>
+                  Zwischenspeicherung Ihrer Auswahl im Konfigurator, damit diese
+                  bei einem Seitenwechsel nicht verloren gehen.
+                </li>
+              </ul>
             </section>
 
             {/* 11. Auftragsverarbeitung */}
@@ -308,12 +372,9 @@ export default function Datenschutz() {
               </p>
               <ul className="list-disc list-inside space-y-1 ml-4">
                 <li>
-                  <strong>PocketBase (ZimaOS App Store):</strong> Datenbank zur
+                  <strong>PostgreSQL (ZimaOS App Store):</strong> Datenbank zur
                   Speicherung von Kontaktanfragen und Leads.
-                  Selbst gehostet auf eigener Infrastruktur. Es wird ein
-                  Auftragsverarbeitungsvertrag (AVV) gestellt, soweit
-                  gesetzlich erforderlich.
-                  {/* TODO: AVV mit ZimaOS/PocketBase abschließen oder dokumentieren, dass Eigenbetrieb vorliegt */}
+                  Selbst gehostet auf eigener Infrastruktur.
                 </li>
                 <li>
                   <strong>Next.js / Node.js:</strong> Webserver und
@@ -365,7 +426,11 @@ export default function Datenschutz() {
                   <strong>Server-Logfiles:</strong> 7 Tage
                 </li>
                 <li>
-                  <strong>Einwilligungsnachweise (Consent):</strong> 3 Jahre
+                  <strong>Cookie-Einwilligungsnachweise (Consent):</strong> 3 Jahre
+                  (Nachweispflicht nach Art. 7 Abs. 1 DSGVO)
+                </li>
+                <li>
+                  <strong>Admin-Session-Cookies:</strong> 24 Stunden (Session-Ende)
                 </li>
                 <li>
                   <strong>Vertragsdaten:</strong> 6 Jahre (gesetzliche
