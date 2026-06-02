@@ -36,7 +36,7 @@ test.describe("Admin Protection", () => {
 test.describe("API Routes", () => {
   test("GET /api/leads should return data or error", async ({ request }) => {
     const response = await request.get("/api/leads");
-    // Returns 200 if PocketBase connected, 500 if not
+    // Returns 200 if DB connected, 500 if not (e.g. no PostgreSQL)
     // Both are valid depending on environment
     expect([200, 500]).toContain(response.status());
   });
