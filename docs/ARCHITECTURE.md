@@ -1,6 +1,6 @@
 # 🏗️ Stickwerk-Studio — Architecture Document
 
-**Stand:** 01. Juni 2026 | **Version:** 0.4.0
+**Stand:** 02. Juni 2026 | **Version:** 0.5.0
 
 ---
 
@@ -23,12 +23,12 @@
 ┌─────────────────────────────────────────────────────────────┐
 │                    ZimaOS (Heimnetz)                         │
 │  ┌──────────────────────┐  ┌──────────────────────────────┐ │
-│  │  stickwerk-app       │  │  PocketBase                  │ │
-│  │  (Next.js 16)        │  │  (Datenbank + Admin UI)      │ │
-│  │  Port 3034           │  │  Port 8090                   │ │
+│  │  stickwerk-app       │  │  PostgreSQL                  │ │
+│  │  (Next.js 16)        │  │  (Datenbank via Drizzle ORM) │ │
+│  │  Port 3034           │  │  Port 5432                   │ │
 │  └────────┬─────────────┘  └────────┬─────────────────────┘ │
-│           │ REST API                │                        │
-│           └─────────────────────────┘                        │
+│           │ Drizzle ORM              │                        │
+│           └──────────────────────────┘                        │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -47,11 +47,13 @@ src/
 │   ├── datenschutz/page.tsx          # Datenschutz (Server-kompatibel)
 │   ├── agb/page.tsx                  # AGB (Server-kompatibel)
 │   └── api/
-│       ├── contact/route.ts          # POST: Kontakt-Formular → PocketBase
-│       ├── health/route.ts           # GET: Healthcheck
+│       ├── contact/route.ts          # POST: Kontakt-Formular → PostgreSQL
+│       ├── health/route.ts           # GET: Healthcheck (mit DB-Test)
+│       ├── upload/route.ts           # POST: Datei-Upload (unabhängig von DB)
 │       └── leads/
 │           ├── route.ts              # GET/POST: Leads CRUD
-│           └── [id]/route.ts         # PATCH/DELETE: Einzel-Lead
+│           ├── [id]/route.ts         # PATCH/DELETE/GET: Einzel-Lead
+│           └── export/route.ts       # GET: CSV-Export
 │
 ├── components/
 │   ├── Navbar.tsx                    # Premium Sticky Navbar
@@ -68,8 +70,13 @@ src/
 │       └── sheet.tsx                 # Radix Dialog (Mobile Menu)
 │
 └── lib/
-    └── pocketbase/
-        └── client.ts                 # PocketBase SDK Client
+    ├── db/
+    │   ├── index.ts                  # Drizzle ORM Client (PostgreSQL)
+    │   └── schema.ts                 # DB-Schema: leads, contact_messages
+    ├── auth/
+    │   └── session.ts                # Admin JWT Session (unabhängig)
+    ├── email.ts                      # E-Mail-Benachrichtigungen (nodemailer)
+    └── rate-limit.ts                 # Rate Limiting (in-memory)
 ```
 
 ---
@@ -88,10 +95,10 @@ Client-seitige Validierung (Zod)
 POST /api/contact
        │
        ▼
-Server validiert + erstellt Lead in PocketBase
+Server validiert + erstellt Lead in PostgreSQL (via Drizzle)
        │
        ▼
-Response: { success: true, id: "abc123" }
+Response: { success: true, id: 42 }
        │
        ▼
 Client zeigt Erfolgsmeldung
@@ -109,32 +116,52 @@ Context speichert: Form, Größe, Basis, Rand, Menge, Express, Optionen
 Echtzeit-Preisberechnung (calculatePrice())
        │
        ▼
-Final: Zusammenfassung + Lead-Erstellung
+Final: Zusammenfassung + Lead-Erstellung über /api/leads
 ```
 
 ---
 
 ## 3. Datenmodell
 
-### 3.1 PocketBase Collections
+### 3.1 PostgreSQL Tabellen (Drizzle ORM)
 
-#### `leads` (Hauptsammlung)
+#### `leads` (Haupttabelle)
 
 | Feld | Typ | Zweck |
 |------|-----|-------|
-| `name` | Text | Kundenname |
-| `email` | Email | Kontakt-E-Mail |
-| `phone` | Text (optional) | Telefonnummer |
-| `company` | Text (optional) | Unternehmen/Verein |
-| `message` | Text (optional) | Freitext-Nachricht |
-| `patch_config` | JSON | Komplette Konfiguration |
-| `price_range` | Text | Preisrange (z.B. "100-250€") |
-| `status` | Select | new → in_progress → completed → cancelled |
-| `source` | Text | leads | kontakt |
-| `created` | Auto | Timestamp (PocketBase) |
+| `id` | serial (PK) | Auto-Increment ID |
+| `name` | text | Kundenname |
+| `email` | text | Kontakt-E-Mail |
+| `phone` | text (default '') | Telefonnummer |
+| `company` | text (default '') | Unternehmen/Verein |
+| `message` | text (default '') | Freitext-Nachricht |
+| `patch_config` | jsonb | Komplette Konfiguration |
+| `estimated_price_min` | integer (default 0) | Untere Preisspanne |
+| `estimated_price_max` | integer (default 0) | Obere Preisspanne |
+| `status` | text (default 'new') | new → in_progress → quoted → won → lost → archived |
+| `source` | text (default 'website') | website \| kontakt |
+| `admin_notes` | text (default '') | Interne Notizen |
+| `consent_privacy` | boolean | DSGVO-Einwilligung |
+| `consent_timestamp` | text | Zeitpunkt der Einwilligung |
+| `privacy_version` | text (default '1.0') | Version der Datenschutzerklärung |
+| `created` | timestamp (default now()) | Erstellungszeitpunkt |
+| `updated` | timestamp (default now()) | Letzte Aktualisierung |
 
-**Historische Notiz:** In PocketBase v0.27+ müssen Base Collections ohne `created`-Feld
-mit `sort=-id` statt `sort=-created` sortiert werden (Commit `1c282b3`).
+#### `contact_messages`
+
+| Feld | Typ | Zweck |
+|------|-----|-------|
+| `id` | serial (PK) | Auto-Increment ID |
+| `name` | text | Absender-Name |
+| `email` | text | Absender-E-Mail |
+| `phone` | text (default '') | Telefonnummer |
+| `subject` | text (default '') | Betreff |
+| `message` | text | Nachrichtentext |
+| `status` | text (default 'new') | new \| read \| replied \| archived |
+| `consent_privacy` | boolean | DSGVO-Einwilligung |
+| `consent_timestamp` | text | Zeitpunkt der Einwilligung |
+| `privacy_version` | text (default '1.0') | Version der Datenschutzerklärung |
+| `created` | timestamp (default now()) | Erstellungszeitpunkt |
 
 ---
 
@@ -209,7 +236,8 @@ Option für manuellen Toggle vorhanden (nicht aktiviert).
 | `framer-motion` | ^12.40.0 | Animationen |
 | `lenis` | ^1.3.23 | Smooth Scrolling |
 | `lucide-react` | ^1.16.0 | Icons |
-| `pocketbase` | ^0.27.0 | Datenbank-Client |
+| `drizzle-orm` | ^0.45.2 | Drizzle ORM (Datenbankzugriff) |
+| `pg` | ^8.21.0 | PostgreSQL Client |
 | `zod` | ^4.4.3 | Validierung |
 | `class-variance-authority` | ^0.7.1 | UI-Varianten |
 | `tailwind-merge` | ^2.5.5 | Tailwind-Konfliktauflösung |
@@ -229,6 +257,8 @@ Option für manuellen Toggle vorhanden (nicht aktiviert).
 |-------|---------|-------|
 | `@playwright/test` | ^1.49.0 | E2E-Testing |
 | `@playwright/mcp` | ^0.0.75 | AI-gestütztes Testing |
+| `drizzle-kit` | ^0.31.10 | Migrationen generieren & pushen |
+| `@types/pg` | ^8.20.0 | Typdefinitionen für PostgreSQL |
 | `eslint` | ^9 | Linting |
 | `eslint-config-next` | 16.2.6 | Next.js ESLint-Config |
 | `@tailwindcss/postcss` | ^4 | PostCSS-Plugin |
@@ -263,7 +293,7 @@ services:
     ports:
       - "3034:3000"
     environment:
-      - POCKETBASE_URL=http://pocketbase:8090
+      - DATABASE_URL=postgresql://stickwerk:stickwerk@host.docker.internal:5432/stickwerk
 ```
 
 ---
@@ -341,6 +371,11 @@ npm run dev                    # Dev-Server (localhost:3000)
 npm run build                  # Production Build
 npm run start                  # Production Server
 
+# Datenbank
+npm run db:generate            # Migration generieren
+npm run db:push                # Schema auf PostgreSQL pushen
+npm run db:studio              # Drizzle Studio (GUI)
+
 # Testing
 npm run lint                   # ESLint
 npm run test:e2e               # Playwright E2E
@@ -356,5 +391,5 @@ GIT_MASTER=1 git log --oneline --reverse  # Komplette History anzeigen
 
 ---
 
-*Letzte Aktualisierung: 01. Juni 2026*  
+*Letzte Aktualisierung: 02. Juni 2026*  
 *Maintainer: Sisyphus (AI Agent)*

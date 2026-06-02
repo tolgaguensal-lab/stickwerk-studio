@@ -148,6 +148,6 @@ http://<ZIMAOS-IP>:3034
 |---------|---------|--------|
 | App nicht erreichbar | Container down | `docker compose up -d` |
 | Port belegt | Anderer Service auf 3000 | Port ändern oder Konflikt lösen |
-| PocketBase nicht erreichbar | Container down | `docker compose up -d pocketbase` |
+| PostgreSQL nicht erreichbar | Container/Service down | PostgreSQL-Verbindung prüfen |
 | 502 über Pangolin | Falsche IP/Port | Resource Target prüfen |
 | 404 über Pangolin | DNS/Resource falsch | Pangolin Dashboard prüfen |

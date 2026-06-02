@@ -19,7 +19,7 @@ Professionelle Website für Maschinenstickerei und Custom Patches im DACH-Raum. 
 ### Für Administration
 - **Admin-Dashboard** zur Lead-Verwaltung
 - **Status-Tracking** (new → in_progress → completed → cancelled)
-- **PocketBase** als datastore (über ZimaOS App Store)
+- **PostgreSQL** als datastore (über ZimaOS App Store)
 
 ---
 
@@ -33,7 +33,7 @@ Professionelle Website für Maschinenstickerei und Custom Patches im DACH-Raum. 
 | **Animation** | Framer Motion |
 | **Icons** | Lucide React (MIT) |
 | **Fonts** | Inter + Playfair Display (Google Fonts, MIT) |
-| **Datenbank** | PocketBase (ZimaOS App Store) |
+| **Datenbank** | PostgreSQL (ZimaOS App Store) via Drizzle ORM |
 | **Deployment** | Docker + ZimaOS + Pangolin |
 
 ---
@@ -77,7 +77,8 @@ stickwerk-studio/
 │   │   ├── SmoothScroll.tsx
 │   │   └── ui/           # UI-Komponenten (Button, Card, Input, etc.)
 │   └── lib/              # Hilfsfunktionen
-│       └── pocketbase/   # PocketBase Client
+│       ├── db/           # Drizzle ORM (PostgreSQL)
+│       └── auth/         # Admin JWT Session
 ├── deploy/               # ZimaOS Docker Compose
 ├── docs/                 # Dokumentation
 ├── scripts/              # Debug-Script für ZimaOS
@@ -90,7 +91,7 @@ stickwerk-studio/
 
 ### Voraussetzungen
 - Node.js 20+
-- PocketBase (lokal oder über ZimaOS App Store)
+- PostgreSQL (lokal oder über ZimaOS App Store)
 
 ### Installation
 ```bash

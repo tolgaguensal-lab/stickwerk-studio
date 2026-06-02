@@ -1,7 +1,7 @@
 # 📜 Stickwerk-Studio — Complete Project History
 
 **Von der ersten Idee bis zum Premium-Redesign.**
-*Stand: 01. Juni 2026 | Version 0.4.0*
+*Stand: 02. Juni 2026 | Version 0.5.0*
 
 ---
 
@@ -24,7 +24,7 @@ Architekturwechsel und Meilensteine nachvollziehen zu können.
 | **Framework** | Next.js 16 (App Router) | Modernstes React-Framework, optimiert für SEO und DX |
 | **Sprache** | TypeScript | Typsicherheit für Produktionscode |
 | **Styling** | Tailwind CSS + eigenes Design-System | Maximale Flexibilität ohne CSS-in-JS Overhead |
-| **Datenbank** | Prisma (initial) → PocketBase (später) | Einfaches Schema, später auf PocketBase gewechselt |
+| **Datenbank** | Prisma → PocketBase → PostgreSQL/Drizzle ORM | Migration zu PostgreSQL für bessere Typensicherheit |
 | **Deployment** | Docker + ZimaOS | Zielplattform ist das Heim-Server-Setup |
 | **Reverse Proxy** | Pangolin | Tunnel-Lösung für ZimaOS im Heimnetz |
 
@@ -321,6 +321,51 @@ d263961 chore: Konfiguration und README aktualisiert
 
 ---
 
+---
+
+## 🗄️ Phase 6: PostgreSQL Migration (v0.5.0)
+
+*Zeitraum: 02. Juni 2026*
+
+### Migration: PocketBase → PostgreSQL / Drizzle ORM
+
+**Grund:** PocketBase war ein Experiment, das sich nicht bewährt hat:
+- Zusätzlicher Service auf ZimaOS nötig (Port 8090)
+- Keine echte Typensicherheit — SDK-Client liefert `any`
+- Admin-UI nicht benötigt (eigenes Admin-Dashboard vorhanden)
+- Fremdschlüssel-Relationen umständlich
+
+**Migration:**
+
+| Aspekt | PocketBase (alt) | PostgreSQL + Drizzle (neu) |
+|--------|-----------------|---------------------------|
+| **Datenbank** | SQLite (via PocketBase) | PostgreSQL (ZimaOS App Store) |
+| **Client** | PocketBase SDK | Drizzle ORM + `pg` |
+| **Typen** | `any` (untyped) | Voll typisiert via Drizzle Schema |
+| **API** | REST + SDK | SQL via Drizzle ORM |
+| **Migrationen** | Manuell | `drizzle-kit generate` / `push` |
+| **Admin UI** | PocketBase Admin (`/_/`) | Eigenes Dashboard + Drizzle Studio |
+| **Container** | Extra PocketBase-Service | Nur PostgreSQL (extern) |
+
+### Wichtige Änderungen
+
+```
+src/lib/pocketbase/           → GELÖSCHT
+src/lib/db/schema.ts          → NEU (Drizzle Schema)
+src/lib/db/index.ts            → NEU (Drizzle Client)
+drizzle.config.ts              → NEU
+drizzle/                       → NEU (Migrationen)
+src/app/api/leads/route.ts     → Rewrite (Drizzle statt PocketBase)
+src/app/api/leads/[id]/route.ts → Rewrite (Drizzle statt PocketBase)
+src/app/api/leads/export/route.ts → Rewrite (Drizzle statt PocketBase)
+src/app/api/contact/route.ts   → Rewrite (Drizzle statt PocketBase)
+src/app/api/health/route.ts    → Rewrite (DB-Healthcheck statt PocketBase)
+deploy/zimaos-compose.yml      → POCKETBASE_* entfernt, DATABASE_URL hinzugefügt
+.env                           → POCKETBASE_* entfernt, DATABASE_URL hinzugefügt
+```
+
+---
+
 ## 🔮 Roadmap & Ausblick
 
 ### Abgeschlossen ✅
@@ -330,7 +375,7 @@ d263961 chore: Konfiguration und README aktualisiert
 - [x] Admin-Dashboard mit Lead-Verwaltung
 - [x] Docker + ZimaOS Deployment Pipeline
 - [x] Pangolin Reverse Proxy Integration
-- [x] PocketBase Backend
+- [x] PocketBase → PostgreSQL Migration (Drizzle ORM)
 - [x] Originäres, warmes Design-System (Creme/Gold)
 - [x] Premium Visual Refresh mit Playfair Display
 - [x] DSGVO-konforme rechtliche Seiten
@@ -355,7 +400,7 @@ d263961 chore: Konfiguration und README aktualisiert
 | **Versionen** | v0.0.0 → v0.4.0 |
 | **Aktive Branches** | `main` (Trunk-based) |
 | **PHP (nein)** | Next.js Fullstack |
-| **Datenbank** | PocketBase (extern) |
+| **Datenbank** | PostgreSQL (extern, via Drizzle ORM) |
 | **Deployment** | Docker + GHCR + ZimaOS |
 | **Lines of Code** | ~10.000+ (TypeScript) |
 
