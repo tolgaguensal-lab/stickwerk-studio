@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import PatchPreview from "@/components/PatchPreview";
 
 // --- Config & Logic ---
 const CONFIG = {
@@ -1207,7 +1208,29 @@ variant="default"
       </div>
 
       {/* --- SUMMARY SIDEBAR --- */}
-      <div className="lg:col-span-2 lg:sticky lg:top-24">
+      <div className="lg:col-span-2 lg:sticky lg:top-24 space-y-4">
+        {/* Live Preview */}
+        {productType && (
+          <Card className="border border-border shadow-sm overflow-hidden bg-card">
+            <CardContent className="p-4">
+              <PatchPreview
+                productType={productType}
+                shape={selections.shape}
+                size={selections.size}
+                nametagSize={selections.nametagSize}
+                complexity={selections.complexity}
+                colors={selections.colors}
+                material={selections.material}
+                edge={selections.edge}
+                backing={selections.backing}
+                quantity={selections.quantity}
+                express={selections.express}
+              />
+            </CardContent>
+          </Card>
+        )}
+
+        {/* Summary */}
         <Card className="border border-border shadow-sm overflow-hidden bg-card">
           <CardHeader className="bg-accent/10 text-accent border-b border-border py-4">
             <CardTitle className="text-center text-lg font-semibold">
