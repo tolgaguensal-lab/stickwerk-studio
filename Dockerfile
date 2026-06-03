@@ -1,24 +1,54 @@
-# Build Stage
+# =============================================================================
+# Stickwerk-Studio — Multi-Stage Docker Build
+# =============================================================================
+# Build:
+#   docker build --build-arg APP_VERSION=0.5.0 \
+#     --build-arg NEXT_PUBLIC_SITE_URL=https://example.com \
+#     -t ghcr.io/tolgaguensal-lab/stickwerk-studio:latest .
+#
+# Run with docker-compose (empfohlen):
+#   docker compose up -d
+#
+# Manuell mit externer DB:
+#   docker run -p 3034:3000 \
+#     -e DATABASE_URL=postgresql://user:pass@host:5432/db \
+#     -e SESSION_SECRET="mindestens-32-zeichen-lang!!!" \
+#     -e ADMIN_USER=admin@example.com \
+#     -e ADMIN_PASSWORD=sicheres-passwort \
+#     ghcr.io/tolgaguensal-lab/stickwerk-studio:latest
+# =============================================================================
+
+# ---- Build Stage ----
 FROM node:20-alpine AS builder
+
 ARG APP_VERSION=0.0.0
+ARG NEXT_PUBLIC_SITE_URL
+ARG NEXT_PUBLIC_APP_URL
+
 ENV NEXT_PUBLIC_APP_VERSION=${APP_VERSION}
+ENV NEXT_PUBLIC_SITE_URL=${NEXT_PUBLIC_SITE_URL}
+ENV NEXT_PUBLIC_APP_URL=${NEXT_PUBLIC_APP_URL}
+ENV NODE_ENV=production
+
 WORKDIR /app
 
-# Install dependencies
+# Install dependencies (layer caching)
 COPY package*.json ./
 RUN npm ci
 
-# Copy source and build
+# Source code
 COPY . .
 
-# Write version file (accessible runtime via /version.json)
+# Version file
 RUN mkdir -p public && \
     echo "{\"version\":\"${APP_VERSION}\",\"buildTime\":\"$(date -u +%Y-%m-%dT%H:%M:%SZ)\"}" > public/version.json
 
+# Next.js Standalone-Build
 RUN npm run build
 
-# Production Stage
+# ---- Production Stage ----
 FROM node:20-alpine AS runner
+
 ARG APP_VERSION=0.0.0
 ENV APP_VERSION=${APP_VERSION}
 ENV NODE_ENV=production
@@ -27,44 +57,49 @@ ENV PORT=3000
 
 WORKDIR /app
 
-# Copy drizzle migration files
-COPY --from=builder /app/drizzle ./drizzle
+# Security: non-root user
+RUN addgroup --system --gid 1001 nodejs && \
+    adduser --system --uid 1001 nextjs
 
-# Copy built app
-COPY --from=builder /app/public ./public
-COPY --from=builder /app/.next/standalone ./
+# 1. Standalone-App (server.js + node_modules + .next/server)
+COPY --from=builder /app/.next/standalone/stickwerk-studio/ ./
+
+# 2. Static Assets (CSS, JS chunks, Medien)
 COPY --from=builder /app/.next/static ./.next/static
-COPY --from=builder /app/package.json ./
 
-# Copy migration script
-COPY scripts/migrate.mjs ./scripts/migrate.mjs
+# 3. Public Assets (Bilder, Icons, version.json)
+COPY --from=builder /app/public ./public
 
-# Create startup script that runs migrations then starts Next.js
+# 4. Drizzle-Migrationen (Auto-Migration beim Container-Start)
+COPY --from=builder /app/drizzle ./drizzle
+COPY --from=builder /app/scripts/migrate.mjs ./scripts/migrate.mjs
+
+# Besitzer setzen
+RUN chown -R nextjs:nodejs /app
+
+# Startup-Script: Migration → Next.js starten
 RUN { \
       echo '#!/bin/sh'; \
+      echo 'set -e'; \
       echo ''; \
-      echo 'echo ""'; \
       echo 'echo "========================================"'; \
-      echo "echo \"  Stickwerk-Studio ${APP_VERSION}\""; \
-      echo "echo \"  $(date -u +%Y-%m-%dT%H:%M:%SZ)\""; \
+      echo "echo \"  Stickwerk-Studio v${APP_VERSION}\""; \
       echo 'echo "========================================"'; \
       echo 'echo ""'; \
       echo ''; \
-      echo '# Run database migrations'; \
+      echo 'echo "→ Datenbank-Migration..."'; \
       echo 'node scripts/migrate.mjs'; \
       echo 'echo ""'; \
       echo ''; \
-      echo '# Start Next.js'; \
       echo 'exec node server.js'; \
     } > /start.sh && \
     chmod +x /start.sh
 
-# Expose port
+USER nextjs
+
 EXPOSE 3000
 
-# Healthcheck
 HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
   CMD wget -qO- http://127.0.0.1:3000/api/health || exit 1
 
-# Start application
 CMD ["/start.sh"]

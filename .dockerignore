@@ -1,9 +1,55 @@
+# Version control
 .git
 .gitignore
+.gitattributes
+
+# Dependencies
 node_modules
+
+# Build artifacts
 .next
+out
+build
+dist
+
+# Environment
 .env
 .env.*
+!.env.example
+
+# Documentation
 *.md
 docs/
+README.md
+
+# Tests
 tests/
+coverage/
+test-results/
+*.spec.ts
+*.spec.tsx
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+*.swp
+*.swo
+
+# OpenCode / AI
+.omo/
+.opencode/
+.agents/
+.claude/
+skills-lock.json
+
+# Generated
+public/version.json
+public/sitemap.xml
+*.tsbuildinfo
+next-env.d.ts
+
+# Misc
+*.log
+*.txt
+*.patch
