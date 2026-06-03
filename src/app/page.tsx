@@ -341,6 +341,103 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* ==================== NAMENSCHILDER ==================== */}
+      <section id="namensschilder" className="py-16 md:py-24 px-6 bg-background">
+        <div className="max-w-7xl mx-auto">
+          <Reveal variant="fade-up" duration={0.6}>
+            <div className="text-center mb-16 space-y-4">
+              <span className="inline-block px-4 py-1.5 text-xs font-semibold tracking-widest uppercase text-accent bg-accent/10 rounded-full">
+                Auch für Teams & Vereine
+              </span>
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif text-foreground">
+                Namensschilder — klar & professionell
+              </h2>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                Ob für Ihr Team, den Verein oder den Betrieb — Namensschilder in Stickqualität mit individueller Schrift. 
+                Einfach bestellen, fertig aufgenäht oder zum Aufbügeln.
+              </p>
+              <div className="section-divider" />
+            </div>
+          </Reveal>
+
+          <Reveal variant="fade-up" duration={0.6}>
+            <div className="overflow-x-auto rounded-2xl border border-border shadow-sm bg-card">
+              <table className="w-full text-sm md:text-base">
+                <thead>
+                  <tr className="bg-accent/10 border-b border-border">
+                    <th className="text-left px-6 py-4 font-semibold text-foreground">Größe</th>
+                    <th className="text-center px-4 py-4 font-semibold text-foreground">10 Stk</th>
+                    <th className="text-center px-4 py-4 font-semibold text-foreground">20 Stk</th>
+                    <th className="text-center px-4 py-4 font-semibold text-foreground">50 Stk</th>
+                    <th className="text-center px-4 py-4 font-semibold text-foreground">100 Stk</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-border">
+                  {[
+                    { size: "Mini (1,5 × 6 cm)", prices: ["35 €", "55 €", "110 €", "190 €"], popular: false },
+                    { size: "Klein (2 × 8 cm)", prices: ["45 €", "75 €", "150 €", "260 €"], popular: true },
+                    { size: "Mittel (3 × 10 cm)", prices: ["55 €", "95 €", "195 €", "340 €"], popular: false },
+                    { size: "Groß (4 × 12 cm)", prices: ["75 €", "125 €", "260 €", "460 €"], popular: false },
+                  ].map((row, i) => (
+                    <tr key={i} className={`hover:bg-accent/5 transition-colors ${row.popular ? 'bg-accent/5' : ''}`}>
+                      <td className="px-6 py-5 font-medium text-foreground">
+                        <div className="flex items-center gap-2">
+                          {row.size}
+                          {row.popular && (
+                            <span className="text-[10px] font-bold uppercase text-accent bg-accent/10 px-2 py-0.5 rounded-full">
+                              Beliebt
+                            </span>
+                          )}
+                        </div>
+                      </td>
+                      {row.prices.map((price, j) => (
+                        <td key={j} className="text-center px-4 py-5 text-foreground font-medium">{price}</td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </Reveal>
+
+          <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
+            <Reveal variant="fade-up" delay={0.1} duration={0.5}>
+              <div className="card p-6 text-center">
+                <h4 className="font-serif text-lg text-foreground mb-2">Rückseiten</h4>
+                <ul className="text-sm text-muted-foreground space-y-1.5">
+                  <li>Zum Aufnähen — 0 €</li>
+                  <li>Bügelrückseite — +2 €/Stk</li>
+                  <li>Klettverschluss — +3 €/Stk</li>
+                  <li>Magnet — +4,50 €/Stk</li>
+                </ul>
+              </div>
+            </Reveal>
+            <Reveal variant="fade-up" delay={0.2} duration={0.5}>
+              <div className="card p-6 text-center">
+                <h4 className="font-serif text-lg text-foreground mb-2">Gestaltung</h4>
+                <ul className="text-sm text-muted-foreground space-y-1.5">
+                  <li>1–2 Farben inklusive</li>
+                  <li>Verschiedene Schriftarten</li>
+                  <li>Mit oder ohne Logo möglich</li>
+                  <li>Digitalisierung +15 € einmalig</li>
+                </ul>
+              </div>
+            </Reveal>
+            <Reveal variant="fade-up" delay={0.3} duration={0.5}>
+              <div className="card p-6 text-center">
+                <h4 className="font-serif text-lg text-foreground mb-2">Hinweis</h4>
+                <ul className="text-sm text-muted-foreground space-y-1.5">
+                  <li>Mindestbestellung: 10 Stk</li>
+                  <li>Lieferzeit: 7–10 Werktage</li>
+                  <li>Muster auf Anfrage: 15 €</li>
+                  <li>Staffelpreise gelten automatisch</li>
+                </ul>
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
       {/* ==================== TRUST ==================== */}
       <section id="vertrauen" className="py-16 md:py-24 px-6 bg-background">
         <div className="max-w-7xl mx-auto">
