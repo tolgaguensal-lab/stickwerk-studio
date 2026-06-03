@@ -1,3 +1,12 @@
+# =============================================================================
+# Stickwerk-Studio — ZimaOS Docker Compose Deployment
+# =============================================================================
+# Dieses File ist für die ZimaOS App Store Integration optimiert.
+# Auf ZimaOS können die Variablen im App Store UI überschrieben werden.
+#
+# Für eigenständiges Docker Compose siehe docker-compose.yml (mit PostgreSQL).
+# =============================================================================
+
 services:
   app:
     image: ghcr.io/tolgaguensal-lab/stickwerk-studio:latest
@@ -6,20 +15,23 @@ services:
     ports:
       - "3034:3000"
     environment:
-      # ⚠️  Umgebungsvariablen haben Default-Werte (${VAR:-default}).
-      #      Auf ZimaOS kannst du sie im App Store UI überschreiben.
-      #      Nur ändern, wenn deine Werte abweichen!
       NODE_ENV: production
       HOSTNAME: 0.0.0.0
       PORT: 3000
-      DATABASE_URL: ${DATABASE_URL:-postgresql://casaos:casaos@192.168.178.91:5432/casaos}
-      SESSION_SECRET: ${SESSION_SECRET:-stickwerk-super-secret-key-2026-change-in-production}
-      ADMIN_USER: ${ADMIN_USER:-admin@stickwerk-studio.de}
-      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-test123}
-      NEXT_PUBLIC_SITE_URL: https://sws.guenlab.de
-      NEXT_PUBLIC_APP_URL: https://sws.guenlab.de
 
-      # E-Mail Benachrichtigungen (optional — ohne SMTP läuft die Seite trotzdem)
+      # PostgreSQL — Auf ZimaOS separaten DB-Container oder externen Service nutzen
+      DATABASE_URL: ${DATABASE_URL:?DATABASE_URL ist erforderlich — z.B. postgresql://user:pass@host:5432/db}
+
+      # Auth — Muss在生产中 gesetzt werden!
+      SESSION_SECRET: ${SESSION_SECRET:?SESSION_SECRET ist erforderlich — mindestens 32 Zeichen}
+      ADMIN_USER: ${ADMIN_USER:-admin@stickwerk-studio.de}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:?ADMIN_PASSWORD ist erforderlich}
+
+      # Public URLs
+      NEXT_PUBLIC_SITE_URL: ${SITE_URL:-https://sws.guenlab.de}
+      NEXT_PUBLIC_APP_URL: ${SITE_URL:-https://sws.guenlab.de}
+
+      # SMTP (optional)
       SMTP_HOST: ${SMTP_HOST:-}
       SMTP_PORT: ${SMTP_PORT:-587}
       SMTP_USER: ${SMTP_USER:-}
