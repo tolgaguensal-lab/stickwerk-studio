@@ -68,6 +68,74 @@ const CONFIG = {
   },
 };
 
+const STEP_LABELS: Record<number, string> = {
+  1: "Form", 2: "Größe", 3: "Komplexität", 4: "Farben",
+  5: "Material", 6: "Rand", 7: "Rückseite", 8: "Menge",
+  9: "Express", 10: "Design", 11: "Kontakt",
+};
+
+const STEP_PHASES = [
+  { label: "Design", steps: [1, 2, 3, 4] },
+  { label: "Material", steps: [5, 6, 7] },
+  { label: "Bestellung", steps: [8, 9, 10, 11] },
+];
+
+function StepProgress({ currentStep }: { currentStep: number }) {
+  const phaseIndex = STEP_PHASES.findIndex(p => p.steps.includes(currentStep));
+  const stepInPhase = STEP_PHASES.find(p => p.steps.includes(currentStep))?.steps.indexOf(currentStep) ?? 0;
+  const phaseSteps = STEP_PHASES[phaseIndex]?.steps.length ?? 1;
+  const phaseProgress = ((stepInPhase) / (phaseSteps - 1)) * 100;
+
+  return (
+    <div className="hidden lg:block mb-10">
+      <div className="flex items-center justify-between max-w-2xl mx-auto mb-4">
+        {STEP_PHASES.map((phase, i) => {
+          const isActive = i === phaseIndex;
+          const isPast = i < phaseIndex;
+          return (
+            <div key={phase.label} className="flex items-center gap-2">
+              <div className={cn(
+                "w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-all duration-500",
+                isPast ? "bg-accent text-accent-foreground" : 
+                isActive ? "bg-accent text-accent-foreground ring-4 ring-accent/20" :
+                "bg-card border-2 border-border text-muted-foreground"
+              )}>
+                {isPast ? <Check className="w-4 h-4" /> : i + 1}
+              </div>
+              <span className={cn(
+                "text-sm font-medium transition-colors",
+                isActive ? "text-foreground" : isPast ? "text-accent" : "text-muted-foreground/60"
+              )}>
+                {phase.label}
+              </span>
+              {i < STEP_PHASES.length - 1 && (
+                <div className={cn(
+                  "w-12 h-0.5 mx-2 rounded transition-colors duration-500",
+                  isPast ? "bg-accent" : "bg-border"
+                )} />
+              )}
+            </div>
+          );
+        })}
+      </div>
+      <div className="max-w-2xl mx-auto">
+        <div className="flex justify-between text-xs text-muted-foreground mb-1.5">
+          <span>Schritt {currentStep} von 11</span>
+          <span className="text-accent font-medium">{STEP_LABELS[currentStep]}</span>
+        </div>
+        <div className="w-full h-1.5 bg-border rounded-full overflow-hidden">
+          <motion.div
+            className="h-full bg-accent rounded-full"
+            initial={{ width: `${((currentStep - 1) / 10) * 100}%` }}
+            animate={{ width: `${((currentStep - 1) / 10) * 100}%` }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function PatchCalculator() {
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -230,7 +298,9 @@ export default function PatchCalculator() {
   }
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start px-6 lg:px-10">
+    <div className="space-y-4">
+      <StepProgress currentStep={step} />
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start px-6 lg:px-10">
       
       {/* --- MAIN STEPS --- */}
       <div className="lg:col-span-3 space-y-8">
@@ -912,7 +982,8 @@ variant="default"
                </div>
              </CardContent>
          </Card>
-       </div>
+        </div>
+     </div>
     </div>
   );
 }

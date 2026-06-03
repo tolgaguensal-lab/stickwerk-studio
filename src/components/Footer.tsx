@@ -49,12 +49,7 @@ export default function Footer() {
               >
                 Galerie
               </Link>
-              <Link
-                href="/preise"
-                className="block text-card/70 hover:text-accent transition-colors nav-link"
-              >
-                Preise
-              </Link>
+
               <a
                 href="/#calculator"
                 className="block text-card/70 hover:text-accent transition-colors nav-link"

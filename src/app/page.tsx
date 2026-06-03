@@ -320,11 +320,14 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto">
           <Reveal variant="fade-up" duration={0.6}>
             <div className="text-center mb-16 space-y-4">
+              <span className="inline-block px-4 py-1.5 text-xs font-semibold tracking-widest uppercase text-accent bg-accent/10 rounded-full">
+                3 Schritte zur Anfrage
+              </span>
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif text-foreground">
-                Ihr Patch-Konfigurator
+                Dein Patch — selbst gestalten
               </h2>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                Gestalten Sie Ihren Patch in Echtzeit und erhalten Sie eine sofortige Kostenschätzung.
+                Wähle Form, Größe und Material — in nur 3 Minuten hast du deine unverbindliche Kostenschätzung und kannst direkt eine Anfrage senden.
               </p>
               <div className="section-divider" />
             </div>
