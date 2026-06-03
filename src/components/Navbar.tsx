@@ -73,6 +73,11 @@ export default function Navbar() {
       }
 
       if (pathname === "/kontakt") current = "kontakt";
+      if (pathname === "/galerie") current = "galerie";
+      if (pathname === "/ratgeber") current = "ratgeber";
+      if (pathname === "/preise") current = "preise";
+      if (pathname === "/faq") current = "faq";
+      if (pathname === "/ueber-uns") current = "ueber-uns";
       setActiveSection(current);
     };
 
@@ -97,9 +102,11 @@ export default function Navbar() {
     { id: "features", label: "Leistungen", href: "#features", hash: true },
     { id: "galerie", label: "Galerie", href: "/galerie", hash: false },
     { id: "ratgeber", label: "Ratgeber", href: "/ratgeber", hash: false },
+    { id: "preise", label: "Preise", href: "/preise", hash: false },
     { id: "calculator", label: "Konfigurator", href: "#calculator", hash: true },
-    { id: "faq", label: "FAQ", href: "#faq", hash: true },
+    { id: "faq", label: "FAQ", href: "/faq", hash: false },
     { id: "kontakt", label: "Kontakt", href: "/kontakt", hash: false },
+    { id: "ueber-uns", label: "Über uns", href: "/ueber-uns", hash: false },
   ];
 
   return (

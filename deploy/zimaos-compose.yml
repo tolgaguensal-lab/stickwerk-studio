@@ -18,6 +18,14 @@ services:
       ADMIN_PASSWORD: ${ADMIN_PASSWORD:-test123}
       NEXT_PUBLIC_SITE_URL: https://sws.guenlab.de
       NEXT_PUBLIC_APP_URL: https://sws.guenlab.de
+
+      # E-Mail Benachrichtigungen (optional — ohne SMTP läuft die Seite trotzdem)
+      SMTP_HOST: ${SMTP_HOST:-}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_USER: ${SMTP_USER:-}
+      SMTP_PASS: ${SMTP_PASS:-}
+      SMTP_FROM: ${SMTP_FROM:-}
+      NOTIFY_EMAIL: ${NOTIFY_EMAIL:-}
     healthcheck:
       test: ["CMD", "wget", "-qO-", "http://127.0.0.1:3000/api/health"]
       interval: 30s

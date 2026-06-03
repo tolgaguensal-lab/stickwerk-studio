@@ -31,36 +31,42 @@ export default function Footer() {
           <div className="space-y-5">
             <h4 className="font-semibold text-lg">Navigation</h4>
             <div className="space-y-3">
-              <a
-                href="/#features"
+              <Link
+                href="/"
                 className="block text-card/70 hover:text-accent transition-colors nav-link"
               >
-                Leistungen
-              </a>
-              <a
-                href="/#zielgruppen"
+                Startseite
+              </Link>
+              <Link
+                href="/ueber-uns"
                 className="block text-card/70 hover:text-accent transition-colors nav-link"
               >
-                Zielgruppen
-              </a>
-              <a
-                href="/#prozess"
+                Über uns
+              </Link>
+              <Link
+                href="/galerie"
                 className="block text-card/70 hover:text-accent transition-colors nav-link"
               >
-                Prozess
-              </a>
+                Galerie
+              </Link>
+              <Link
+                href="/preise"
+                className="block text-card/70 hover:text-accent transition-colors nav-link"
+              >
+                Preise
+              </Link>
               <a
                 href="/#calculator"
                 className="block text-card/70 hover:text-accent transition-colors nav-link"
               >
                 Konfigurator
               </a>
-              <a
-                href="/#faq"
+              <Link
+                href="/faq"
                 className="block text-card/70 hover:text-accent transition-colors nav-link"
               >
                 FAQ
-              </a>
+              </Link>
               <Link
                 href="/kontakt"
                 className="block text-card/70 hover:text-accent transition-colors nav-link"
