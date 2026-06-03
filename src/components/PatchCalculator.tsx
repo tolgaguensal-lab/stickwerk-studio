@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Check, ChevronRight, ChevronLeft, Info, Send, Loader2, User, Mail, Phone, MessageSquare, Upload, Palette, Layers, Circle, Square, Shield, Diamond, Sparkles } from "lucide-react";
+import { Check, ChevronRight, ChevronLeft, Info, Send, Loader2, User, Mail, Phone, MessageSquare, Upload, Palette, Layers, Circle, Square, Shield, Diamond, Sparkles, Tag, Ruler } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -55,11 +55,10 @@ const CONFIG = {
     { id: "heat_seal", name: "Heat-Seal Rand", price: 2.0, desc: "Versiegelt, wasserfest" },
     { id: "none", name: "Kein Rand", price: -0.5, desc: "Rohr Rand für besonderen Look" },
   ],
-  // Express options
   expressMultipliers: {
     none: 1.0,
-    express: 1.8, // 80% Aufschlag
-    super_express: 2.5, // 150% Aufschlag
+    express: 1.8,
+    super_express: 2.5,
   },
   expressDeliveryTimes: {
     none: "7-10 Werktage",
@@ -68,28 +67,48 @@ const CONFIG = {
   },
 };
 
-const STEP_LABELS: Record<number, string> = {
+const NAMETAG_SIZES = [
+  { id: "mini", name: "Mini (1,5 × 6 cm)", desc: "Für Kinder & kleine Flächen", baseUnitPrice: 3.5 },
+  { id: "small", name: "Klein (2 × 8 cm)", desc: "Die Standardgröße", baseUnitPrice: 4.5, popular: true },
+  { id: "medium", name: "Mittel (3 × 10 cm)", desc: "Mehr Platz für Namen & Funktion", baseUnitPrice: 5.5 },
+  { id: "large", name: "Groß (4 × 12 cm)", desc: "Für Logos & lange Titel", baseUnitPrice: 7.5 },
+];
+
+const PATCH_STEP_LABELS: Record<number, string> = {
   1: "Form", 2: "Größe", 3: "Komplexität", 4: "Farben",
   5: "Material", 6: "Rand", 7: "Rückseite", 8: "Menge",
   9: "Express", 10: "Design", 11: "Kontakt",
 };
 
-const STEP_PHASES = [
+const NAMETAG_STEP_LABELS: Record<number, string> = {
+  1: "Größe", 2: "Rückseite", 3: "Menge", 4: "Kontakt",
+};
+
+const PATCH_PHASES = [
   { label: "Design", steps: [1, 2, 3, 4] },
   { label: "Material", steps: [5, 6, 7] },
   { label: "Bestellung", steps: [8, 9, 10, 11] },
 ];
 
-function StepProgress({ currentStep }: { currentStep: number }) {
-  const phaseIndex = STEP_PHASES.findIndex(p => p.steps.includes(currentStep));
-  const stepInPhase = STEP_PHASES.find(p => p.steps.includes(currentStep))?.steps.indexOf(currentStep) ?? 0;
-  const phaseSteps = STEP_PHASES[phaseIndex]?.steps.length ?? 1;
-  const phaseProgress = ((stepInPhase) / (phaseSteps - 1)) * 100;
+const NAMETAG_PHASES = [
+  { label: "Auswahl", steps: [1, 2] },
+  { label: "Bestellung", steps: [3, 4] },
+];
+
+function StepProgress({ currentStep, productType }: { currentStep: number; productType: "patch" | "nametag" }) {
+  const steps = productType === "patch" ? PATCH_STEP_LABELS : NAMETAG_STEP_LABELS;
+  const phases = productType === "patch" ? PATCH_PHASES : NAMETAG_PHASES;
+  const totalSteps = Object.keys(steps).length;
+
+  const phaseIndex = phases.findIndex(p => p.steps.includes(currentStep));
+  const phaseSteps = phases[phaseIndex]?.steps.length ?? 1;
+  const stepInPhase = phases.find(p => p.steps.includes(currentStep))?.steps.indexOf(currentStep) ?? 0;
+  const pct = currentStep === 1 ? 0 : ((stepInPhase) / (phaseSteps - 1)) * 100;
 
   return (
     <div className="hidden lg:block mb-10">
       <div className="flex items-center justify-between max-w-2xl mx-auto mb-4">
-        {STEP_PHASES.map((phase, i) => {
+        {phases.map((phase, i) => {
           const isActive = i === phaseIndex;
           const isPast = i < phaseIndex;
           return (
@@ -108,7 +127,7 @@ function StepProgress({ currentStep }: { currentStep: number }) {
               )}>
                 {phase.label}
               </span>
-              {i < STEP_PHASES.length - 1 && (
+              {i < phases.length - 1 && (
                 <div className={cn(
                   "w-12 h-0.5 mx-2 rounded transition-colors duration-500",
                   isPast ? "bg-accent" : "bg-border"
@@ -120,14 +139,14 @@ function StepProgress({ currentStep }: { currentStep: number }) {
       </div>
       <div className="max-w-2xl mx-auto">
         <div className="flex justify-between text-xs text-muted-foreground mb-1.5">
-          <span>Schritt {currentStep} von 11</span>
-          <span className="text-accent font-medium">{STEP_LABELS[currentStep]}</span>
+          <span>Schritt {currentStep} von {totalSteps}</span>
+          <span className="text-accent font-medium">{steps[currentStep]}</span>
         </div>
         <div className="w-full h-1.5 bg-border rounded-full overflow-hidden">
           <motion.div
             className="h-full bg-accent rounded-full"
-            initial={{ width: `${((currentStep - 1) / 10) * 100}%` }}
-            animate={{ width: `${((currentStep - 1) / 10) * 100}%` }}
+            initial={{ width: `${((currentStep - 1) / (totalSteps - 1)) * 100}%` }}
+            animate={{ width: `${((currentStep - 1) / (totalSteps - 1)) * 100}%` }}
             transition={{ duration: 0.4, ease: "easeOut" }}
           />
         </div>
@@ -137,20 +156,22 @@ function StepProgress({ currentStep }: { currentStep: number }) {
 }
 
 export default function PatchCalculator() {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(0);
+  const [productType, setProductType] = useState<"patch" | "nametag" | null>(null);
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
   const [selections, setSelections] = useState({
-    shape: "circle",
-    size: "small",
-    complexity: "low",
-    backing: "sewn",
-    material: "twill",
+    shape: "circle" as string,
+    size: "small" as string,
+    nametagSize: "small" as string,
+    complexity: "low" as string,
+    backing: "sewn" as string,
+    material: "twill" as string,
     colors: 2,
     quantity: 10,
-    edge: "standard",
-    express: "none",
+    edge: "standard" as string,
+    express: "none" as string,
   });
 
   const [designFile, setDesignFile] = useState<File | null>(null);
@@ -165,6 +186,16 @@ export default function PatchCalculator() {
   const [consentPrivacy, setConsentPrivacy] = useState(false);
 
   const calculatePrice = () => {
+    if (productType === "nametag") {
+      const sizeData = NAMETAG_SIZES.find(s => s.id === selections.nametagSize) || NAMETAG_SIZES[1];
+      const backingPrice = CONFIG.backings.find(b => b.id === selections.backing)?.price || 0;
+      const baseUnit = sizeData.baseUnitPrice + backingPrice;
+      let discount = 1.0;
+      if (selections.quantity >= 100) discount = 0.7;
+      else if (selections.quantity >= 50) discount = 0.8;
+      else if (selections.quantity >= 20) discount = 0.9;
+      return Math.round(baseUnit * selections.quantity * discount);
+    }
     const shapeBase = CONFIG.shapes.find(s => s.id === selections.shape)?.basePrice || 15;
     const sizeMult = CONFIG.sizes.find(s => s.id === selections.size)?.multiplier || 1;
     const compMult = CONFIG.complexity.find(c => c.id === selections.complexity)?.multiplier || 1;
@@ -189,6 +220,9 @@ export default function PatchCalculator() {
 
   const getPriceRange = () => {
     const basePrice = calculatePrice();
+    if (productType === "nametag") {
+      return { min: basePrice, max: basePrice };
+    }
     const minPrice = Math.round(basePrice * 0.9);
     const maxPrice = Math.round(basePrice * 1.1);
     return { min: minPrice, max: maxPrice };
@@ -213,6 +247,7 @@ export default function PatchCalculator() {
         email: formData.email.trim(),
         phone: formData.phone.trim() || null,
         message: formData.message.trim() || null,
+        productType: productType,
         patchConfig: selections,
         estimatedPriceMin: priceRange.min,
         estimatedPriceMax: priceRange.max,
@@ -290,8 +325,8 @@ export default function PatchCalculator() {
         <p className="text-muted-foreground mb-8 max-w-md mx-auto">
           Vielen Dank für Ihr Vertrauen. Wir prüfen Ihre Konfiguration und melden uns innerhalb von 24-48 Stunden mit einem finalen Angebot bei Ihnen.
         </p>
-        <Button variant="default" onClick={() => { setSubmitted(false); setStep(1); }}>
-          Neuen Patch planen
+        <Button variant="default" onClick={() => { setSubmitted(false); setStep(0); setProductType(null); }}>
+          Neu gestalten
         </Button>
       </motion.div>
     );
@@ -299,13 +334,274 @@ export default function PatchCalculator() {
 
   return (
     <div className="space-y-4">
-      <StepProgress currentStep={step} />
+      <StepProgress currentStep={step} productType={productType || "patch"} />
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start px-6 lg:px-10">
       
       {/* --- MAIN STEPS --- */}
       <div className="lg:col-span-3 space-y-8">
         <AnimatePresence mode="wait">
-          {step === 1 && (
+          {step === 0 && (
+            <motion.div
+              key="step0"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              className="space-y-6"
+            >
+              <div className="text-center mb-6">
+                <h3 className="text-2xl md:text-3xl font-serif text-foreground mb-3">
+                  Was möchtest du gestalten?
+                </h3>
+                <p className="text-muted-foreground max-w-md mx-auto">
+                  Wähle dein Projekt — für jedes Produkt die passende Konfiguration.
+                </p>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
+                <button
+                  onClick={() => { setProductType("patch"); setStep(1); }}
+                  className="p-8 rounded-2xl border-2 border-border hover:border-accent hover:bg-accent/5 transition-all text-center group"
+                >
+                  <div className="w-16 h-16 rounded-2xl bg-accent/10 text-accent flex items-center justify-center mx-auto mb-5 group-hover:scale-110 transition-transform">
+                    <Sparkles className="w-8 h-8" />
+                  </div>
+                  <h4 className="text-xl font-serif text-foreground mb-2">Patch</h4>
+                  <p className="text-sm text-muted-foreground">
+                    Individuelles Design, alle Formen, viele Materialien — ab 10 Stück.
+                  </p>
+                </button>
+                <button
+                  onClick={() => { setProductType("nametag"); setStep(1); }}
+                  className="p-8 rounded-2xl border-2 border-border hover:border-accent hover:bg-accent/5 transition-all text-center group"
+                >
+                  <div className="w-16 h-16 rounded-2xl bg-accent/10 text-accent flex items-center justify-center mx-auto mb-5 group-hover:scale-110 transition-transform">
+                    <Tag className="w-8 h-8" />
+                  </div>
+                  <h4 className="text-xl font-serif text-foreground mb-2">Namensschild</h4>
+                  <p className="text-sm text-muted-foreground">
+                    Klassische Namensschilder mit fixen Preisen — perfekt für Teams & Vereine.
+                  </p>
+                </button>
+              </div>
+            </motion.div>
+          )}
+
+          {(productType === "nametag" && step === 1) && (
+            <motion.div
+              key="nametag1"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              className="space-y-6"
+            >
+              <div className="flex items-center gap-3 mb-4">
+                <span className="w-10 h-10 rounded-full bg-accent/10 text-accent border-2 border-accent/20 flex items-center justify-center font-bold">1</span>
+                <h3 className="text-2xl font-serif text-foreground">Größe wählen</h3>
+              </div>
+              <p className="text-muted-foreground mb-6">Jede Größe hat einen festen Stückpreis. Mengenrabatte werden automatisch berücksichtigt.</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {NAMETAG_SIZES.map((size) => (
+                  <button
+                    key={size.id}
+                    onClick={() => { setSelections(prev => ({ ...prev, nametagSize: size.id })); setStep(2); }}
+                    className={cn(
+                      "p-6 rounded-2xl border-2 text-left transition-all hover:shadow-md relative",
+                      selections.nametagSize === size.id ? "border-accent bg-accent/5 shadow-sm" : "border-border hover:border-foreground/30"
+                    )}
+                  >
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <span className="font-bold text-foreground text-lg">{size.name}</span>
+                          {size.popular && (
+                            <span className="text-[10px] font-bold uppercase text-accent bg-accent/10 px-2 py-0.5 rounded-full">
+                              Beliebt
+                            </span>
+                          )}
+                        </div>
+                        <div className="text-sm text-foreground/60 mt-1">{size.desc}</div>
+                        <div className="text-sm text-accent font-semibold mt-2">{size.baseUnitPrice} € / Stück</div>
+                      </div>
+                      {selections.nametagSize === size.id && <Check className="w-5 h-5 text-accent" />}
+                    </div>
+                  </button>
+                ))}
+              </div>
+              <Button variant="ghost" onClick={() => { setProductType(null); setStep(0); }} className="mt-4">
+                <ChevronLeft className="w-4 h-4 mr-2" /> Produkt wählen
+              </Button>
+            </motion.div>
+          )}
+
+          {(productType === "nametag" && step === 2) && (
+            <motion.div
+              key="nametag2"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              className="space-y-6"
+            >
+              <div className="flex items-center gap-3 mb-4">
+                <span className="w-10 h-10 rounded-full bg-accent/10 text-accent border-2 border-accent/20 flex items-center justify-center font-bold">2</span>
+                <h3 className="text-2xl font-serif text-foreground">Rückseite</h3>
+              </div>
+              <p className="text-muted-foreground mb-6">Wähle die Befestigungsart für dein Namensschild.</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                {CONFIG.backings.map((back) => (
+                  <button
+                    key={back.id}
+                    onClick={() => { setSelections(prev => ({ ...prev, backing: back.id })); setStep(3); }}
+                    className={cn(
+                      "p-6 rounded-2xl border-2 transition-all text-center hover:shadow-md",
+                      selections.backing === back.id ? "border-accent bg-accent/5 shadow-sm" : "border-border hover:border-foreground/30"
+                    )}
+                  >
+                    <div className="font-medium text-foreground">{back.name}</div>
+                    <div className="text-xs text-muted-foreground mt-1">{back.desc}</div>
+                    {back.price > 0 && (
+                      <div className="text-xs text-accent mt-2">+{back.price}€ pro Stück</div>
+                    )}
+                    {selections.backing === back.id && <Check className="w-5 h-5 text-accent mx-auto mt-2" />}
+                  </button>
+                ))}
+              </div>
+              <Button variant="ghost" onClick={() => setStep(1)} className="mt-4">
+                <ChevronLeft className="w-4 h-4 mr-2" /> Zurück zur Größe
+              </Button>
+            </motion.div>
+          )}
+
+          {(productType === "nametag" && step === 3) && (
+            <motion.div
+              key="nametag3"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              className="space-y-6"
+            >
+              <div className="flex items-center gap-3 mb-4">
+                <span className="w-10 h-10 rounded-full bg-accent/10 text-accent border-2 border-accent/20 flex items-center justify-center font-bold">3</span>
+                <h3 className="text-2xl font-serif text-foreground">Menge</h3>
+              </div>
+              <p className="text-muted-foreground mb-6">Staffelpreise — je mehr, desto günstiger pro Stück.</p>
+              <div className="flex flex-col items-center gap-6 p-8 bg-card rounded-3xl border-2 border-border shadow-sm">
+                <div className="text-5xl font-serif font-bold text-foreground">{selections.quantity}</div>
+                <div className="text-sm text-muted-foreground">Stück</div>
+                <div className="flex items-center gap-6">
+                  <button 
+                    onClick={() => setSelections(prev => ({ ...prev, quantity: Math.max(10, prev.quantity - 10) }))}
+                    className="w-12 h-12 rounded-full border-2 border-foreground text-foreground flex items-center justify-center hover:bg-foreground/5 transition-colors text-2xl disabled:opacity-50 disabled:cursor-not-allowed"
+                    disabled={selections.quantity <= 10}
+                  >
+                    -
+                  </button>
+                  <button 
+                    onClick={() => setSelections(prev => ({ ...prev, quantity: prev.quantity + 10 }))}
+                    className="w-12 h-12 rounded-full border-2 border-foreground text-foreground flex items-center justify-center hover:bg-foreground/5 transition-colors text-2xl"
+                  >
+                    +
+                  </button>
+                </div>
+                <p className="text-xs text-muted-foreground">Mindestbestellmenge: 10 Stück</p>
+              </div>
+              <div className="grid grid-cols-3 gap-4 mt-6">
+                {[
+                  { threshold: 20, discount: "10 %" },
+                  { threshold: 50, discount: "20 %" },
+                  { threshold: 100, discount: "30 %" },
+                ].map((tier, i) => (
+                  <div 
+                    key={i}
+                    className={cn(
+                      "p-4 rounded-xl border-2 text-center text-sm",
+                      selections.quantity >= tier.threshold 
+                        ? "border-accent bg-accent/5" 
+                        : "border-border"
+                    )}
+                  >
+                    <div className="font-bold text-foreground">ab {tier.threshold} Stk</div>
+                    <div className="text-accent font-bold">−{tier.discount} Rabatt</div>
+                  </div>
+                ))}
+              </div>
+              <div className="flex gap-4">
+                <Button variant="ghost" onClick={() => setStep(2)} className="flex-1">
+                  <ChevronLeft className="w-4 h-4 mr-2" /> Zurück
+                </Button>
+                <Button variant="default" onClick={() => setStep(4)} className="flex-1">
+                  Weiter <ChevronRight className="w-4 h-4 ml-2" />
+                </Button>
+              </div>
+            </motion.div>
+          )}
+
+          {(productType === "nametag" && step === 4) && (
+            <motion.div
+              key="nametag4"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              className="space-y-6"
+            >
+              <div className="flex items-center gap-3 mb-4">
+                <span className="w-10 h-10 rounded-full bg-accent/10 text-accent border-2 border-accent/20 flex items-center justify-center font-bold">4</span>
+                <h3 className="text-2xl font-serif text-foreground">Kontaktdaten</h3>
+              </div>
+              <p className="text-muted-foreground mb-6">Wir melden uns mit einem unverbindlichen Angebot bei dir.</p>
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <input type="text" name="website" tabIndex={-1} autoComplete="off"
+                  style={{ position: "absolute", left: "-9999px", opacity: 0, height: 0, overflow: "hidden" }} readOnly />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium flex items-center gap-2 text-foreground/70">
+                      <User className="w-4 h-4" /> Name*
+                    </label>
+                    <Input required className="w-full p-3 rounded-xl border-2 border-border focus:border-accent outline-none transition-all" placeholder="Dein voller Name"
+                      value={formData.name} onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))} />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium flex items-center gap-2 text-foreground/70">
+                      <Mail className="w-4 h-4" /> E-Mail*
+                    </label>
+                    <Input required type="email" className="w-full p-3 rounded-xl border-2 border-border focus:border-accent outline-none transition-all" placeholder="email@beispiel.de"
+                      value={formData.email} onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))} />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium flex items-center gap-2 text-foreground/70">
+                    <Phone className="w-4 h-4" /> Telefon (Optional)
+                  </label>
+                  <Input className="w-full p-3 rounded-xl border-2 border-border focus:border-accent outline-none transition-all" placeholder="+49 ..."
+                    value={formData.phone} onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))} />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium flex items-center gap-2 text-foreground/70">
+                    <MessageSquare className="w-4 h-4" /> Textwunsch / Name
+                  </label>
+                  <textarea rows={3} className="w-full p-3 rounded-xl border-2 border-border focus:border-accent outline-none transition-all" placeholder="Welcher Name oder Text soll auf das Schild?"
+                    value={formData.message} onChange={(e) => setFormData(prev => ({ ...prev, message: e.target.value }))} />
+                </div>
+                <div className="flex items-start gap-3 p-4 bg-accent/5 rounded-xl border border-accent/20">
+                  <input type="checkbox" id="consent-nametag" checked={consentPrivacy}
+                    onChange={(e) => setConsentPrivacy(e.target.checked)}
+                    className="mt-1 h-4 w-4 rounded border-accent/30 text-accent focus:ring-accent" />
+                  <label htmlFor="consent-nametag" className="text-sm text-foreground/70">
+                    Ich stimme der <Link href="/datenschutz" className="text-accent hover:underline">Datenschutzerklärung</Link> zu.
+                  </label>
+                </div>
+                <div className="flex gap-4 pt-4">
+                  <Button variant="ghost" onClick={() => setStep(3)} className="flex-1">
+                    <ChevronLeft className="w-4 h-4 mr-2" /> Zurück
+                  </Button>
+                  <Button variant="default" type="submit" disabled={loading || !consentPrivacy} className="flex-1">
+                    {loading ? <Loader2 className="w-5 h-5 animate-spin mr-2" /> : <Send className="w-5 h-5 mr-2" />}
+                    Anfrage jetzt senden
+                  </Button>
+                </div>
+              </form>
+            </motion.div>
+          )}
+
+          {(productType === "patch" && step === 1) && (
             <motion.div
               key="step1"
               initial={{ opacity: 0, x: 20 }}
@@ -337,7 +633,7 @@ export default function PatchCalculator() {
             </motion.div>
           )}
 
-          {step === 2 && (
+          {(productType === "patch" && step === 2) && (
             <motion.div
               key="step2"
               initial={{ opacity: 0, x: 20 }}
@@ -371,7 +667,7 @@ export default function PatchCalculator() {
             </motion.div>
           )}
 
-          {step === 3 && (
+          {(productType === "patch" && step === 3) && (
             <motion.div
               key="step3"
               initial={{ opacity: 0, x: 20 }}
@@ -410,7 +706,7 @@ export default function PatchCalculator() {
             </motion.div>
           )}
 
-           {step === 4 && (
+           {(productType === "patch" && step === 4) && (
             <motion.div
               key="step4"
               initial={{ opacity: 0, x: 20 }}
@@ -478,7 +774,7 @@ export default function PatchCalculator() {
             </motion.div>
           )}
 
-           {step === 5 && (
+           {(productType === "patch" && step === 5) && (
             <motion.div
               key="step5"
               initial={{ opacity: 0, x: 20 }}
@@ -522,7 +818,7 @@ export default function PatchCalculator() {
             </motion.div>
           )}
 
-           {step === 6 && (
+           {(productType === "patch" && step === 6) && (
             <motion.div
               key="step6"
               initial={{ opacity: 0, x: 20 }}
@@ -566,7 +862,7 @@ export default function PatchCalculator() {
             </motion.div>
           )}
 
-            {step === 7 && (
+            {(productType === "patch" && step === 7) && (
               <motion.div
                 key="step7"
                 initial={{ opacity: 0, x: 20 }}
@@ -604,7 +900,7 @@ export default function PatchCalculator() {
               </motion.div>
             )}
 
-            {step === 8 && (
+            {(productType === "patch" && step === 8) && (
               <motion.div
                 key="step8"
                 initial={{ opacity: 0, x: 20 }}
@@ -675,7 +971,7 @@ export default function PatchCalculator() {
               </motion.div>
             )}
 
-            {step === 9 && (
+            {(productType === "patch" && step === 9) && (
               <motion.div
                 key="step9"
                 initial={{ opacity: 0, x: 20 }}
@@ -731,7 +1027,7 @@ export default function PatchCalculator() {
               </motion.div>
             )}
 
-             {step === 10 && (
+             {(productType === "patch" && step === 10) && (
               <motion.div
                 key="step10"
                 initial={{ opacity: 0, x: 20 }}
@@ -794,7 +1090,7 @@ export default function PatchCalculator() {
               </motion.div>
             )}
 
-            {step === 11 && (
+            {(productType === "patch" && step === 11) && (
               <motion.div
                 key="step11"
                 initial={{ opacity: 0, x: 20 }}
@@ -914,75 +1210,114 @@ variant="default"
       <div className="lg:col-span-2 lg:sticky lg:top-24">
         <Card className="border border-border shadow-sm overflow-hidden bg-card">
           <CardHeader className="bg-accent/10 text-accent border-b border-border py-4">
-            <CardTitle className="text-center text-lg font-semibold">Ihre Konfiguration</CardTitle>
+            <CardTitle className="text-center text-lg font-semibold">
+              {productType === "nametag" ? "Ihre Bestellung" : "Ihre Konfiguration"}
+            </CardTitle>
           </CardHeader>
            <CardContent className="p-6 md:p-8 space-y-6">
              <div className="space-y-4">
-               <div className="flex justify-between">
-                 <span className="text-muted-foreground">Form:</span>
-                 <span className="font-semibold text-foreground">{CONFIG.shapes.find(s => s.id === selections.shape)?.name}</span>
-               </div>
-               <div className="flex justify-between">
-                 <span className="text-muted-foreground">Größe:</span>
-                 <span className="font-semibold text-foreground">{CONFIG.sizes.find(s => s.id === selections.size)?.name}</span>
-               </div>
-               <div className="flex justify-between">
-                 <span className="text-muted-foreground">Komplexität:</span>
-                 <span className="font-semibold text-foreground">{CONFIG.complexity.find(c => c.id === selections.complexity)?.name}</span>
-               </div>
-               <div className="flex justify-between">
-                 <span className="text-muted-foreground">Farben:</span>
-                 <span className="font-semibold text-foreground">{selections.colors}</span>
-               </div>
-               <div className="flex justify-between">
-                 <span className="text-muted-foreground">Material:</span>
-                 <span className="font-semibold text-foreground">{CONFIG.materials.find(m => m.id === selections.material)?.name}</span>
-               </div>
-               <div className="flex justify-between">
-                 <span className="text-muted-foreground">Rand:</span>
-                 <span className="font-semibold text-foreground">{CONFIG.edges.find(e => e.id === selections.edge)?.name}</span>
-               </div>
-               <div className="flex justify-between">
-                 <span className="text-muted-foreground">Rückseite:</span>
-                 <span className="font-semibold text-foreground">{CONFIG.backings.find(b => b.id === selections.backing)?.name}</span>
-               </div>
-               <div className="flex justify-between">
-                 <span className="text-muted-foreground">Express:</span>
-                 <span className="font-semibold text-foreground">
-                   {selections.express === "none" ? "Standard" : selections.express === "express" ? "Express" : "Super Express"}
-                 </span>
-               </div>
-               <div className="flex justify-between">
-                 <span className="text-muted-foreground">Menge:</span>
-                 <span className="font-semibold text-foreground">{selections.quantity} Stück</span>
-               </div>
-               <div className="flex justify-between">
-                 <span className="text-muted-foreground">Lieferzeit:</span>
-                 <span className="font-semibold text-foreground">{CONFIG.expressDeliveryTimes[selections.express as keyof typeof CONFIG.expressDeliveryTimes]}</span>
-               </div>
-               <div className="h-px bg-border" />
-               
-               <div className="flex justify-between items-center pt-2">
-                 <span className="text-xl font-serif font-bold text-foreground">Gesamtpreis:</span>
-                 <span className="text-3xl font-serif font-bold text-accent">{calculatePrice()} €</span>
-               </div>
-               
-               <div className="text-sm text-muted-foreground">
-                 ca. {priceRange.min} - {priceRange.max} €
-               </div>
+              {productType === "nametag" ? (
+                <>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Produkt:</span>
+                    <span className="font-semibold text-foreground">Namensschild</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Größe:</span>
+                    <span className="font-semibold text-foreground">{NAMETAG_SIZES.find(s => s.id === selections.nametagSize)?.name}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Rückseite:</span>
+                    <span className="font-semibold text-foreground">{CONFIG.backings.find(b => b.id === selections.backing)?.name}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Menge:</span>
+                    <span className="font-semibold text-foreground">{selections.quantity} Stück</span>
+                  </div>
+                  <div className="h-px bg-border" />
+                  <div className="flex justify-between items-center pt-2">
+                    <span className="text-xl font-serif font-bold text-foreground">Gesamtpreis:</span>
+                    <span className="text-3xl font-serif font-bold text-accent">{calculatePrice()} €</span>
+                  </div>
+                  <div className="p-4 bg-accent/5 rounded-xl border border-accent/20">
+                    <div className="flex gap-3 items-start">
+                      <Info className="w-5 h-5 text-accent shrink-0 mt-0.5" />
+                      <p className="text-sm text-muted-foreground leading-relaxed">
+                        Fixpreis — inklusive Mengenrabatt und Rückseite.
+                      </p>
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Produkt:</span>
+                    <span className="font-semibold text-foreground">Patch</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Form:</span>
+                    <span className="font-semibold text-foreground">{CONFIG.shapes.find(s => s.id === selections.shape)?.name}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Größe:</span>
+                    <span className="font-semibold text-foreground">{CONFIG.sizes.find(s => s.id === selections.size)?.name}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Komplexität:</span>
+                    <span className="font-semibold text-foreground">{CONFIG.complexity.find(c => c.id === selections.complexity)?.name}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Farben:</span>
+                    <span className="font-semibold text-foreground">{selections.colors}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Material:</span>
+                    <span className="font-semibold text-foreground">{CONFIG.materials.find(m => m.id === selections.material)?.name}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Rand:</span>
+                    <span className="font-semibold text-foreground">{CONFIG.edges.find(e => e.id === selections.edge)?.name}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Rückseite:</span>
+                    <span className="font-semibold text-foreground">{CONFIG.backings.find(b => b.id === selections.backing)?.name}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Express:</span>
+                    <span className="font-semibold text-foreground">
+                      {selections.express === "none" ? "Standard" : selections.express === "express" ? "Express" : "Super Express"}
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Menge:</span>
+                    <span className="font-semibold text-foreground">{selections.quantity} Stück</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Lieferzeit:</span>
+                    <span className="font-semibold text-foreground">{CONFIG.expressDeliveryTimes[selections.express as keyof typeof CONFIG.expressDeliveryTimes]}</span>
+                  </div>
+                  <div className="h-px bg-border" />
+                  <div className="flex justify-between items-center pt-2">
+                    <span className="text-xl font-serif font-bold text-foreground">Gesamtpreis:</span>
+                    <span className="text-3xl font-serif font-bold text-accent">{calculatePrice()} €</span>
+                  </div>
+                  <div className="text-sm text-muted-foreground">
+                    ca. {priceRange.min} – {priceRange.max} € (Richtwert ±10 %)
+                  </div>
+                  <div className="p-4 bg-accent/5 rounded-xl border border-accent/20">
+                    <div className="flex gap-3 items-start">
+                      <Info className="w-5 h-5 text-accent shrink-0 mt-0.5" />
+                      <p className="text-sm text-muted-foreground leading-relaxed">
+                        Dies ist eine unverbindliche Kostenschätzung. Der finale Preis wird nach Prüfung Ihres Motivs festgelegt.
+                      </p>
+                    </div>
+                  </div>
+                </>
+              )}
              </div>
-             
-               <div className="p-4 bg-accent/5 rounded-xl border border-accent/20">
-                 <div className="flex gap-3 items-start">
-                   <Info className="w-5 h-5 text-accent shrink-0 mt-0.5" />
-                   <p className="text-sm text-muted-foreground leading-relaxed">
-                     Dies ist eine unverbindliche Kostenschätzung. Der finale Preis wird nach Prüfung Ihres Motivs festgelegt.
-                   </p>
-                 </div>
-               </div>
-             </CardContent>
-         </Card>
-        </div>
+           </CardContent>
+        </Card>
+       </div>
      </div>
     </div>
   );
