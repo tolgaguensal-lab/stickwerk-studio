@@ -1,6 +1,6 @@
 # 🧵 Stickwerk-Studio
 
-**Fäden, die Marken sichtbar machen.** v0.4.0
+**Fäden, die Marken sichtbar machen.** v0.5.0
 
 > ⚠️ **Legal Notice:** This project is proprietary. All rights reserved. Unauthorized use, reproduction, or distribution of this software is strictly prohibited. See [LICENSE](./LICENSE) for details.
 
@@ -11,6 +11,9 @@ Professionelle Website für Maschinenstickerei und Custom Patches im DACH-Raum. 
 ## ✨ Features
 
 ### Für Kunden
+- **Über-uns-Seite** (`/ueber-uns`) mit Geschichte, Werten, Team und Maschinen-Statistiken
+- **FAQ-Seite** (`/faq`) mit 17 Fragen in 4 Kategorien
+- **Preisrechner** (`/preise`) — interaktiver Rechner für Kostenschätzung (±20%)
 - **Patch-Konfigurator** mit 11-Schritte-Konfigurator und Echtzeit-Preisberechnung
 - **Kontaktformular** mit DSGVO-konformer Datenschutz-Checkbox
 - **Rechtliche Seiten** (Impressum, Datenschutz, AGB)
@@ -68,6 +71,9 @@ stickwerk-studio/
 │   │   ├── api/          # API-Routes (contact, health, leads)
 │   │   ├── kontakt/      # Kontaktformular
 │   │   ├── impressum/    # Impressum
+│   │   ├── ueber-uns/    # Über-uns-Seite
+│   │   ├── faq/          # FAQ-Seite
+│   │   ├── preise/       # Preisrechner
 │   │   ├── datenschutz/  # Datenschutzerklärung
 │   │   └── agb/          # AGB
 │   ├── components/       # React-Komponenten
@@ -166,9 +172,14 @@ Siehe [DEPLOYMENT.md](./DEPLOYMENT.md) für detaillierte Deployment-Anleitung.
 - [x] Pangolin Integration
 - [x] PostgreSQL + Drizzle ORM
 - [x] Originäres Design-System
+- [x] Über-uns-Seite (/ueber-uns)
+- [x] FAQ-Seite (/faq) mit 17 Fragen
+- [x] Preisrechner (/preise) interaktiv
+- [x] Auto-Migration + Debug-Dashboard
+- [x] E-Mail-Benachrichtigungen (SMTP konfiguriert)
 - [ ] E2E Tests vollständig
-- [ ] E-Mail-Benachrichtigungen
 - [ ] DSGVO finale Prüfung
+- [ ] Admin: Lead-Detail-Ansicht
 
 ---
 
