@@ -1,31 +1,42 @@
 import { test, expect } from "@playwright/test";
 
+const ADMIN_EMAIL = "admin@stickwerk-studio.de";
+const ADMIN_PASSWORD = "test123";
+
 test.describe("Admin Area", () => {
-  test("should be accessible without authentication (public dashboard)", async ({ page }) => {
+  test("should redirect unauthenticated users to /admin/login", async ({ page }) => {
     await page.goto("/admin");
-    
-    // Admin page should be accessible (currently no auth)
-    // This test documents the current behavior
-    await expect(page).toHaveURL(/\/admin/);
+    await expect(page).toHaveURL(/\/admin\/login/);
   });
 
-  test("should display admin dashboard", async ({ page }) => {
-    await page.goto("/admin");
-    
-    // Should show admin interface with Lead Management heading
-    await expect(page.getByRole("heading", { name: /lead management/i })).toBeVisible({ timeout: 10000 });
-  });
-});
-
-test.describe("Health Endpoint", () => {
-  test("should return 200 OK", async ({ request }) => {
-    const response = await request.get("/api/health");
-    expect(response.status()).toBe(200);
+  test("should allow login with valid credentials", async ({ page }) => {
+    await page.goto("/admin/login");
+    await page.fill("input[type=email]", ADMIN_EMAIL);
+    await page.fill("input[type=password]", ADMIN_PASSWORD);
+    await page.click("button[type=submit]");
+    await expect(page).toHaveURL("/admin", { timeout: 10000 });
+    await expect(page.getByRole("heading", { name: /dashboard/i })).toBeVisible({ timeout: 5000 });
   });
 
-  test("should return JSON with status ok", async ({ request }) => {
-    const response = await request.get("/api/health");
-    const data = await response.json();
-    expect(data.status).toBe("ok");
+  test("should show error on invalid credentials", async ({ page }) => {
+    await page.goto("/admin/login");
+    await page.fill("input[type=email]", ADMIN_EMAIL);
+    await page.fill("input[type=password]", "wrongpassword");
+    await page.click("button[type=submit]");
+    await expect(page.getByText(/fehlgeschlagen/i)).toBeVisible({ timeout: 10000 });
+  });
+
+  test("should persist session across pages after login", async ({ page }) => {
+    // Login
+    await page.goto("/admin/login");
+    await page.fill("input[type=email]", ADMIN_EMAIL);
+    await page.fill("input[type=password]", ADMIN_PASSWORD);
+    await page.click("button[type=submit]");
+    await expect(page).toHaveURL("/admin", { timeout: 10000 });
+
+    // Navigate to leads — stays authenticated
+    await page.goto("/admin/leads");
+    await expect(page).toHaveURL(/\/admin\/leads/, { timeout: 5000 });
+    await expect(page.getByRole("heading", { name: /anfragen/i })).toBeVisible({ timeout: 5000 });
   });
 });
