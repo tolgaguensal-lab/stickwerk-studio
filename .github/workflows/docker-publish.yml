@@ -86,7 +86,10 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          build-args: APP_VERSION=${{ steps.version.outputs.full }}
+          build-args: |
+            APP_VERSION=${{ steps.version.outputs.full }}
+            NEXT_PUBLIC_SITE_URL=${{ vars.NEXT_PUBLIC_SITE_URL || 'https://sws.guenlab.de' }}
+            NEXT_PUBLIC_APP_URL=${{ vars.NEXT_PUBLIC_APP_URL || 'https://sws.guenlab.de' }}
 
       - name: Create GitHub Release
         env:
