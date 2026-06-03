@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import {
   ArrowLeft,
@@ -14,6 +14,11 @@ import {
   AlertCircle,
   CheckCircle2,
   Save,
+  ShoppingBag,
+  Euro,
+  ExternalLink,
+  Clock,
+  User,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -27,9 +32,17 @@ interface Lead {
   phone?: string;
   message?: string;
   status: string;
-  patch_config?: Record<string, unknown>;
-  admin_notes?: string;
+  patchConfig?: Record<string, unknown>;
+  adminNotes?: string;
   source?: string;
+}
+
+interface Order {
+  id: number;
+  orderNumber: string;
+  status: string;
+  totalPrice: string;
+  createdAt: string;
 }
 
 const statusConfig: Record<
@@ -44,6 +57,16 @@ const statusConfig: Record<
   archived: { label: "Archiviert", color: "outline", next: [] },
 };
 
+const orderStatusLabel: Record<string, string> = {
+  lead_received: "Eingegangen",
+  digitizing: "Digitalisierung",
+  embroidery: "Stickerei",
+  quality_check: "Qualitätsprüfung",
+  shipping: "Versand",
+  done: "Erledigt",
+  cancelled: "Storniert",
+};
+
 const configLabels: Record<string, string> = {
   shape: "Form",
   size: "Größe",
@@ -56,11 +79,29 @@ const configLabels: Record<string, string> = {
   express: "Express",
 };
 
+const shapeLabels: Record<string, string> = {
+  circle: "Rund",
+  rectangle: "Rechteckig",
+  shield: "Schild",
+  oval: "Oval",
+  diamond: "Raute",
+  custom: "Individuell",
+};
+
+const sizeLabels: Record<string, string> = {
+  small: "Klein (ca. 5 cm)",
+  medium: "Mittel (ca. 8 cm)",
+  large: "Groß (ca. 10 cm)",
+  xl: "Extra Groß (ca. 12 cm)",
+};
+
 export default function LeadDetail() {
   const params = useParams();
+  const router = useRouter();
   const id = params.id as string;
 
   const [lead, setLead] = useState<Lead | null>(null);
+  const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
@@ -74,7 +115,16 @@ export default function LeadDetail() {
       if (response.ok) {
         const data = await response.json();
         setLead(data.lead);
-        setAdminNotes(data.lead.admin_notes || "");
+        setAdminNotes(data.lead.adminNotes || data.lead.admin_notes || "");
+
+        // Fetch orders linked to this lead
+        if (data.lead.email) {
+          const ordersRes = await fetch(`/api/orders?email=${encodeURIComponent(data.lead.email)}`);
+          if (ordersRes.ok) {
+            const ordersData = await ordersRes.json();
+            setOrders(ordersData.orders || []);
+          }
+        }
       } else {
         setError("Anfrage konnte nicht geladen werden.");
       }
@@ -132,10 +182,26 @@ export default function LeadDetail() {
     }
   };
 
+  const estimatePrice = (config: Record<string, unknown>) => {
+    let base = 3.50;
+    const size = (config.size as string) || "medium";
+    const complexity = (config.complexity as string) || "simple";
+    const quantity = parseInt((config.quantity as string) || "50", 10);
+
+    const sizeMultiplier = { small: 0.8, medium: 1.0, large: 1.4, xl: 1.8 };
+    const complexityMultiplier = { simple: 1.0, moderate: 1.3, complex: 1.8, very_complex: 2.5 };
+
+    base *= sizeMultiplier[size as keyof typeof sizeMultiplier] || 1.0;
+    base *= complexityMultiplier[complexity as keyof typeof complexityMultiplier] || 1.0;
+
+    const total = base * quantity;
+    return total;
+  };
+
   // Loading
   if (loading) {
     return (
-      <div className="p-4 sm:p-6 lg:p-8 max-w-4xl mx-auto">
+      <div className="p-4 sm:p-6 lg:p-8 max-w-5xl mx-auto">
         <div className="flex items-center justify-center py-20">
           <div className="flex items-center gap-3 text-muted-foreground">
             <Loader2 className="w-6 h-6 animate-spin" />
@@ -149,7 +215,7 @@ export default function LeadDetail() {
   // Error
   if (error || !lead) {
     return (
-      <div className="p-4 sm:p-6 lg:p-8 max-w-4xl mx-auto">
+      <div className="p-4 sm:p-6 lg:p-8 max-w-5xl mx-auto">
         <Link
           href="/admin/leads"
           className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors text-sm mb-6"
@@ -176,11 +242,15 @@ export default function LeadDetail() {
     next: [],
   };
 
-  const patchConfig = lead.patch_config || {};
+  const patchConfig = lead.patchConfig || {};
   const hasDesignFile = patchConfig && typeof patchConfig === "object" && "designFile" in patchConfig;
+  const estimatedTotal = estimatePrice(patchConfig);
+  const quantity = parseInt((patchConfig.quantity as string) || "50", 10);
+  const unitPrice = quantity > 0 ? estimatedTotal / quantity : 0;
+  const linkedOrders = orders.filter((o: any) => o.leadId === parseInt(id, 10));
 
   return (
-    <div className="p-4 sm:p-6 lg:p-8 max-w-4xl mx-auto space-y-8">
+    <div className="p-4 sm:p-6 lg:p-8 max-w-5xl mx-auto space-y-8">
       {/* Back Link */}
       <Link
         href="/admin/leads"
@@ -189,6 +259,14 @@ export default function LeadDetail() {
         <ArrowLeft className="w-4 h-4" />
         Zurück zur Übersicht
       </Link>
+
+      {/* Save Success */}
+      {saveSuccess && (
+        <div className="p-3 bg-success/10 border border-success/20 rounded-xl flex items-center gap-2 text-success text-sm">
+          <CheckCircle2 className="w-4 h-4" />
+          Gespeichert
+        </div>
+      )}
 
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -210,15 +288,41 @@ export default function LeadDetail() {
             })}
           </p>
         </div>
-      </div>
-
-      {/* Save Success */}
-      {saveSuccess && (
-        <div className="p-3 bg-success/10 border border-success/20 rounded-xl flex items-center gap-2 text-success text-sm">
-          <CheckCircle2 className="w-4 h-4" />
-          Gespeichert
+        <div className="flex items-center gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={async () => {
+              // Create order from this lead
+              try {
+                const res = await fetch("/api/orders", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({
+                    leadId: parseInt(id, 10) || undefined,
+                    customerName: lead.name,
+                    customerEmail: lead.email,
+                    customerPhone: lead.phone || "",
+                    patchConfig,
+                    totalPrice: Math.round(estimatedTotal * 100) / 100,
+                    notes: lead.message || "",
+                  }),
+                });
+                if (res.ok) {
+                  const data = await res.json();
+                  router.push(`/admin/orders/${data.order.id}`);
+                }
+              } catch {
+                // silent
+              }
+            }}
+            className="gap-2"
+          >
+            <ShoppingBag className="w-4 h-4" />
+            Auftrag erstellen
+          </Button>
         </div>
-      )}
+      </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Main Content */}
@@ -280,6 +384,58 @@ export default function LeadDetail() {
             </Card>
           ) : null}
 
+          {/* Pricing Card */}
+          {Object.keys(patchConfig).length > 0 && (
+            <Card className="border-border">
+              <CardHeader>
+                <CardTitle className="text-lg font-serif text-foreground flex items-center gap-2">
+                  <Euro className="w-4 h-4" />
+                  Preisübersicht (Schätzung)
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
+                  <div>
+                    <div className="text-xs text-muted-foreground uppercase tracking-wider">Stückpreis</div>
+                    <div className="text-lg font-bold text-foreground mt-0.5">
+                      {unitPrice.toFixed(2)}€
+                    </div>
+                  </div>
+                  <div>
+                    <div className="text-xs text-muted-foreground uppercase tracking-wider">Menge</div>
+                    <div className="text-lg font-bold text-foreground mt-0.5">{quantity}</div>
+                  </div>
+                  <div className="sm:col-span-2">
+                    <div className="text-xs text-muted-foreground uppercase tracking-wider">Geschätzter Gesamtpreis</div>
+                    <div className="text-2xl font-serif font-bold text-accent mt-0.5">
+                      {Math.round(estimatedTotal).toLocaleString("de-DE", { minimumFractionDigits: 2 })}€
+                    </div>
+                    <div className="text-xs text-muted-foreground mt-0.5">±20% (exakter Preis nach Angebot)</div>
+                  </div>
+                </div>
+
+                <div className="mt-4 pt-4 border-t border-border grid grid-cols-2 sm:grid-cols-4 gap-3 text-sm">
+                  <div>
+                    <div className="text-muted-foreground">Größe</div>
+                    <div className="font-medium text-foreground">{sizeLabels[patchConfig.size as string] || (patchConfig.size as string) || "—"}</div>
+                  </div>
+                  <div>
+                    <div className="text-muted-foreground">Komplexität</div>
+                    <div className="font-medium text-foreground capitalize">{patchConfig.complexity as string || "—"}</div>
+                  </div>
+                  <div>
+                    <div className="text-muted-foreground">Form</div>
+                    <div className="font-medium text-foreground">{shapeLabels[patchConfig.shape as string] || (patchConfig.shape as string) || "—"}</div>
+                  </div>
+                  <div>
+                    <div className="text-muted-foreground">Rand</div>
+                    <div className="font-medium text-foreground capitalize">{patchConfig.edge as string || "—"}</div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
           {/* Patch Configuration */}
           {Object.keys(patchConfig).length > 0 && (
             <Card className="border-border">
@@ -292,15 +448,18 @@ export default function LeadDetail() {
               <CardContent>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                   {Object.entries(patchConfig).map(([key, value]) => {
-                    if (!value) return null;
+                    if (!value || key === "designFile") return null;
                     const label = configLabels[key] || key;
+                    let displayValue = String(value);
+                    if (key === "shape") displayValue = shapeLabels[value as string] || displayValue;
+                    if (key === "size") displayValue = sizeLabels[value as string] || displayValue;
                     return (
                       <div key={key}>
                         <div className="text-xs text-muted-foreground uppercase tracking-wider">
                           {label}
                         </div>
                         <div className="text-foreground font-medium mt-0.5">
-                          {String(value)}
+                          {displayValue}
                         </div>
                       </div>
                     );
@@ -365,8 +524,9 @@ export default function LeadDetail() {
           </Card>
         </div>
 
-        {/* Sidebar - Status Actions */}
-        <div className="space-y-4">
+        {/* Sidebar */}
+        <div className="space-y-6">
+          {/* Status Actions */}
           <Card className="border-border">
             <CardHeader>
               <CardTitle className="text-lg font-serif text-foreground">
@@ -402,6 +562,96 @@ export default function LeadDetail() {
               })}
             </CardContent>
           </Card>
+
+          {/* Orders Section */}
+          <Card className="border-border">
+            <CardHeader>
+              <CardTitle className="text-lg font-serif text-foreground flex items-center gap-2">
+                <ShoppingBag className="w-4 h-4" />
+                Aufträge
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              {linkedOrders.length === 0 ? (
+                <div className="text-sm text-muted-foreground py-4 text-center">
+                  <p>Keine Aufträge zu dieser Anfrage.</p>
+                  <Button
+                    variant="link"
+                    size="sm"
+                    onClick={async () => {
+                      try {
+                        const res = await fetch("/api/orders", {
+                          method: "POST",
+                          headers: { "Content-Type": "application/json" },
+                          body: JSON.stringify({
+                            leadId: parseInt(id, 10),
+                            customerName: lead.name,
+                            customerEmail: lead.email,
+                            customerPhone: lead.phone || "",
+                            patchConfig,
+                            totalPrice: Math.round(estimatedTotal * 100) / 100,
+                            notes: lead.message || "",
+                          }),
+                        });
+                        if (res.ok) {
+                          const data = await res.json();
+                          router.push(`/admin/orders/${data.order.id}`);
+                        }
+                      } catch {
+                        // silent
+                      }
+                    }}
+                    className="mt-2"
+                  >
+                    + Auftrag erstellen
+                  </Button>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {linkedOrders.map((order) => (
+                    <Link
+                      key={order.id}
+                      href={`/admin/orders/${order.id}`}
+                      className="flex items-center justify-between p-3 rounded-xl hover:bg-accent/5 transition-colors group"
+                    >
+                      <div>
+                        <div className="text-sm font-medium text-foreground">{order.orderNumber}</div>
+                        <div className="text-xs text-muted-foreground">
+                          {orderStatusLabel[order.status] || order.status}
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        {order.totalPrice && parseFloat(order.totalPrice) > 0 && (
+                          <span className="text-sm font-medium text-foreground">
+                            {parseFloat(order.totalPrice).toLocaleString("de-DE", { minimumFractionDigits: 2 })}€
+                          </span>
+                        )}
+                        <ExternalLink className="w-4 h-4 text-muted-foreground/40 group-hover:text-accent transition-colors" />
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </CardContent>
+          </Card>
+
+          {/* Lead Age */}
+          <div className="text-xs text-muted-foreground space-y-1 px-1">
+            <div className="flex items-center gap-1.5">
+              <Clock className="w-3 h-3" />
+              <span>
+                Anfrage ist{" "}
+                {Math.floor(
+                  (Date.now() - new Date(lead.created).getTime()) / (1000 * 60 * 60 * 24)
+                )}{" "}
+                Tage alt
+              </span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <User className="w-3 h-3" />
+              <span>Status: {status.label}</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
