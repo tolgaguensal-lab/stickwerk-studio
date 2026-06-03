@@ -7,6 +7,8 @@ import Image from "next/image";
 import {
   LayoutDashboard,
   Inbox,
+  ShoppingBag,
+  Users,
   Menu,
   X,
   LogOut,
@@ -27,6 +29,18 @@ const sidebarLinks = [
     href: "/admin/leads",
     label: "Anfragen",
     icon: Inbox,
+    exact: false,
+  },
+  {
+    href: "/admin/orders",
+    label: "Aufträge",
+    icon: ShoppingBag,
+    exact: false,
+  },
+  {
+    href: "/admin/customers",
+    label: "Kunden",
+    icon: Users,
     exact: false,
   },
   {
