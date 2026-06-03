@@ -1,45 +1,72 @@
 # =============================================================================
-# Stickwerk-Studio — ZimaOS Deployment
+# Stickwerk-Studio — ZimaOS Deployment (mit eigener PostgreSQL)
 # =============================================================================
 # Verwendung in der ZimaOS Web UI:
 #
-# 1. Dieses Compose-File importieren (oder manuell anlegen)
-# 2. MINDESTENS diese 3 Umgebungsvariablen setzen:
-#      - DATABASE_URL     (z.B. postgresql://user:pass@ip:5432/db)
-#      - SESSION_SECRET   (mindestens 32 Zeichen)
+# 1. Importieren in ZimaOS App Store → eigener Eintrag
+# 2. Mindestens setzen:
+#      - SESSION_SECRET   (mindestens 32 Zeichen, zufällig)
 #      - ADMIN_PASSWORD   (Login-Passwort für /admin)
-# 3. Deploy starten → Image wird automatisch von ghcr.io gepullt
+# 3. Deploy starten
+#
+# PostgreSQL läuft im gleichen Stack — keine externe DB nötig.
+# Daten bleiben bei Updates erhalten (Volume "pgdata").
+#
+# Bei eigenem PostgreSQL-Service:
+#   Einfach DATABASE_URL überschreiben — dann bitte den db-Service entfernen.
 #
 # Das Docker-Image wird automatisch bei jedem Push auf main gebaut:
 #   https://github.com/tolgaguensal-lab/stickwerk-studio/pkgs/container/stickwerk-studio
 # =============================================================================
 
 services:
+  # ---- PostgreSQL (integriert) ----
+  db:
+    image: postgres:17-alpine
+    container_name: stickwerk-db
+    restart: unless-stopped
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: stickwerk
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-stickwerk_secret_2026}
+      POSTGRES_DB: stickwerk
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U stickwerk"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+
+  # ---- Next.js App ----
   app:
     image: ghcr.io/tolgaguensal-lab/stickwerk-studio:latest
     container_name: stickwerk-app
     restart: unless-stopped
     ports:
       - "3034:3000"
+    depends_on:
+      db:
+        condition: service_healthy
     environment:
       NODE_ENV: production
       HOSTNAME: 0.0.0.0
       PORT: 3000
 
-      # === PostgreSQL (PFLICHT) ===
-      # Beispiel: postgresql://casaos:casaos@192.168.178.91:5432/casaos
-      DATABASE_URL: ${DATABASE_URL:?DATABASE_URL fehlt — PostgreSQL-Verbindungsstring erforderlich}
+      # === PostgreSQL (automatisch zum db-Container) ===
+      # Überschreiben für externen PostgreSQL-Service
+      DATABASE_URL: postgresql://stickwerk:${POSTGRES_PASSWORD:-stickwerk_secret_2026}@db:5432/stickwerk
 
       # === Admin-Zugang (PFLICHT) ===
-      SESSION_SECRET: ${SESSION_SECRET:?SESSION_SECRET fehlt — mindestens 32 Zeichen}
+      SESSION_SECRET: ${SESSION_SECRET:?SESSION_SECRET fehlt — mindestens 32 Zeichen, zufällig generieren}
       ADMIN_USER: ${ADMIN_USER:-admin@stickwerk-studio.de}
       ADMIN_PASSWORD: ${ADMIN_PASSWORD:?ADMIN_PASSWORD fehlt — wähle ein sicheres Passwort}
 
-      # === Öffentliche URL (optional) ===
-      NEXT_PUBLIC_SITE_URL: ${SITE_URL:-https://sws.guenlab.de}
-      NEXT_PUBLIC_APP_URL: ${SITE_URL:-https://sws.guenlab.de}
+      # === Öffentliche URL (optional, für SEO) ===
+      NEXT_PUBLIC_SITE_URL: ${SITE_URL:-http://localhost:3034}
+      NEXT_PUBLIC_APP_URL: ${SITE_URL:-http://localhost:3034}
 
-      # === E-Mail (optional — ohne SMTP läuft die Seite trotzdem) ===
+      # === E-Mail (optional — ohne SMTP läuft alles trotzdem) ===
       SMTP_HOST: ${SMTP_HOST:-}
       SMTP_PORT: ${SMTP_PORT:-587}
       SMTP_USER: ${SMTP_USER:-}
@@ -52,3 +79,7 @@ services:
       timeout: 10s
       retries: 3
       start_period: 30s
+
+volumes:
+  pgdata:
+    driver: local
