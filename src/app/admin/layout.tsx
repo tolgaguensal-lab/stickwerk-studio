@@ -12,6 +12,7 @@ import {
   LogOut,
   ExternalLink,
   Loader2,
+  Bug,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -26,6 +27,12 @@ const sidebarLinks = [
     href: "/admin/leads",
     label: "Anfragen",
     icon: Inbox,
+    exact: false,
+  },
+  {
+    href: "/admin/debug",
+    label: "Debug",
+    icon: Bug,
     exact: false,
   },
 ];
@@ -201,7 +208,7 @@ export default function AdminLayout({
             {appVersion && (
               <div className="px-3 pt-2">
                 <p className="text-[10px] text-muted-foreground/50 uppercase tracking-wider text-center">
-                  v{appVersion}
+                  {appVersion}
                 </p>
               </div>
             )}
