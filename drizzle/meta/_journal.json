@@ -8,6 +8,13 @@
       "when": 1780399025304,
       "tag": "0000_optimal_mauler",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1780494042322,
+      "tag": "0001_rainy_sphinx",
+      "breakpoints": true
     }
   ]
 }
