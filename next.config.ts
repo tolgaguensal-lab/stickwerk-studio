@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { withSentryConfig } from "@sentry/nextjs";
 
 const nextConfig: NextConfig = {
   output: "standalone",
@@ -15,8 +16,9 @@ const nextConfig: NextConfig = {
             key: "Content-Security-Policy",
             value: [
               "default-src 'self'",
-              "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://*.googleapis.com",
+              "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://*.googleapis.com https://*.sentry.io",
               "style-src 'self' 'unsafe-inline' https://*.googleapis.com https://*.gstatic.com",
+              "connect-src 'self' https://*.sentry.io",
               "font-src 'self' https://*.gstatic.com",
               "img-src 'self' data: blob:",
               "frame-ancestors 'none'",
@@ -46,4 +48,9 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+export default withSentryConfig(nextConfig, {
+  sourcemaps: {
+    disable: true,
+  },
+  tunnelRoute: "/monitoring",
+});
