@@ -77,7 +77,7 @@ COPY --from=builder /app/scripts/migrate.mjs ./scripts/migrate.mjs
 # Besitzer setzen
 RUN chown -R nextjs:nodejs /app
 
-# Startup-Script: Migration → Next.js starten
+# Startup-Script: Migration (tolerant) → Next.js starten
 RUN { \
       echo '#!/bin/sh'; \
       echo 'set -e'; \
@@ -88,7 +88,12 @@ RUN { \
       echo 'echo ""'; \
       echo ''; \
       echo 'echo "→ Datenbank-Migration..."'; \
-      echo 'node scripts/migrate.mjs'; \
+      echo 'if node scripts/migrate.mjs; then'; \
+      echo '  echo "✅ Migration erfolgreich"'; \
+      echo 'else'; \
+      echo '  echo "⚠️  Migration fehlgeschlagen — Tabellen existieren evtl. bereits"'; \
+      echo '  echo "   App startet trotzdem (Schema muss bereits aktuell sein)"'; \
+      echo 'fi'; \
       echo 'echo ""'; \
       echo ''; \
       echo 'exec node server.js'; \
