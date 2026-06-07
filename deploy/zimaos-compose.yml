@@ -5,6 +5,8 @@ services:
     container_name: stickwerk-app
     image: ghcr.io/tolgaguensal-lab/stickwerk-studio:latest
     restart: unless-stopped
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
     ports:
       - target: 3000
         published: "3034"
@@ -63,6 +65,22 @@ services:
       interval: 10s
       retries: 5
       start_period: 15s
+    network_mode: bridge
+  watchtower:
+    cpu_shares: 10
+    container_name: stickwerk-watchtower
+    image: containrrr/watchtower:latest
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+    environment:
+      - WATCHTOWER_CLEANUP=true
+      - WATCHTOWER_POLL_INTERVAL=60
+      - WATCHTOWER_LABEL_ENABLE=true
+      - WATCHTOWER_INCLUDE_STOPPED=false
+      - WATCHTOWER_TIMEOUT=60s
     network_mode: bridge
 volumes:
   pgdata:
