@@ -32,9 +32,11 @@ ENV NODE_ENV=production
 
 WORKDIR /app
 
-# Install dependencies (layer caching)
 COPY package*.json ./
-RUN npm ci
+
+# Install ALL deps (including devDependencies needed for build tools like @tailwindcss/postcss)
+# NODE_ENV=production above would otherwise cause npm to skip devDependencies
+RUN npm ci --include=dev
 
 # Source code
 COPY . .
