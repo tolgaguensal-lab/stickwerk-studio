@@ -46,11 +46,7 @@ RUN mkdir -p public && \
     echo "{\"version\":\"${APP_VERSION}\",\"buildTime\":\"$(date -u +%Y-%m-%dT%H:%M:%SZ)\"}" > public/version.json
 
 # Next.js Standalone-Build
-RUN TURBOPACK=false npm run build && \
-    echo "=== .next directory ===" && \
-    ls -la /app/.next/ && \
-    echo "=== .next/standalone/ ===" && \
-    ls -la /app/.next/standalone/ 2>&1 || echo "standalone MISSING"
+RUN npm run build
 
 # ---- Production Stage ----
 FROM node:20-alpine AS runner
@@ -67,8 +63,8 @@ WORKDIR /app
 RUN addgroup --system --gid 1001 nodejs && \
     adduser --system --uid 1001 nextjs
 
-# 1. Standalone-App (server.js + node_modules + .next/server)
-COPY --from=builder /app/.next/standalone/stickwerk-studio/ ./
+    # 1. Standalone-App (server.js + node_modules + .next/server)
+    COPY --from=builder /app/.next/standalone/ ./
 
 # 2. Static Assets (CSS, JS chunks, Medien)
 COPY --from=builder /app/.next/static ./.next/static
