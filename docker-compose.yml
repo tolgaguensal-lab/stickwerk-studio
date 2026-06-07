@@ -52,9 +52,9 @@ services:
       # Public URLs (für SEO, Links)
       NEXT_PUBLIC_SITE_URL: ${SITE_URL:-http://localhost:3034}
       NEXT_PUBLIC_APP_URL: ${SITE_URL:-http://localhost:3034}
-      # Sentry (optional — Error Tracking)
-      SENTRY_DSN: ${SENTRY_DSN:-}
-      NEXT_PUBLIC_SENTRY_DSN: ${SENTRY_DSN:-}
+      # Sentry (Error Tracking)
+      SENTRY_DSN: ${SENTRY_DSN:-https://390985695bc2d6d915f88f5f7a97220b@o4511455077007360.ingest.de.sentry.io/4511523279011920}
+      NEXT_PUBLIC_SENTRY_DSN: ${NEXT_PUBLIC_SENTRY_DSN:-https://390985695bc2d6d915f88f5f7a97220b@o4511455077007360.ingest.de.sentry.io/4511523279011920}
       # SMTP (optional)
       SMTP_HOST: ${SMTP_HOST:-}
       SMTP_PORT: ${SMTP_PORT:-587}
