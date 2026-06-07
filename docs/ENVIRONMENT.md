@@ -110,23 +110,40 @@ NOTIFY_EMAIL=admin@stickwerk-studio.de
 
 | Variable | Pflicht? | Standard | Beschreibung |
 |----------|----------|----------|--------------|
-| `SENTRY_DSN` | ❌ Nein | `""` (deaktiviert) | Sentry DSN für Server + Client. Einmal in Sentry-Projekt generieren |
-| `NEXT_PUBLIC_SENTRY_DSN` | ❌ Nein | Wert von `SENTRY_DSN` | Wird automatisch gesetzt — normalerweise nicht separat nötig |
+| `SENTRY_DSN` | ❌ Nein | `""` (deaktiviert) | Sentry DSN für Server + Edge. Einmal in Sentry-Projekt generieren |
+| `NEXT_PUBLIC_SENTRY_DSN` | ❌ Nein | Wert von `SENTRY_DSN` | Sentry DSN für Browser. Meist identisch mit `SENTRY_DSN` |
+| `SENTRY_AUTH_TOKEN` | ⚪ Build-time | — | Auth-Token für Source-Map-Upload. Nie im Runtime-Container nötig |
+| `SENTRY_ORG` | ⚪ Build-time | — | Sentry-Org-Slug (für Source-Map-Upload) |
+| `SENTRY_PROJECT` | ⚪ Build-time | — | Sentry-Projekt-Slug (für Source-Map-Upload) |
 
-**Einrichtung:**
+**Einrichtung (Runtime, im Container / .env):**
 1. Account auf https://sentry.io (kostenlos)
-2. Neues Next.js-Projekt anlegen
+2. Neues **Next.js**-Projekt anlegen
 3. DSN aus den Projekt-Einstellungen kopieren
 4. Hier eintragen:
 
 ```
-SENTRY_DSN=https://xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx@xxxxxxx.ingest.sentry.io/1234567
+SENTRY_DSN=https://xxx@xxx.ingest.sentry.io/12345
+NEXT_PUBLIC_SENTRY_DSN=https://xxx@xxx.ingest.sentry.io/12345
 ```
 
+**Einrichtung (Build-time, in GitHub Actions Secrets):**
+Für lesbare Production-Stack-Traces (Source Maps):
+1. https://sentry.io/settings/auth-tokens/ → **Create New Token**
+2. Scopes: `project:releases` + `org:read`
+3. Token in GitHub als Secret `SENTRY_AUTH_TOKEN` speichern
+4. Org-Slug in Secret `SENTRY_ORG` speichern (z.B. `tolga-guensal`)
+5. Projekt-Slug in Secret `SENTRY_PROJECT` speichern (z.B. `stickwerk-studio`)
+
+Die Build-Args werden im Docker-Build per **BuildKit secrets** übergeben — sie landen **nicht** im finalen Image.
+
 **Was passiert dann automatisch:**
-- Jeder 500er / jede Exception wird an Sentry gesendet
-- Session Replays (10% Sampling) — sieht was der User vor dem Fehler gemacht hat
-- Performance-Tracing (25% für Server, 10% für Client)
+- Jeder 500er / jede Exception wird an Sentry gesendet (Browser, Server, Edge)
+- Session Replays (10% Sampling, 100% bei Fehlern) — sieht was der User vor dem Fehler gemacht hat
+- Performance-Tracing (100% Dev, 10% Prod) für Server + Client
+- `global-error.tsx` fängt alle Root-Layout-Errors
+- `onRequestError` fängt alle unhandled Server-Side-Errors
+- `onRouterTransitionStart` sendet Spans für App-Router-Navigation
 
 ---
 

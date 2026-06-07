@@ -48,9 +48,27 @@ const nextConfig: NextConfig = {
   },
 };
 
+/**
+ * Sentry build-time configuration.
+ *
+ * Source map upload is enabled when SENTRY_AUTH_TOKEN is set.
+ * Org/project slugs read from env vars (fall back to env-injected values).
+ *
+ * @see https://docs.sentry.io/platforms/javascript/guides/nextjs/
+ */
 export default withSentryConfig(nextConfig, {
-  sourcemaps: {
-    disable: true,
-  },
+  org: process.env.SENTRY_ORG,
+  project: process.env.SENTRY_PROJECT,
+
+  // Source map upload auth token (reads from .env.sentry-build-plugin or CI env)
+  authToken: process.env.SENTRY_AUTH_TOKEN,
+
+  // Upload wider set of client source files for better stack trace resolution
+  widenClientFileUpload: true,
+
+  // Tunnel route: bypass ad-blockers by proxying events through our own domain
   tunnelRoute: "/monitoring",
+
+  // Suppress non-CI output noise
+  silent: !process.env.CI,
 });

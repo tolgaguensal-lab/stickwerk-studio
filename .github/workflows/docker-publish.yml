@@ -90,6 +90,12 @@ jobs:
             APP_VERSION=${{ steps.version.outputs.full }}
             NEXT_PUBLIC_SITE_URL=${{ vars.NEXT_PUBLIC_SITE_URL || 'https://sws.guenlab.de' }}
             NEXT_PUBLIC_APP_URL=${{ vars.NEXT_PUBLIC_APP_URL || 'https://sws.guenlab.de' }}
+          # Sentry source map upload (build-time only, not baked into image)
+          secrets: |
+            SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}
+            SENTRY_ORG=${{ secrets.SENTRY_ORG }}
+            SENTRY_PROJECT=${{ secrets.SENTRY_PROJECT }}
+
 
       - name: Create GitHub Release
         env:
