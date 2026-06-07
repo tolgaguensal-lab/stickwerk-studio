@@ -57,8 +57,8 @@ const nextConfig: NextConfig = {
  * @see https://docs.sentry.io/platforms/javascript/guides/nextjs/
  */
 export default withSentryConfig(nextConfig, {
-  org: process.env.SENTRY_ORG,
-  project: process.env.SENTRY_PROJECT,
+  org: process.env.SENTRY_ORG || "stickwerk-studio-uw",
+  project: process.env.SENTRY_PROJECT || "sws",
 
   // Source map upload auth token (reads from .env.sentry-build-plugin or CI env)
   authToken: process.env.SENTRY_AUTH_TOKEN,
