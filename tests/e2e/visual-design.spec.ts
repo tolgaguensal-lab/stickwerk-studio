@@ -38,8 +38,8 @@ test.describe('Visual Design System Compliance', () => {
 
       // 5. H1 Font Size check (Desktop 64px / Mobile 40px)
       const h1 = page.locator('h1').first();
-      const h1FontSize = await h1.evaluate((el) => 
-        parseInt(window.getComputedStyle(el).fontSize
+      const h1FontSize = await h1.evaluate((el) =>
+        parseInt(window.getComputedStyle(el).fontSize),
       );
       if (vp.width >= 1280) {
         expect(h1FontSize).toBeGreaterThanOrEqual(64);

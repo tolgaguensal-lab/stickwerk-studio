@@ -100,8 +100,12 @@ test.describe("Mobile Navigation", () => {
   test("should open mobile menu", async ({ page }) => {
     await page.goto("/");
     await page.waitForTimeout(2000);
-    await page.waitForFunction(() => typeof (window as any).__setMobileMenuOpen === 'function', {}, { timeout: 10000 });
-    await page.evaluate(() => (window as any).__setMobileMenuOpen(true));
+    await page.waitForFunction(
+      () => typeof (window as unknown as { __setMobileMenuOpen?: unknown }).__setMobileMenuOpen === "function",
+      {},
+      { timeout: 10000 },
+    );
+    await page.evaluate(() => (window as unknown as { __setMobileMenuOpen?: (open: boolean) => void }).__setMobileMenuOpen?.(true));
     await page.waitForTimeout(1000);
     // The Sheet renders with role="dialog"
     const mobileMenu = page.locator('[role="dialog"]');

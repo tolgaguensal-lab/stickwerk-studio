@@ -50,12 +50,12 @@ export default function Footer() {
                 Galerie
               </Link>
 
-              <a
+              <Link
                 href="/#calculator"
                 className="block text-card/70 hover:text-accent transition-colors nav-link"
               >
                 Konfigurator
-              </a>
+              </Link>
               <Link
                 href="/faq"
                 className="block text-card/70 hover:text-accent transition-colors nav-link"

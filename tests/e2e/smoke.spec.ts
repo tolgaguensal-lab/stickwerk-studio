@@ -58,7 +58,7 @@ test.describe("Smoke Tests — Contact form", () => {
 
 test.describe("Smoke Tests — 404 handling", () => {
   test("Non-existent page shows 404", async ({ page }) => {
-    const response = await page.goto("/nonexistent-seite", { waitUntil: "networkidle" });
+    await page.goto("/nonexistent-seite", { waitUntil: "networkidle" });
     // Next.js returns 200 for not-found but renders the not-found page
     await expect(page.locator("h1, h2").first()).toBeVisible();
   });

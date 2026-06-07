@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useId, useMemo } from "react";
 import { motion } from "framer-motion";
 
 // ─── Types ───────────────────────────────────────────────────────────────
@@ -105,6 +105,7 @@ export default function PatchPreview({
 }: PatchPreviewProps) {
   const W = 280;
   const H = 240;
+  const reactId = useId();
 
   const palette = useMemo(() => {
     const count = Math.min(colors || 2, 12);
@@ -156,7 +157,7 @@ export default function PatchPreview({
   }, [productType, shape, size, nametagSize]);
 
   const fabricGradient = useMemo(() => {
-    const id = `fabric-${Math.random().toString(36).slice(2, 8)}`;
+    const id = `fabric-${reactId.replace(/[^a-z0-9]/gi, "")}`;
     const baseColor = productType === "nametag"
       ? "#F7F1E6"
       : material === "leather"

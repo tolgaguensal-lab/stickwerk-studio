@@ -2,6 +2,7 @@
 
 import { Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import Link from "next/link";
 import { useState } from "react";
 import Image from "next/image";
 import {
@@ -165,12 +166,12 @@ function LoginForm() {
 
       {/* Back to website */}
       <div className="text-center">
-        <a
+        <Link
           href="/"
           className="text-sm text-muted-foreground hover:text-accent transition-colors"
         >
           ← Zurück zur Website
-        </a>
+        </Link>
       </div>
     </div>
   );

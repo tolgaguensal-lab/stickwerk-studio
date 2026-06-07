@@ -62,9 +62,7 @@ test.describe("Visual Integrity — Overlays, Fonts & Layout", () => {
             document.querySelectorAll("h1, h2, h3, h4, p, li, span, a, button, label"),
           );
           const problems: string[] = [];
-          // eslint-disable-next-line @typescript-eslint/prefer-for-of
-          for (let ei = 0; ei < allEls.length; ei++) {
-            const el = allEls[ei];
+          for (const el of allEls) {
             const text = el.textContent?.trim();
             if (!text || text.length < 3) continue;
             const rect = el.getBoundingClientRect();
@@ -100,11 +98,8 @@ test.describe("Visual Integrity — Overlays, Fonts & Layout", () => {
         const fontIssues = await page.evaluate(() => {
           const issues: string[] = [];
           const headings = Array.from(document.querySelectorAll("h1, h2, h3"));
-          // eslint-disable-next-line @typescript-eslint/prefer-for-of
-          for (let hi = 0; hi < headings.length; hi++) {
-            const h = headings[hi];
+          for (const h of headings) {
             const style = window.getComputedStyle(h);
-            const fontFamily = style.fontFamily;
             const fontSize = style.fontSize;
             const color = style.color;
             if (color === "rgba(0, 0, 0, 0)" || color === "transparent") {
@@ -143,9 +138,7 @@ test.describe("Visual Integrity — Overlays, Fonts & Layout", () => {
       const buttons = Array.from(
         document.querySelectorAll("button, a, [role='button'], input, select, textarea"),
       );
-      // eslint-disable-next-line @typescript-eslint/prefer-for-of
-      for (let bi = 0; bi < buttons.length; bi++) {
-        const btn = buttons[bi];
+      for (const btn of buttons) {
         const rect = btn.getBoundingClientRect();
         if (rect.width === 0 || rect.height === 0) continue;
         const centerX = rect.left + rect.width / 2;
