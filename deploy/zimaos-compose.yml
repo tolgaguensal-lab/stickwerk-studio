@@ -1,73 +1,69 @@
-# =============================================================================
-# Stickwerk-Studio — ZimaOS Deployment (mit eigener PostgreSQL)
-# =============================================================================
-# Zero-Config: alle Env-Vars sind direkt gesetzt (keine Variable-Substitution).
-# Einfach in ZimaOS Web UI importieren → Start → läuft.
-#
-# Werte können jederzeit in der ZimaOS Web UI überschrieben werden —
-# aber der Container startet auch ohne manuelles Eingreifen.
-#
-# PostgreSQL läuft im gleichen Stack — keine externe DB nötig.
-# Daten bleiben bei Updates erhalten (Volume "pgdata").
-# =============================================================================
-
+name: stickwerk-studio
 services:
-  db:
-    image: postgres:17-alpine
-    container_name: stickwerk-db
-    restart: unless-stopped
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-    environment:
-      POSTGRES_USER: stickwerk
-      POSTGRES_PASSWORD: stickwerk_secret_2026
-      POSTGRES_DB: stickwerk
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U stickwerk"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 15s
-
   app:
-    image: ghcr.io/tolgaguensal-lab/stickwerk-studio:latest
+    cpu_shares: 90
     container_name: stickwerk-app
+    image: ghcr.io/tolgaguensal-lab/stickwerk-studio:latest
     restart: unless-stopped
     ports:
-      - "3034:3000"
+      - target: 3000
+        published: "3034"
+        protocol: tcp
     depends_on:
       db:
         condition: service_healthy
+        required: true
     environment:
-      NODE_ENV: production
-      HOSTNAME: 0.0.0.0
-      PORT: 3000
-
-      DATABASE_URL: postgresql://stickwerk:stickwerk_secret_2026@db:5432/stickwerk
-
-      SESSION_SECRET: 1136803954688f9a32a363737b1960ba40fe4084b2bc5d8232e1ecbcb137f4c9
-      ADMIN_USER: admin@stickwerk-studio.de
-      ADMIN_PASSWORD: gKJtBwhgUAafhU8n
-
-      NEXT_PUBLIC_SITE_URL: https://sws.guenlab.de
-      NEXT_PUBLIC_APP_URL: https://sws.guenlab.de
-
-      SENTRY_DSN: https://390985695bc2d6d915f88f5f7a97220b@o4511455077007360.ingest.de.sentry.io/4511523279011920
-      NEXT_PUBLIC_SENTRY_DSN: https://390985695bc2d6d915f88f5f7a97220b@o4511455077007360.ingest.de.sentry.io/4511523279011920
-
-      SMTP_HOST: ""
-      SMTP_PORT: "587"
-      SMTP_USER: ""
-      SMTP_PASS: ""
-      SMTP_FROM: ""
-      NOTIFY_EMAIL: ""
+      - NODE_ENV=production
+      - HOSTNAME=0.0.0.0
+      - PORT=3000
+      - DATABASE_URL=postgresql://stickwerk:stickwerk_secret_2026@db:5432/stickwerk
+      - SESSION_SECRET=1136803954688f9a32a363737b1960ba40fe4084b2bc5d8232e1ecbcb137f4c9
+      - ADMIN_USER=admin@stickwerk-studio.de
+      - ADMIN_PASSWORD=gKJtBwhgUAafhU8n
+      - NEXT_PUBLIC_SITE_URL=https://sws.guenlab.de
+      - NEXT_PUBLIC_APP_URL=https://sws.guenlab.de
+      - SENTRY_DSN=https://390985695bc2d6d915f88f5f7a97220b@o4511455077007360.ingest.de.sentry.io/4511523279011920
+      - NEXT_PUBLIC_SENTRY_DSN=https://390985695bc2d6d915f88f5f7a97220b@o4511455077007360.ingest.de.sentry.io/4511523279011920
+      - SMTP_HOST=
+      - SMTP_PORT=587
+      - SMTP_USER=
+      - SMTP_PASS=
+      - SMTP_FROM=
+      - NOTIFY_EMAIL=
     healthcheck:
-      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:3000/api/health"]
-      interval: 30s
+      test:
+        - CMD
+        - wget
+        - -qO-
+        - http://127.0.0.1:3000/api/health
       timeout: 10s
+      interval: 30s
       retries: 3
       start_period: 30s
-
+    network_mode: bridge
+  db:
+    cpu_shares: 90
+    container_name: stickwerk-db
+    image: postgres:17-alpine
+    restart: unless-stopped
+    volumes:
+      - type: volume
+        source: pgdata
+        target: /var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=stickwerk
+      - POSTGRES_PASSWORD=stickwerk_secret_2026
+      - POSTGRES_DB=stickwerk
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - pg_isready -U stickwerk
+      timeout: 5s
+      interval: 10s
+      retries: 5
+      start_period: 15s
+    network_mode: bridge
 volumes:
   pgdata:
     driver: local
