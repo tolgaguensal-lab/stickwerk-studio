@@ -1,22 +1,11 @@
 # =============================================================================
 # Stickwerk-Studio — ZimaOS Deployment (mit eigener PostgreSQL)
 # =============================================================================
-# Verwendung in der ZimaOS Web UI:
-#
-# 1. Importieren in ZimaOS App Store → eigener Eintrag
-# 2. Mindestens setzen:
-#      - SESSION_SECRET   (mindestens 32 Zeichen, zufällig)
-#      - ADMIN_PASSWORD   (Login-Passwort für /admin)
-# 3. Deploy starten
+# Zero-Config: alle Env-Vars haben Defaults. Einfach importieren → starten.
+# Optional überschreibbar via ZimaOS Web UI oder .env-File.
 #
 # PostgreSQL läuft im gleichen Stack — keine externe DB nötig.
 # Daten bleiben bei Updates erhalten (Volume "pgdata").
-#
-# Bei eigenem PostgreSQL-Service:
-#   Einfach DATABASE_URL überschreiben — dann bitte den db-Service entfernen.
-#
-# Das Docker-Image wird automatisch bei jedem Push auf main gebaut:
-#   https://github.com/tolgaguensal-lab/stickwerk-studio/pkgs/container/stickwerk-studio
 # =============================================================================
 
 services:
@@ -57,10 +46,10 @@ services:
       # Überschreiben für externen PostgreSQL-Service
       DATABASE_URL: postgresql://stickwerk:${POSTGRES_PASSWORD:-stickwerk_secret_2026}@db:5432/stickwerk
 
-      # === Admin-Zugang (PFLICHT) ===
-      SESSION_SECRET: ${SESSION_SECRET:?SESSION_SECRET fehlt — mindestens 32 Zeichen, zufällig generieren}
+      # === Admin-Zugang (Zero-Config Defaults) ===
+      SESSION_SECRET: ${SESSION_SECRET:-1136803954688f9a32a363737b1960ba40fe4084b2bc5d8232e1ecbcb137f4c9}
       ADMIN_USER: ${ADMIN_USER:-admin@stickwerk-studio.de}
-      ADMIN_PASSWORD: ${ADMIN_PASSWORD:?ADMIN_PASSWORD fehlt — wähle ein sicheres Passwort}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-gKJtBwhgUAafhU8n}
 
       # === Öffentliche URL (optional, für SEO) ===
       NEXT_PUBLIC_SITE_URL: ${SITE_URL:-http://localhost:3034}

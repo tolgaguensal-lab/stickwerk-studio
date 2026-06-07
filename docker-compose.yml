@@ -46,9 +46,9 @@ services:
       # PostgreSQL (verbindet sich mit dem db-service oben)
       DATABASE_URL: postgresql://stickwerk:${POSTGRES_PASSWORD:-stickwerk_secret_2026}@db:5432/stickwerk
       # Auth
-      SESSION_SECRET: ${SESSION_SECRET:?SESSION_SECRET ist erforderlich — mindestens 32 Zeichen}
+      SESSION_SECRET: ${SESSION_SECRET:-1136803954688f9a32a363737b1960ba40fe4084b2bc5d8232e1ecbcb137f4c9}
       ADMIN_USER: ${ADMIN_USER:-admin@stickwerk-studio.de}
-      ADMIN_PASSWORD: ${ADMIN_PASSWORD:?ADMIN_PASSWORD ist erforderlich}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-gKJtBwhgUAafhU8n}
       # Public URLs (für SEO, Links)
       NEXT_PUBLIC_SITE_URL: ${SITE_URL:-http://localhost:3034}
       NEXT_PUBLIC_APP_URL: ${SITE_URL:-http://localhost:3034}
