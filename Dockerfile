@@ -46,7 +46,7 @@ RUN mkdir -p public && \
     echo "{\"version\":\"${APP_VERSION}\",\"buildTime\":\"$(date -u +%Y-%m-%dT%H:%M:%SZ)\"}" > public/version.json
 
 # Next.js Standalone-Build
-RUN npm run build && \
+RUN TURBOPACK=false npm run build && \
     echo "=== .next directory ===" && \
     ls -la /app/.next/ && \
     echo "=== .next/standalone/ ===" && \
