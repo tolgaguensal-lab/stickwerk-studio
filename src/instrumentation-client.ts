@@ -22,7 +22,13 @@ if (dsn) {
     sendDefaultPii: true,
 
     integrations: [
+      Sentry.browserTracingIntegration(),
       Sentry.replayIntegration(),
+    ],
+
+    tracePropagationTargets: [
+      "localhost",
+      /^https:\/\/sws\.guenlab\.de\/api/,
     ],
   });
 }
