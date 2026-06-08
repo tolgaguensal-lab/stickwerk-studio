@@ -1,20 +1,13 @@
-name: stickwerk-studio
 services:
   app:
-    cpu_shares: 90
     container_name: stickwerk-app
     image: ghcr.io/tolgaguensal-lab/stickwerk-studio:latest
     restart: unless-stopped
-    labels:
-      - "de.stickwerk-studio.watchtower.enable=true"
     ports:
-      - target: 3000
-        published: "3034"
-        protocol: tcp
+      - "3034:3000"
     depends_on:
       db:
         condition: service_healthy
-        required: true
     environment:
       - NODE_ENV=production
       - HOSTNAME=0.0.0.0
@@ -34,55 +27,28 @@ services:
       - SMTP_FROM=
       - NOTIFY_EMAIL=
     healthcheck:
-      test:
-        - CMD
-        - wget
-        - -qO-
-        - http://127.0.0.1:3000/api/health
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:3000/api/health"]
       timeout: 10s
       interval: 30s
       retries: 3
       start_period: 30s
-    network_mode: bridge
+
   db:
-    cpu_shares: 90
     container_name: stickwerk-db
     image: postgres:17-alpine
     restart: unless-stopped
     volumes:
-      - type: volume
-        source: pgdata
-        target: /var/lib/postgresql/data
+      - pgdata:/var/lib/postgresql/data
     environment:
       - POSTGRES_USER=stickwerk
       - POSTGRES_PASSWORD=stickwerk_secret_2026
       - POSTGRES_DB=stickwerk
     healthcheck:
-      test:
-        - CMD-SHELL
-        - pg_isready -U stickwerk
+      test: ["CMD-SHELL", "pg_isready -U stickwerk"]
       timeout: 5s
       interval: 10s
       retries: 5
       start_period: 15s
-    network_mode: bridge
-  watchtower:
-    cpu_shares: 10
-    container_name: stickwerk-watchtower
-    image: containrrr/watchtower:latest
-    restart: unless-stopped
-    volumes:
-      - type: bind
-        source: /var/run/docker.sock
-        target: /var/run/docker.sock
-    environment:
-      - WATCHTOWER_CLEANUP=true
-      - WATCHTOWER_POLL_INTERVAL=60
-      - WATCHTOWER_LABEL_ENABLE=true
-      - WATCHTOWER_LABEL=de.stickwerk-studio.watchtower.enable
-      - WATCHTOWER_INCLUDE_STOPPED=false
-      - WATCHTOWER_TIMEOUT=60s
-    network_mode: bridge
+
 volumes:
   pgdata:
-    driver: local
