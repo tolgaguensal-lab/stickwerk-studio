@@ -32,6 +32,9 @@ ENV NODE_ENV=production
 
 WORKDIR /app
 
+# better-sqlite3 needs native compilation (C++ addon)
+RUN apk add --no-cache python3 g++ make
+
 COPY package*.json ./
 
 # Install ALL deps (including devDependencies needed for build tools like @tailwindcss/postcss)
@@ -76,7 +79,8 @@ COPY --from=builder /app/public ./public
 COPY --from=builder /app/drizzle ./drizzle
 COPY --from=builder /app/scripts/migrate.mjs ./scripts/migrate.mjs
 # Migration braucht drizzle-orm + better-sqlite3 — standalone hat nur Next.js-Deps
-RUN npm install drizzle-orm better-sqlite3
+RUN apk add --no-cache python3 g++ make && \
+    npm install drizzle-orm better-sqlite3
 
 # Besitzer setzen
 RUN chown -R nextjs:nodejs /app
