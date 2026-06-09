@@ -75,6 +75,8 @@ COPY --from=builder /app/public ./public
 # 4. Drizzle-Migrationen (Auto-Migration beim Container-Start)
 COPY --from=builder /app/drizzle ./drizzle
 COPY --from=builder /app/scripts/migrate.mjs ./scripts/migrate.mjs
+# Migration braucht drizzle-orm + pg — standalone hat nur Next.js-Deps
+RUN npm install drizzle-orm pg
 
 # Besitzer setzen
 RUN chown -R nextjs:nodejs /app
