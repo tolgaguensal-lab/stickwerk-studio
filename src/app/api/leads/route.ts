@@ -66,7 +66,7 @@ export async function POST(req: Request) {
         phone: phone || "",
         company: company || "",
         message: message || "",
-        patchConfig: patchConfig || {},
+        patchConfig: JSON.stringify(patchConfig || {}),
         estimatedPriceMin: estimatedPriceMin || 0,
         estimatedPriceMax: estimatedPriceMax || 0,
         status: "new",
@@ -123,7 +123,6 @@ export async function GET(req: Request) {
         leads: leadsList.map((l) => ({
           ...l,
           id: String(l.id),
-          created: l.created?.toISOString() ?? "",
         })),
         total,
         page,

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { db, schema } from "@/lib/db";
-import { eq, desc, sql } from "drizzle-orm";
+import { eq, desc } from "drizzle-orm";
 
 export async function GET(req: Request) {
   try {
@@ -9,15 +9,17 @@ export async function GET(req: Request) {
 
     if (email) {
       // Single customer detail
-      const leads = await db.select()
+      const leads = db.select()
         .from(schema.leads)
         .where(eq(schema.leads.email, email))
-        .orderBy(desc(schema.leads.created));
+        .orderBy(desc(schema.leads.created))
+        .all();
 
-      const orders = await db.select()
+      const orders = db.select()
         .from(schema.orders)
         .where(eq(schema.orders.customerEmail, email))
-        .orderBy(desc(schema.orders.createdAt));
+        .orderBy(desc(schema.orders.createdAt))
+        .all();
 
       // Get customer name from most recent lead
       const name = leads.length > 0 ? leads[0].name : "";
@@ -31,27 +33,29 @@ export async function GET(req: Request) {
     }
 
     // All customers: group leads by email
-    const customersRaw = await db.execute(sql`
-      SELECT 
-        email,
-        MAX(name) as name,
-        COUNT(*)::int as total_leads,
-        COALESCE(
-          (SELECT COUNT(*)::int FROM orders WHERE customer_email = leads.email),
-          0
-        ) as total_orders,
-        MAX(created) as last_lead_date
-      FROM leads
-      WHERE email IS NOT NULL AND email != ''
-      GROUP BY email
-      ORDER BY last_lead_date DESC
-    `);
+    const customersRaw = db.$client
+      .prepare(
+        `SELECT 
+          email,
+          MAX(name) as name,
+          COUNT(*) as total_leads,
+          COALESCE(
+            (SELECT COUNT(*) FROM orders WHERE customer_email = leads.email),
+            0
+          ) as total_orders,
+          MAX(created) as last_lead_date
+        FROM leads
+        WHERE email IS NOT NULL AND email != ''
+        GROUP BY email
+        ORDER BY last_lead_date DESC`
+      )
+      .all() as any[];
 
-    const customers = customersRaw.rows.map((row: any) => ({
+    const customers = customersRaw.map((row: any) => ({
       email: row.email,
       name: row.name,
-      totalLeads: parseInt(row.total_leads, 10),
-      totalOrders: parseInt(row.total_orders, 10),
+      totalLeads: row.total_leads,
+      totalOrders: row.total_orders,
       lastLeadDate: row.last_lead_date,
     }));
 

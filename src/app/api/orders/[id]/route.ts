@@ -43,7 +43,7 @@ export async function PATCH(req: Request, { params }: { params: Promise<{ id: st
       return NextResponse.json({ error: "Auftrag nicht gefunden" }, { status: 404 });
     }
 
-    const updateData: Record<string, unknown> = { updatedAt: new Date() };
+    const updateData: Record<string, unknown> = { updatedAt: new Date().toISOString() };
     if (status !== undefined) updateData.status = status;
     if (notes !== undefined) updateData.notes = notes;
     if (shippingAddress !== undefined) updateData.shippingAddress = shippingAddress;

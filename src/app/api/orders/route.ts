@@ -89,8 +89,8 @@ export async function POST(req: Request) {
       await db.update(schema.leads)
         .set({
           status: "in_progress",
-          convertedToOrderAt: new Date(),
-          updated: new Date(),
+          convertedToOrderAt: new Date().toISOString(),
+          updated: new Date().toISOString(),
         })
         .where(eq(schema.leads.id, leadId));
     }

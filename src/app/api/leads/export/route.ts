@@ -19,7 +19,7 @@ function escapeCSV(value: unknown): string {
   return str;
 }
 
-function formatDate(iso: Date | null | undefined): string {
+function formatDate(iso: string | null | undefined): string {
   if (!iso) return "";
   const d = new Date(iso);
   const pad = (n: number) => String(n).padStart(2, "0");

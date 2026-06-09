@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { Pool } from "pg";
+import Database from "better-sqlite3";
 import { readFileSync } from "fs";
 import { join } from "path";
 
@@ -69,40 +69,30 @@ export async function GET() {
     return NextResponse.json(report);
   }
 
-  // Sanitize URL for display
-  try {
-    const url = new URL(dbUrl);
-    report.env.databaseUrl = {
-      status: "ok",
-      message: `postgresql://${url.username}:****@${url.hostname}:${url.port}${url.pathname}`,
-    };
-  } catch {
-    report.env.databaseUrl = { status: "error", message: "DATABASE_URL ist ungültig" };
-  }
+  report.env.databaseUrl = {
+    status: "ok",
+    message: `SQLite: ${dbUrl}`,
+  };
 
   // Test database connection
-  const pool = new Pool({ connectionString: dbUrl, connectionTimeoutMillis: 5000 });
-
+  let sqlite: Database.Database | null = null;
   try {
-    const client = await pool.connect();
-    await client.query("SELECT 1");
-    client.release();
+    sqlite = new Database(dbUrl);
+    sqlite.prepare("SELECT 1").get();
     report.database.connection = { status: "ok", message: "Verbindung erfolgreich" };
   } catch (err: unknown) {
     const msg = err instanceof Error ? err.message : String(err);
     report.database.connection = { status: "error", message: `Verbindung fehlgeschlagen`, detail: msg };
-    await pool.end().catch(() => {});
+    if (sqlite) sqlite.close();
     return NextResponse.json(report);
   }
 
   // Check tables exist
   try {
-    const result = await pool.query(`
-      SELECT table_name FROM information_schema.tables 
-      WHERE table_schema = 'public' AND table_name IN ('leads', 'contact_messages')
-      ORDER BY table_name
-    `);
-    const found = result.rows.map((r: { table_name: string }) => r.table_name);
+    const result = sqlite
+      .prepare("SELECT name FROM sqlite_master WHERE type='table' AND name IN ('leads', 'contact_messages') ORDER BY name")
+      .all() as { name: string }[];
+    const found = result.map((r) => r.name);
     const expected = ["leads", "contact_messages"];
     const missing = expected.filter((t) => !found.includes(t));
 
@@ -120,6 +110,6 @@ export async function GET() {
     report.database.tables = { status: "error", message: "Tabellen-Check fehlgeschlagen", detail: msg };
   }
 
-  await pool.end().catch(() => {});
+  sqlite.close();
   return NextResponse.json(report);
 }

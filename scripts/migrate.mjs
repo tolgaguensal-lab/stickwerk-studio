@@ -1,40 +1,32 @@
-import { drizzle } from "drizzle-orm/node-postgres";
-import { migrate } from "drizzle-orm/node-postgres/migrator";
-import pg from "pg";
+import { drizzle } from "drizzle-orm/better-sqlite3";
+import { migrate } from "drizzle-orm/better-sqlite3/migrator";
+import Database from "better-sqlite3";
 
-const { Pool } = pg;
-
-async function main() {
+function main() {
   const url = process.env.DATABASE_URL;
   if (!url) {
     console.error("DATABASE_URL nicht gesetzt — Migration übersprungen");
     return;
   }
 
-  const pool = new Pool({ connectionString: url });
+  const sqlite = new Database(url);
 
-  // Test connection before running migrations
   try {
-    const client = await pool.connect();
-    await client.query("SELECT 1");
-    client.release();
+    sqlite.prepare("SELECT 1").get();
     console.log("Datenbankverbindung hergestellt");
   } catch (err) {
     console.error("Keine Datenbankverbindung — Migration übersprungen:", err.message);
-    await pool.end();
+    sqlite.close();
     return;
   }
 
-  const db = drizzle(pool);
+  const db = drizzle(sqlite);
 
   console.log("Führe Datenbank-Migrationen aus...");
-  await migrate(db, { migrationsFolder: "drizzle" });
+  migrate(db, { migrationsFolder: "drizzle" });
   console.log("✅ Migrationen erfolgreich angewendet");
 
-  await pool.end();
+  sqlite.close();
 }
 
-main().catch((err) => {
-  console.error("❌ Migration fehlgeschlagen:", err);
-  process.exit(1);
-});
+main();

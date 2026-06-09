@@ -11,7 +11,7 @@
 #
 # Manuell mit externer DB:
 #   docker run -p 3034:3000 \
-#     -e DATABASE_URL=postgresql://user:pass@host:5432/db \
+#     -e DATABASE_URL=/data/stickwerk.db \
 #     -e SESSION_SECRET="mindestens-32-zeichen-lang!!!" \
 #     -e ADMIN_USER=admin@example.com \
 #     -e ADMIN_PASSWORD=sicheres-passwort \
@@ -75,8 +75,8 @@ COPY --from=builder /app/public ./public
 # 4. Drizzle-Migrationen (Auto-Migration beim Container-Start)
 COPY --from=builder /app/drizzle ./drizzle
 COPY --from=builder /app/scripts/migrate.mjs ./scripts/migrate.mjs
-# Migration braucht drizzle-orm + pg — standalone hat nur Next.js-Deps
-RUN npm install drizzle-orm pg
+# Migration braucht drizzle-orm + better-sqlite3 — standalone hat nur Next.js-Deps
+RUN npm install drizzle-orm better-sqlite3
 
 # Besitzer setzen
 RUN chown -R nextjs:nodejs /app

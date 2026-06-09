@@ -35,7 +35,7 @@ export async function PATCH(
       .set({
         status: result.data.status,
         adminNotes: result.data.adminNotes || "",
-        updated: new Date(),
+        updated: new Date().toISOString(),
       })
       .where(eq(schema.leads.id, idNum))
       .returning();
@@ -111,7 +111,7 @@ export async function GET(
     }
 
     return NextResponse.json(
-      { lead: { ...record, id: String(record.id), created: record.created?.toISOString() ?? "" } },
+      { lead: { ...record, id: String(record.id) } },
       { status: 200 }
     );
   } catch (error) {
