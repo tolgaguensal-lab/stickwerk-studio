@@ -6,7 +6,7 @@ services:
     image: ghcr.io/tolgaguensal-lab/stickwerk-studio:latest
     restart: unless-stopped
     labels:
-      - "de.stickwerk-studio.watchtower.enable=true"
+      - "com.centurylinklabs.watchtower.enable=true"
       - "casaos.name=Stickwerk-Studio"
       - "casaos.title=Stickwerk-Studio"
       - "casaos.description=Patches &amp; Stickerei Konfigurator — Lead-Management &amp; Admin-Dashboard"
@@ -37,6 +37,5 @@ services:
       - WATCHTOWER_CLEANUP=true
       - WATCHTOWER_POLL_INTERVAL=3600
       - WATCHTOWER_LABEL_ENABLE=true
-      - WATCHTOWER_LABEL=de.stickwerk-studio.watchtower.enable
       - WATCHTOWER_INCLUDE_STOPPED=false
       - WATCHTOWER_TIMEOUT=60s
