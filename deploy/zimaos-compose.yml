@@ -28,7 +28,7 @@ services:
       - SMTP_FROM=
       - NOTIFY_EMAIL=
     volumes:
-      - stickwerk-data:/data
+      - /DATA/stickwerk-data:/data
     healthcheck:
       test: ["CMD", "wget", "-qO-", "http://127.0.0.1:3000/api/health"]
       timeout: 10s
@@ -49,6 +49,3 @@ services:
       - WATCHTOWER_LABEL=de.stickwerk-studio.watchtower.enable
       - WATCHTOWER_INCLUDE_STOPPED=false
       - WATCHTOWER_TIMEOUT=60s
-
-volumes:
-  stickwerk-data:
