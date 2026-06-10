@@ -1,0 +1,51 @@
+name: stickwerk-studio
+
+services:
+  app:
+    container_name: stickwerk-app
+    image: ghcr.io/tolgaguensal-lab/stickwerk-studio:latest
+    restart: unless-stopped
+    labels:
+      - "de.stickwerk-studio.watchtower.enable=true"
+    ports:
+      - "3034:3000"
+    environment:
+      - NODE_ENV=production
+      - HOSTNAME=0.0.0.0
+      - PORT=3000
+      - DATABASE_URL=/data/stickwerk.db
+      - SESSION_SECRET=1136803954688f9a32a363737b1960ba40fe4084b2bc5d8232e1ecbcb137f4c9
+      - ADMIN_USER=admin@stickwerk-studio.de
+      - ADMIN_PASSWORD=gKJtBwhgUAafhU8n
+      - NEXT_PUBLIC_SITE_URL=https://sws.guenlab.de
+      - NEXT_PUBLIC_APP_URL=https://sws.guenlab.de
+      - SENTRY_DSN=https://390985695bc2d6d915f88f5f7a97220b@o4511455077007360.ingest.de.sentry.io/4511523279011920
+      - NEXT_PUBLIC_SENTRY_DSN=https://390985695bc2d6d915f88f5f7a97220b@o4511455077007360.ingest.de.sentry.io/4511523279011920
+      - SMTP_HOST=
+      - SMTP_PORT=587
+      - SMTP_USER=
+      - SMTP_PASS=
+      - SMTP_FROM=
+      - NOTIFY_EMAIL=
+    volumes:
+      - /DATA/stickwerk-data:/data
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:3000/api/health"]
+      timeout: 10s
+      interval: 30s
+      retries: 3
+      start_period: 30s
+
+  watchtower:
+    container_name: stickwerk-watchtower
+    image: containrrr/watchtower:latest
+    restart: unless-stopped
+    volumes:
+      - /DATA/docker.sock:/var/run/docker.sock
+    environment:
+      - WATCHTOWER_CLEANUP=true
+      - WATCHTOWER_POLL_INTERVAL=60
+      - WATCHTOWER_LABEL_ENABLE=true
+      - WATCHTOWER_LABEL=de.stickwerk-studio.watchtower.enable
+      - WATCHTOWER_INCLUDE_STOPPED=false
+      - WATCHTOWER_TIMEOUT=60s
