@@ -13,7 +13,7 @@ export async function GET() {
   // Test database connectivity
   try {
     const result = await db.select({ total: drizzleCount() }).from(schema.leads);
-    checks.database_reachable = "PostgreSQL-Verbindung OK";
+    checks.database_reachable = "SQLite-Verbindung OK";
     checks.database_query = `leads-Tabelle OK (${result[0]?.total ?? 0} Einträge)`;
   } catch (error) {
     const msg = error instanceof Error ? error.message : String(error);
