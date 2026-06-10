@@ -11,23 +11,23 @@ import PatchPreview from "@/components/PatchPreview";
 // --- Config & Logic ---
 const CONFIG = {
   shapes: [
-    { id: "circle", name: "Rund", icon: Circle, basePrice: 15 },
-    { id: "rectangle", name: "Rechteckig", icon: Square, basePrice: 15 },
-    { id: "shield", name: "Schildform", icon: Shield, basePrice: 20 },
-    { id: "oval", name: "Oval", icon: Circle, basePrice: 16 },
-    { id: "diamond", name: "Raute", icon: Diamond, basePrice: 18 },
-    { id: "custom", name: "Individuell", icon: Sparkles, basePrice: 25 },
+    { id: "circle", name: "Rund", icon: Circle, basePrice: 5 },
+    { id: "rectangle", name: "Rechteckig", icon: Square, basePrice: 5 },
+    { id: "shield", name: "Schildform", icon: Shield, basePrice: 8 },
+    { id: "oval", name: "Oval", icon: Circle, basePrice: 6 },
+    { id: "diamond", name: "Raute", icon: Diamond, basePrice: 7 },
+    { id: "custom", name: "Individuell", icon: Sparkles, basePrice: 12 },
   ],
   sizes: [
     { id: "small", name: "Klein (bis 5cm)", multiplier: 1.0 },
-    { id: "medium", name: "Mittel (bis 10cm)", multiplier: 1.5 },
-    { id: "large", name: "Groß (bis 15cm)", multiplier: 2.2 },
-    { id: "xl", name: "Extra Groß (15cm+)", multiplier: 3.0 },
+    { id: "medium", name: "Mittel (bis 10cm)", multiplier: 1.3 },
+    { id: "large", name: "Groß (bis 15cm)", multiplier: 1.7 },
+    { id: "xl", name: "Extra Groß (15cm+)", multiplier: 2.2 },
   ],
   complexity: [
     { id: "low", name: "Einfach", desc: "1-2 Farben, klare Linien", multiplier: 1.0 },
-    { id: "medium", name: "Mittel", desc: "Mehrere Farben, Details", multiplier: 1.3 },
-    { id: "high", name: "Komplex", desc: "Viele Details, Verläufe", multiplier: 1.7 },
+    { id: "medium", name: "Mittel", desc: "Mehrere Farben, Details", multiplier: 1.25 },
+    { id: "high", name: "Komplex", desc: "Viele Details, Verläufe", multiplier: 1.5 },
   ],
   backings: [
     { id: "sewn", name: "Zum Aufnähen", price: 0, desc: "Klassische Befestigung mit Naht" },
@@ -45,9 +45,9 @@ const CONFIG = {
   ],
   colorRanges: [
     { max: 2, multiplier: 1.0 },
-    { max: 4, multiplier: 1.2 },
-    { max: 6, multiplier: 1.4 },
-    { max: 12, multiplier: 1.8 },
+    { max: 4, multiplier: 1.15 },
+    { max: 6, multiplier: 1.3 },
+    { max: 12, multiplier: 1.5 },
   ],
   edges: [
     { id: "standard", name: "Standard Rand", price: 0, desc: "Sauberer, gerader Schnitt" },
@@ -58,8 +58,8 @@ const CONFIG = {
   ],
   expressMultipliers: {
     none: 1.0,
-    express: 1.8,
-    super_express: 2.5,
+    express: 1.5,
+    super_express: 2.0,
   },
   expressDeliveryTimes: {
     none: "7-10 Werktage",
