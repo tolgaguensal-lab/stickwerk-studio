@@ -78,7 +78,6 @@ export default function Navbar() {
       if (pathname === "/konfigurator") current = "calculator";
       if (pathname === "/faq") current = "faq";
       if (pathname === "/ueber-uns") current = "ueber-uns";
-      if (pathname === "/patch-builder") current = "patch-builder";
       setActiveSection(current);
     };
 
@@ -102,7 +101,6 @@ export default function Navbar() {
   const navLinks = [
     { id: "features", label: "Leistungen", href: "#features", hash: true },
     { id: "galerie", label: "Galerie", href: "/galerie", hash: false },
-    { id: "patch-builder", label: "Mockup", href: "/patch-builder", hash: false },
     { id: "ratgeber", label: "Ratgeber", href: "/ratgeber", hash: false },
     { id: "calculator", label: "Konfigurator", href: "#calculator", hash: true },
     { id: "faq", label: "FAQ", href: "/faq", hash: false },
