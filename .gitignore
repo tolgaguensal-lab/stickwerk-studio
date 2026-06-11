@@ -28,6 +28,10 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Local test files
+patch-mockup-test.html
+scripts/patch-render-test.js
 .pnpm-debug.log*
 
 # env files (can opt-in for committing if needed)
