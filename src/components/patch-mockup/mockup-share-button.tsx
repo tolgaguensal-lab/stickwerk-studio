@@ -17,7 +17,7 @@ export default function MockupShareButton() {
     // Kurze Verzögerung für UI-Feedback
     setTimeout(() => {
       const link = document.createElement("a");
-      link.download = `stickwerk-patch-${state.shape}-${state.sizeCm}cm.png`;
+      link.download = `stickwerk-vorschau-${state.shape}-${state.sizeCm}cm.png`;
       link.href = canvas.toDataURL("image/png");
       link.click();
       setSaving(false);
@@ -34,7 +34,7 @@ export default function MockupShareButton() {
       );
       if (!blob) return;
 
-      const file = new File([blob], `stickwerk-patch-${state.shape}-${state.sizeCm}cm.png`, {
+      const file = new File([blob], `stickwerk-vorschau-${state.shape}-${state.sizeCm}cm.png`, {
         type: "image/png",
       });
 
@@ -71,7 +71,7 @@ export default function MockupShareButton() {
         ) : (
           <Download className="w-4 h-4" />
         )}
-        {saving ? "Wird erstellt…" : "PNG herunterladen"}
+        {saving ? "Wird erstellt…" : "Vorschau speichern"}
       </button>
 
       <button

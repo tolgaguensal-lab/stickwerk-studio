@@ -3,6 +3,7 @@
 import { useRef, useEffect, useState, useCallback } from "react";
 import { useMockup } from "./mockup-provider";
 import { renderFullPatch } from "@/lib/patch-renderer";
+import { Download } from "lucide-react";
 
 export default function MockupPreview() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -10,15 +11,15 @@ export default function MockupPreview() {
   const { state } = useMockup();
   const [img, setImg] = useState<HTMLImageElement | null>(null);
 
-  // Bild laden
+  // Bild laden (ohne crossOrigin – Data-URLs sind immer same-origin)
   useEffect(() => {
     if (!state.imageUrl) {
       setImg(null);
       return;
     }
     const image = new Image();
-    image.crossOrigin = "anonymous";
     image.onload = () => setImg(image);
+    image.onerror = () => console.warn("mockup-preview: Image load failed for", state.imageUrl?.slice(0, 60));
     image.src = state.imageUrl;
   }, [state.imageUrl]);
 
@@ -78,7 +79,7 @@ export default function MockupPreview() {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const link = document.createElement("a");
-    link.download = `stickwerk-patch-${state.shape}-${state.sizeCm}cm.png`;
+    link.download = `stickwerk-vorschau-${state.shape}-${state.sizeCm}cm.png`;
     link.href = canvas.toDataURL("image/png");
     link.click();
   }, [state.shape, state.sizeCm]);
@@ -98,13 +99,14 @@ export default function MockupPreview() {
         </div>
       </div>
 
-      {/* Download-Button */}
+      {/* Vorschau speichern Button */}
       {state.imageUrl && (
         <button
           onClick={handleDownload}
-          className="absolute bottom-4 right-4 px-3 py-1.5 rounded-lg bg-accent text-accent-foreground text-xs font-medium hover:bg-accent/90 transition-colors shadow-lg"
+          className="absolute bottom-4 right-4 px-3 py-1.5 rounded-lg bg-accent text-accent-foreground text-xs font-medium hover:bg-accent/90 transition-colors shadow-lg flex items-center gap-1.5"
         >
-          PNG speichern
+          <Download className="w-3.5 h-3.5" />
+          Vorschau speichern
         </button>
       )}
     </div>
