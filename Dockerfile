@@ -32,8 +32,8 @@ ENV NODE_ENV=production
 
 WORKDIR /app
 
-# better-sqlite3 needs native compilation (C++ addon)
-RUN apk add --no-cache python3 g++ make
+# better-sqlite3 + canvas needs native compilation (C++ addon)
+RUN apk add --no-cache python3 g++ make cairo-dev pango-dev jpeg-dev giflib-dev librsvg-dev pixman-dev fontconfig-dev
 
 COPY package*.json ./
 
