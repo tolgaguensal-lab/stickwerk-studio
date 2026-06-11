@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { Reveal } from "@/components/Reveal";
 import { StaggerContainer, StaggerItem } from "@/components/StaggerContainer";
@@ -11,7 +12,7 @@ interface PortfolioItem {
   title: string;
   category: Exclude<Category, "Alle">;
   description: string;
-  gradient: string;
+  image: string;
   accent: string;
 }
 
@@ -20,84 +21,84 @@ const portfolioItems: PortfolioItem[] = [
     title: "Vereinswappen FC Bayern Fanclub",
     category: "Logo-Patches",
     description: "Aufwändig gearbeitetes Vereinswappen mit 15.000 Stichen. Jeder detailreiche Verlauf wurde exakt auf den Stickrahmen übertragen.",
-    gradient: "from-[#8A6A3F] via-[#A0845C] to-[#D4B896]",
+    image: "/images/gallery/galerie-01.jpg",
     accent: "#8A6A3F",
   },
   {
     title: "Firmenlogo TechStartup München",
     category: "Logo-Patches",
     description: "Modernes, reduziertes Logo als Bügelpatch für Mitarbeiter-Hoodies. 8.000 Stiche, zweifarbig auf schwarzem Grund.",
-    gradient: "from-[#1C1814] via-[#3A332C] to-[#5C5248]",
+    image: "/images/gallery/galerie-02.jpg",
     accent: "#5C5248",
   },
   {
     title: "Merch-Kollektion YouTuber",
     category: "Merch",
     description: "Limitierte Auflage von 200 Patches für einen Gaming-Streamer. Mit Klettverschluss und individuelle Sticknummer.",
-    gradient: "from-[#8B1E1E] via-[#B82828] to-[#D45353]",
+    image: "/images/gallery/galerie-03.jpg",
     accent: "#8B1E1E",
   },
   {
     title: "Corporate Fashion Agentur",
     category: "Textil",
     description: "Gestickte Logo-Ärmelpatches für ein 50-köpfiges Kreativteam. Angenehme Haptik trotz dichtem Stickbild.",
-    gradient: "from-[#2D4A3E] via-[#1F6B3A] to-[#4A8B5C]",
+    image: "/images/gallery/galerie-04.jpg",
     accent: "#1F6B3A",
   },
   {
     title: "Sonderform Motorrad-Club",
     category: "Sonderanfertigungen",
     description: "Freigeschnittener Patch in spezieller Wappenform mit Metallstickgarn. Inklusive Musterfertigung und 3 Anpassungsrunden.",
-    gradient: "from-[#3A2C4A] via-[#5C4B6B] to-[#8B73A8]",
+    image: "/images/gallery/galerie-05.jpg",
     accent: "#5C4B6B",
   },
   {
     title: "Streetwear Brand Berlin",
     category: "Merch",
     description: "Großformatiger Rückenteil-Patch für eine limited Edition. Kontraststickgarn auf schwerem Baumwollstoff.",
-    gradient: "from-[#4A3520] via-[#6B4F2E] to-[#8A6A3F]",
+    image: "/images/gallery/galerie-06.jpg",
     accent: "#6B4F2E",
   },
   {
     title: "Vereinsjacken THW Kiel Fanclub",
     category: "Textil",
     description: "150 Sätze Textil-Patches für Vereinsjacken in 4 Größen. Einheitliche Qualität bei maximaler Detailtreue.",
-    gradient: "from-[#1B3A5C] via-[#2D5F8A] to-[#4A8BB8]",
+    image: "/images/gallery/galerie-07.jpg",
     accent: "#2D5F8A",
   },
   {
     title: "Crossover-Patch: Logo + Text",
     category: "Sonderanfertigungen",
     description: "Kombination aus Schriftzug und Logo in einem Patch. Zwei Sticktechniken auf einer Fläche vereint.",
-    gradient: "from-[#3A332C] via-[#5C5248] to-[#8A7A6A]",
+    image: "/images/gallery/galerie-08.jpg",
     accent: "#5C5248",
   },
   {
     title: "Event-Merch Konferenz 2026",
     category: "Merch",
     description: "Erinnerungspatch für eine Tech-Konferenz mit QR-Code (gestickt!) und Event-Datum. 500 Stück Auflage.",
-    gradient: "from-[#1C1814] via-[#3A332C] to-[#6B5A4A]",
+    image: "/images/gallery/galerie-09.jpg",
     accent: "#3A332C",
   },
   {
     title: "Feuerwehr Ehrenabzeichen",
     category: "Sonderanfertigungen",
     description: "Hochdetailiertes Abzeichen mit Goldstickgarn, Eichenlaubkranz und mehrzeiligem Schriftzug. Handwerkskunst vom Feinsten.",
-    gradient: "from-[#8A6A3F] via-[#C4A86B] to-[#E8D5A3]",
+    image: "/images/gallery/galerie-10.jpg",
     accent: "#8A6A3F",
   },
   {
     title: "Kunstprojekt: Stickerei auf Denim",
     category: "Sonderanfertigungen",
     description: "Künstlerische Stickerei direkt auf Jeansjacke. Filigrane Linienführung und weiche Farbverläufe als textile Zeichnung.",
-    gradient: "from-[#1F4A6B] via-[#3A6B8A] to-[#6B9BB8]",
+    image: "/images/gallery/galerie-11.jpg",
     accent: "#3A6B8A",
   },
   {
     title: "Startup-Branding Paket",
     category: "Logo-Patches",
     description: "Komplettes Branding-Paket aus 4 verschiedenen Patch-Formaten: klein für Cap, mittel für Hoodie, groß für Rucksack.",
-    gradient: "from-[#4A2A1A] via-[#6B4028] to-[#8A5A3A]",
+    image: "/images/gallery/galerie-12.jpg",
     accent: "#6B4028",
   },
 ];
@@ -166,22 +167,20 @@ export default function GalleryPage() {
                     whileHover={{ y: -6 }}
                     className="card bg-card rounded-2xl border border-border overflow-hidden group cursor-pointer"
                   >
-                    {/* Placeholder Patch Visual */}
-                    <div
-                      className={`relative h-52 bg-gradient-to-br ${item.gradient} flex items-center justify-center overflow-hidden`}
-                    >
-                      {/* Decorative stitch lines */}
-                      <div className="absolute inset-4 border border-white/10 rounded-xl" />
-                      <div className="absolute inset-8 border border-white/8 rounded-lg" />
-                      {/* Inner patch shape */}
-                      <div className="w-24 h-24 rounded-full bg-white/5 flex items-center justify-center">
-                        <div className="w-16 h-16 rounded-full bg-white/10" />
-                      </div>
-                      {/* Corner dots */}
-                      <div className="absolute top-3 left-3 w-2 h-2 rounded-full bg-white/15" />
-                      <div className="absolute top-3 right-3 w-2 h-2 rounded-full bg-white/15" />
-                      <div className="absolute bottom-3 left-3 w-2 h-2 rounded-full bg-white/15" />
-                      <div className="absolute bottom-3 right-3 w-2 h-2 rounded-full bg-white/15" />
+                    {/* Patch Image */}
+                    <div className="relative h-52 overflow-hidden">
+                      <Image
+                        src={item.image}
+                        alt={item.title}
+                        fill
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      />
+                      {/* Dark overlay for readability */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                      {/* Decorative stitch border */}
+                      <div className="absolute inset-3 border border-white/15 rounded-xl pointer-events-none" />
+                      <div className="absolute inset-6 border border-white/10 rounded-lg pointer-events-none" />
                     </div>
 
                     {/* Content */}
